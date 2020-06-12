@@ -1,0 +1,18 @@
+module fibonacci;
+
+nested protocol Fib(role Res, role F1, role F2; new role F3) {
+    Fib1(ubound:int, idx:int, val:int) from F1 to F3;
+    Fib2(idx:int, val:int) from F2 to F3;
+    choice at F3 {
+        F3 calls Fib(Res, F2, F3);
+    } or {
+        Result(fib:int) from F3 to Res;
+        End() from F3 to F2;
+    }
+}
+
+global protocol Fibonacci(role Start, role F1, role F2) {
+    StartFib1(n:int, val:int) from Start to F1;
+    StartFib2(n:int, val:int) from Start to F2;
+    Start calls Fib(Start, F1, F2);
+}
