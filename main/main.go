@@ -27,6 +27,7 @@ func boolToInt(b bool) int {
 }
 
 func main() {
+	iterations := 1000
 	runFib := flag.Bool("fib", false, "Run benchmark on fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
@@ -36,7 +37,7 @@ func main() {
 	idx := 0
 	if *runFib {
 		fmt.Println("Fibonacci")
-		scribbleResults, baseResults := FibonacciBenchmark(5000)
+		scribbleResults, baseResults := FibonacciBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
 		strResults[idx] = (benchmark.ResultsToString("fibonacci-scribble", scribbleResults) + "\n;;")
 		idx++
@@ -46,7 +47,7 @@ func main() {
 
 	if *runFannkuch {
 		fmt.Println("Fannkuch")
-		scribbleResults, baseResults := FannkuchBenchmark(200)
+		scribbleResults, baseResults := FannkuchBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
 		strResults[idx] = (benchmark.ResultsToString("fannkuch-scribble", scribbleResults) + "\n;;")
 		idx++
@@ -56,7 +57,7 @@ func main() {
 
 	if *runSieve {
 		fmt.Println("Primesieve")
-		scribbleResults, baseResults := PrimeSieveBenchmark(200)
+		scribbleResults, baseResults := PrimeSieveBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
 		strResults[idx] = (benchmark.ResultsToString("primesieve-scribble", scribbleResults) + "\n;;")
 		idx++

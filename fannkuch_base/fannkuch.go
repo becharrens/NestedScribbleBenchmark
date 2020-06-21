@@ -1,9 +1,5 @@
 package fannkuch_base
 
-import (
-	"runtime"
-)
-
 type Result struct {
 	maxFlips int
 	checkSum int
@@ -111,7 +107,7 @@ func fannkuch(n, idxMin int, ch chan Result) {
 }
 
 func Fannkuch(n int) (int, int) {
-	runtime.GOMAXPROCS(1 << 8 /*runtime._MaxGomaxprocs*/)
+	// runtime.GOMAXPROCS(1 << 8 /*runtime._MaxGomaxprocs*/)
 
 	Fact = make([]int, n+1)
 	Fact[0] = 1

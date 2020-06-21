@@ -33,7 +33,8 @@ func PrimeSieve_Worker(wg *sync.WaitGroup, roleChannels primesieve.Worker_Chan, 
 		sieve_w1_chan := <-inviteChannels.Invite_Worker_To_Sieve_W1
 		sieve_w1_inviteChan := <-inviteChannels.Invite_Worker_To_Sieve_W1_InviteChan
 		sieve_w1_env := env.To_Sieve_W1_Env()
-		sieve_w1_result := Sieve_W1(wg, sieve_w1_chan, sieve_w1_inviteChan, sieve_w1_env)
+		sieve_w1_result := Sieve_W1(wg, sieve_w1_chan,
+			sieve_w1_inviteChan, sieve_w1_env)
 		env.ResultFrom_Sieve_W1(sieve_w1_result)
 
 		return env.Done()
