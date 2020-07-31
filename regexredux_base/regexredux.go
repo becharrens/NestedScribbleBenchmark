@@ -1,8 +1,6 @@
 package regexredux_base
 
 import (
-	"fmt"
-
 	"github.com/GRbit/go-pcre"
 )
 
@@ -48,13 +46,15 @@ func RegexRedux(b []byte) {
 
 	// runtime.GOMAXPROCS(runtime.NumCPU())
 
-	ilen := len(b)
+	// TODO:Uncomment
+	// ilen := len(b)
 
 	// Delete the comment lines and newlines
 	b = pcre.
 		MustCompileJIT("(>[^\n]*)?\n", 0, pcre.STUDY_JIT_COMPILE).
 		ReplaceAll(b, []byte{}, 0)
-	clen := len(b)
+	// TODO:Uncomment
+	// clen := len(b)
 
 	mresults := make([]chan int, len(variants))
 	for i := 0; i < len(variants); i++ {
@@ -77,8 +77,12 @@ func RegexRedux(b []byte) {
 	}(b)
 
 	for i := 0; i < len(variants); i++ {
-		fmt.Printf("%s %d\n", variants[i], <-mresults[i])
+		// TODO: Uncomment
+		<-mresults[i]
+		// fmt.Printf("%s %d\n", variants[i], <-mresults[i])
 	}
 
-	fmt.Printf("\n%d\n%d\n%d\n", ilen, clen, <-lenresult)
+	// TODO: Uncomment
+	<-lenresult
+	// fmt.Printf("\n%d\n%d\n%d\n", ilen, clen, <-lenresult)
 }

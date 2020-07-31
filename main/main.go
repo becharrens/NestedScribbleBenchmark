@@ -27,7 +27,8 @@ func boolToInt(b bool) int {
 }
 
 func main() {
-	iterations := 1000
+	iterations := 1
+	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
 	runFib := flag.Bool("fib", false, "Run benchmark on fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
@@ -41,6 +42,13 @@ func main() {
 		boolToInt(*runRegexRedux) + boolToInt(*runSpectralNorm) + boolToInt(*runKNucleotide) +
 		boolToInt(*runQuickSort)
 	strResults := make([]string, 2*numResults)
+	if *genInputs {
+		GenKNucleotideInputs()
+		fmt.Println("Generated knucleotide input files")
+		GenRegexInputs()
+		fmt.Println("Generated regexredux input files")
+		return
+	}
 	idx := 0
 	if *runFib {
 		fmt.Println("Fibonacci")

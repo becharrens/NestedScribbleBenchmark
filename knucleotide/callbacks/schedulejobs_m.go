@@ -2,7 +2,6 @@ package callbacks
 
 import (
 	"ScribbleBenchmark/knucleotide/messages/schedulejobs"
-	"fmt"
 )
 import schedulejobs_2 "ScribbleBenchmark/knucleotide/results/schedulejobs"
 
@@ -42,7 +41,8 @@ func (s *ScheduleJobsMState) Finish_To_W() schedulejobs.Finish {
 }
 
 func (s *ScheduleJobsMState) FrequencyResult_From_W(frequencyresult_msg schedulejobs.FrequencyResult) {
-	fmt.Println(frequencyresult_msg.Res)
+	// TODO: Uncomment
+	// fmt.Println(frequencyresult_msg.Res)
 }
 
 func (s *ScheduleJobsMState) ResultFrom_ScheduleJobs_M_2(result schedulejobs_2.M_Result) {
@@ -74,7 +74,8 @@ func (s *ScheduleJobsMState) Done() schedulejobs_2.M_Result {
 }
 
 func (s *ScheduleJobsMState) SequenceResult_From_W(sequenceresult_msg schedulejobs.SequenceResult) {
-	fmt.Println(sequenceresult_msg.Res)
+	// TODO: Uncomment
+	// fmt.Println(sequenceresult_msg.Res)
 }
 
 func (s *ScheduleJobsMState) ResultFrom_ScheduleJobs_M(result schedulejobs_2.M_Result) {

@@ -1,20 +1,12 @@
-package main
+package spectralnorm
 
 import (
-	"ScribbleBenchmark/benchmark"
 	"ScribbleBenchmark/spectralnorm/callbacks"
-	"ScribbleBenchmark/spectralnorm/protocol"
 	"ScribbleBenchmark/spectralnorm/results/spectralnorm"
-	"ScribbleBenchmark/spectralnorm_base"
 	"runtime"
-	"time"
 )
 
 var nCPU = runtime.NumCPU()
-
-var spectralNormParams = []int{
-	100, 500, 1500, 2500, 3500, 4500, 5500,
-}
 
 type SpectralNormEnv struct {
 	NCPU         int
@@ -57,25 +49,4 @@ func NewSpectralNormEnv(n int) *SpectralNormEnv {
 		N:            n,
 		SpectralNorm: 0,
 	}
-}
-
-func TimeSpectralNorm(n int) time.Duration {
-	env := NewSpectralNormEnv(n)
-	start := time.Now()
-	protocol.SpectralNorm(env)
-	elapsed := time.Since(start)
-	return elapsed
-}
-
-func TimeSpectralNormBase(n int) time.Duration {
-	start := time.Now()
-	spectralnorm_base.SpectralNorm(n)
-	elapsed := time.Since(start)
-	return elapsed
-}
-
-func SpectralNormBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
-	scribble_results := benchmark.TimeImpl(spectralNormParams, repetitions, TimeSpectralNorm)
-	base_results := benchmark.TimeImpl(spectralNormParams, repetitions, TimeSpectralNormBase)
-	return scribble_results, base_results
 }

@@ -2,7 +2,6 @@ package callbacks
 
 import (
 	"ScribbleBenchmark/knucleotide/messages/knucleotide"
-	"fmt"
 )
 import "ScribbleBenchmark/knucleotide/results/schedulejobs"
 import knucleotide_2 "ScribbleBenchmark/knucleotide/results/knucleotide"
@@ -44,7 +43,8 @@ func (k *KNucleotideMasterState) Done() knucleotide_2.Master_Result {
 }
 
 func (k *KNucleotideMasterState) SequenceResult_From_Worker(sequenceresult_msg knucleotide.SequenceResult) {
-	fmt.Println(sequenceresult_msg.Res)
+	// TODO: Uncomment
+	// fmt.Println(sequenceresult_msg.Res)
 }
 
 func (k *KNucleotideMasterState) ResultFrom_ScheduleJobs_M(result schedulejobs.M_Result) {

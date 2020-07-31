@@ -1,14 +1,10 @@
-package main
+package knucleotide
 
 import (
-	"ScribbleBenchmark/benchmark"
 	"ScribbleBenchmark/knucleotide/callbacks"
-	"ScribbleBenchmark/knucleotide/protocol"
 	"ScribbleBenchmark/knucleotide/results/knucleotide"
-	"ScribbleBenchmark/knucleotide_base"
 	"bufio"
 	"bytes"
-	"time"
 )
 
 type KNucleotideEnv struct {
@@ -33,41 +29,8 @@ func (k *KNucleotideEnv) Master_Result(result knucleotide.Master_Result) {
 func (k *KNucleotideEnv) Worker_Result(result knucleotide.Worker_Result) {
 }
 
-var kNucleotideParams = []int{
-	0, 1, 2, 3, 4, 5, 6, 7,
-}
-var knucleotideFiles = []string{
-	"knucleotide-input1000.txt",
-	"knucleotide-input10000.txt",
-	"knucleotide-input50000.txt",
-	"knucleotide-input100000.txt",
-	"knucleotide-input500000.txt",
-	"knucleotide-input1000000.txt",
-	"knucleotide-input2500000.txt",
-	"knucleotide-input5000000.txt",
-}
-
-func NewKNucleotideEnv(n int) *KNucleotideEnv {
-	b := readFile(n, knucleotideFiles)
-	dna := toBits(readSequence(">THREE", b))
+func NewKNucleotideEnv(dna []byte) *KNucleotideEnv {
 	return &KNucleotideEnv{B: dna}
-}
-
-func TimeKNucleotide(n int) time.Duration {
-	env := NewKNucleotideEnv(n)
-	start := time.Now()
-	protocol.KNucleotide(env)
-	elapsed := time.Since(start)
-	return elapsed
-}
-
-func TimeKNucleotideBase(n int) time.Duration {
-	b := readFile(n, knucleotideFiles)
-	dna := toBits(readSequence(">THREE", b))
-	start := time.Now()
-	knucleotide_base.KNucleotide(dna)
-	elapsed := time.Since(start)
-	return elapsed
 }
 
 func toBits(seq []byte) []byte {
@@ -114,10 +77,4 @@ func findSequence(prefix string, input []byte) (in *bufio.Reader, lineCount int)
 		}
 	}
 	return
-}
-
-func KNucleotideBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
-	scribble_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotide)
-	base_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotideBase)
-	return scribble_results, base_results
 }

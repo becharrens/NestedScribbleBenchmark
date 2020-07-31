@@ -2,7 +2,6 @@ package callbacks
 
 import (
 	"ScribbleBenchmark/spectralnorm/messages/spectralnorm"
-	"fmt"
 	"math"
 )
 import "ScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
@@ -166,6 +165,7 @@ func (s *SpectralNormMasterState) Master_Choice() SpectralNorm_Master_Choice {
 		vv += vi * vi
 	}
 	s.SpectralNorm = math.Sqrt(vBv / vv)
-	fmt.Printf("%0.9f\n", s.SpectralNorm)
+	// TODO: Uncomment
+	// fmt.Printf("%0.9f\n", s.SpectralNorm)
 	return SpectralNorm_Master_Finish
 }

@@ -142,7 +142,9 @@ var jobs = [...]job{
 func KNucleotide(dna seqBits) {
 	scheduleJobs(dna)
 	for i := range jobs {
-		fmt.Println(<-jobs[i].result)
+		<-jobs[i].result
+		// TODO: Uncomment
+		// fmt.Println(<-jobs[i].result)
 	}
 }
 

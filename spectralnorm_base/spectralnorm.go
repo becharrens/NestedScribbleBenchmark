@@ -1,7 +1,6 @@
 package spectralnorm_base
 
 import (
-	"fmt"
 	"math"
 	"runtime"
 )
@@ -72,5 +71,7 @@ func SpectralNorm(n int) {
 		vBv += u[i] * vi
 		vv += vi * vi
 	}
-	fmt.Printf("%0.9f\n", math.Sqrt(vBv/vv))
+	_ = math.Sqrt(vBv / vv)
+	// TODO: Uncomment
+	// fmt.Printf("%0.9f\n", math.Sqrt(vBv/vv))
 }

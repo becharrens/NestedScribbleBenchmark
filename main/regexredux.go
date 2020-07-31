@@ -6,6 +6,7 @@ import (
 	"ScribbleBenchmark/regexredux/protocol"
 	"ScribbleBenchmark/regexredux/results/regexredux"
 	"ScribbleBenchmark/regexredux_base"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"time"
@@ -43,11 +44,18 @@ func (r *RegexReduxEnv) Worker_Result(result regexredux.Worker_Result) {
 }
 
 var regexreduxParams = []int{
-	0,
+	0, 1, 2, 3, 4, 5, 6, 7,
 }
 
 var regexreduxFiles = []string{
-	"regexredux-input.txt",
+	"regexredux-input1000.txt",
+	"regexredux-input10000.txt",
+	"regexredux-input100000.txt",
+	"regexredux-input500000.txt",
+	"regexredux-input1000000.txt",
+	"regexredux-input5000000.txt",
+	"regexredux-input10000000.txt",
+	"regexredux-input25000000.txt",
 }
 
 func NewRegexReduxEnv(b []byte) *RegexReduxEnv {
@@ -74,7 +82,7 @@ func TimeRegexReduxBase(n int) time.Duration {
 }
 
 func readFile(n int, files []string) []byte {
-	f, err := os.Open(files[n])
+	f, err := os.Open(fmt.Sprintf("testdata/%s", files[n]))
 	if err != nil {
 		panic("Can't open input file")
 	}

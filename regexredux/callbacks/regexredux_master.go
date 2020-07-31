@@ -2,10 +2,8 @@ package callbacks
 
 import (
 	"ScribbleBenchmark/regexredux/messages/regexredux"
-	"ScribbleBenchmark/regexredux/results/regexredux2"
-	"fmt"
-
 	regexredux_2 "ScribbleBenchmark/regexredux/results/regexredux"
+	"ScribbleBenchmark/regexredux/results/regexredux2"
 )
 
 type RegexRedux_Master_Env interface {
@@ -42,8 +40,9 @@ func (r *RegexReduxMasterState) Done() regexredux_2.Master_Result {
 }
 
 func (r *RegexReduxMasterState) NumMatches_From_Worker(nummatches_msg regexredux.NumMatches) {
-	fmt.Printf("%s %d\n", variants[r.Idx], nummatches_msg.Nmatches)
-	fmt.Printf("\n%d\n%d\n%d\n", r.ILen, r.CLen, r.Len)
+	// TODO: Uncomment
+	// fmt.Printf("%s %d\n", variants[r.Idx], nummatches_msg.Nmatches)
+	// fmt.Printf("\n%d\n%d\n%d\n", r.ILen, r.CLen, r.Len)
 }
 
 func (r *RegexReduxMasterState) ResultFrom_RegexRedux2_M(result regexredux2.M_Result) {
