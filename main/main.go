@@ -31,8 +31,15 @@ func main() {
 	runFib := flag.Bool("fib", false, "Run benchmark on fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
+	runRegexRedux := flag.Bool("redux", false, "Run benchmark on regexredux protocol")
+	runSpectralNorm := flag.Bool("snorm", false, "Run benchmark on spectralnorm protocol")
+	runKNucleotide := flag.Bool("knucl", false, "Run benchmark on quicksort protocol")
+	runQuickSort := flag.Bool("quicksort", false, "Run benchmark on quicksort protocol")
+
 	flag.Parse()
-	numResults := boolToInt(*runFib) + boolToInt(*runFannkuch) + boolToInt(*runSieve)
+	numResults := boolToInt(*runFib) + boolToInt(*runFannkuch) + boolToInt(*runSieve) +
+		boolToInt(*runRegexRedux) + boolToInt(*runSpectralNorm) + boolToInt(*runKNucleotide) +
+		boolToInt(*runQuickSort)
 	strResults := make([]string, 2*numResults)
 	idx := 0
 	if *runFib {
@@ -62,6 +69,42 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("primesieve-scribble", scribbleResults) + "\n;;")
 		idx++
 		strResults[idx] = (benchmark.ResultsToString("primesieve-base", baseResults) + "\n;;")
+		idx++
+	}
+	if *runRegexRedux {
+		fmt.Println("RegexRedux")
+		scribbleResults, baseResults := RegexReduxBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("regexredux-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("regexredux-base", baseResults) + "\n;;")
+		idx++
+	}
+	if *runSpectralNorm {
+		fmt.Println("SpectralNorm")
+		scribbleResults, baseResults := SpectralNormBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("spectralnorm-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("spectralnorm-base", baseResults) + "\n;;")
+		idx++
+	}
+	if *runKNucleotide {
+		fmt.Println("KNucleotide")
+		scribbleResults, baseResults := KNucleotideBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
+		idx++
+	}
+	if *runQuickSort {
+		fmt.Println("QuickSort")
+		scribbleResults, baseResults := QuickSortBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
 		idx++
 	}
 	result := strings.Join(strResults, "\n")

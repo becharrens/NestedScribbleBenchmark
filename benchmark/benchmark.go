@@ -13,7 +13,6 @@ type BenchmarkTimes map[int][]time.Duration
 type TimeFunction func(int) time.Duration
 
 func TimeImpl(values []int, repetitions int, implFunction TimeFunction) BenchmarkTimes {
-	// values: 2-12
 	results := make(map[int][]time.Duration)
 	for _, val := range values {
 		times := make([]time.Duration, repetitions)

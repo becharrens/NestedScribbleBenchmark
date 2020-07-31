@@ -1,0 +1,27 @@
+goos: darwin
+goarch: amd64
+pkg: ScribbleBenchmark/benchmarks/quicksort
+BenchmarkQuickSort/1000-8  	    1000	     69321 ns/op
+BenchmarkQuickSort/5500-8  	    1000	    203000 ns/op
+BenchmarkQuickSort/10000-8 	    1000	    285462 ns/op
+BenchmarkQuickSort/25000-8 	    1000	    633223 ns/op
+BenchmarkQuickSort/50000-8 	    1000	   1251649 ns/op
+BenchmarkQuickSort/75000-8 	    1000	   1867036 ns/op
+BenchmarkQuickSort/100000-8         	    1000	   2544568 ns/op
+BenchmarkQuickSort/125000-8         	    1000	   3121988 ns/op
+BenchmarkQuickSort/150000-8         	    1000	   4114170 ns/op
+BenchmarkQuickSort/175000-8         	    1000	   4359115 ns/op
+BenchmarkQuickSort/200000-8         	    1000	   5133933 ns/op
+BenchmarkQuickSortBase/1000-8       	    1000	     61417 ns/op
+BenchmarkQuickSortBase/5500-8       	    1000	    167127 ns/op
+BenchmarkQuickSortBase/10000-8      	    1000	    240161 ns/op
+BenchmarkQuickSortBase/25000-8      	    1000	    517191 ns/op
+BenchmarkQuickSortBase/50000-8      	    1000	   1096728 ns/op
+BenchmarkQuickSortBase/75000-8      	    1000	   1795709 ns/op
+BenchmarkQuickSortBase/100000-8     	    1000	   2271448 ns/op
+BenchmarkQuickSortBase/125000-8     	    1000	   2779555 ns/op
+BenchmarkQuickSortBase/150000-8     	    1000	   3562631 ns/op
+BenchmarkQuickSortBase/175000-8     	    1000	   4031965 ns/op
+BenchmarkQuickSortBase/200000-8     	    1000	   4694888 ns/op
+PASS
+ok  	ScribbleBenchmark/benchmarks/quicksort	49.911s

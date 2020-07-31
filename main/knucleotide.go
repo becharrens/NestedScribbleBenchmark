@@ -1,0 +1,112 @@
+package main
+
+import (
+	"ScribbleBenchmark/benchmark"
+	"ScribbleBenchmark/knucleotide/callbacks"
+	"ScribbleBenchmark/knucleotide/protocol"
+	"ScribbleBenchmark/knucleotide/results/knucleotide"
+	"ScribbleBenchmark/knucleotide_base"
+	"bufio"
+	"bytes"
+	"time"
+)
+
+type KNucleotideEnv struct {
+	B []byte
+}
+
+func (k *KNucleotideEnv) New_Master_Env() callbacks.KNucleotide_Master_Env {
+	return &callbacks.KNucleotideMasterState{
+		Dna:        k.B,
+		PatternIdx: len(callbacks.Patterns) - 1,
+		LenIdx:     len(callbacks.Lengths) - 1,
+	}
+}
+
+func (k *KNucleotideEnv) New_Worker_Env() callbacks.KNucleotide_Worker_Env {
+	return &callbacks.KNucleotideWorkerState{}
+}
+
+func (k *KNucleotideEnv) Master_Result(result knucleotide.Master_Result) {
+}
+
+func (k *KNucleotideEnv) Worker_Result(result knucleotide.Worker_Result) {
+}
+
+var kNucleotideParams = []int{0}
+var knucleotideFiles = []string{"quicksort-input.txt"}
+
+func NewKNucleotideEnv(n int) *KNucleotideEnv {
+	b := readFile(n, knucleotideFiles)
+	dna := toBits(readSequence(">THREE", b))
+	return &KNucleotideEnv{B: dna}
+}
+
+func TimeKNucleotide(n int) time.Duration {
+	env := NewKNucleotideEnv(n)
+	start := time.Now()
+	protocol.KNucleotide(env)
+	elapsed := time.Since(start)
+	return elapsed
+}
+
+func TimeKNucleotideBase(n int) time.Duration {
+	b := readFile(n, knucleotideFiles)
+	dna := toBits(readSequence(">THREE", b))
+	start := time.Now()
+	knucleotide_base.KNucleotide(dna)
+	elapsed := time.Since(start)
+	return elapsed
+}
+
+func toBits(seq []byte) []byte {
+	for i := 0; i < len(seq); i++ {
+		// 'A' => 0, 'C' => 1, 'T' => 2, 'G' => 3
+		seq[i] = seq[i] >> 1 & 3
+	}
+	return seq
+}
+
+func readSequence(prefix string, input []byte) (data []byte) {
+	in, lineCount := findSequence(prefix, input)
+	data = make([]byte, 0, lineCount*61)
+	for {
+		line, err := in.ReadSlice('\n')
+		if len(line) <= 1 || line[0] == '>' {
+			break
+		}
+
+		last := len(line) - 1
+		if line[last] == '\n' {
+			line = line[0:last]
+		}
+		data = append(data, line...)
+
+		if err != nil {
+			break
+		}
+	}
+	return
+}
+
+func findSequence(prefix string, input []byte) (in *bufio.Reader, lineCount int) {
+	pfx := []byte(prefix)
+	in = bufio.NewReader(bytes.NewReader(input))
+	for {
+		line, err := in.ReadSlice('\n')
+		if err != nil {
+			panic("read error")
+		}
+		lineCount++
+		if line[0] == '>' && bytes.HasPrefix(line, pfx) {
+			break
+		}
+	}
+	return
+}
+
+func KNucleotideBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
+	scribble_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotide)
+	base_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotideBase)
+	return scribble_results, base_results
+}

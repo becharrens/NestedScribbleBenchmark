@@ -1,0 +1,46 @@
+module knucleotide;
+
+type <go> "[]byte" from "builtin" as ByteArr;
+
+//nested protocol ScheduleJobs(role M; new role W) {
+//    nested protocol ScheduleFrequency(role M; new role W) {
+//        choice at M {
+//            SequenceJob(len: int, dna: ByteArr) from M to W;
+//            M calls ScheduleJobs(M);
+//            SequenceResult(res: string) from W to M;
+//        } or {
+//            Finish() from M to W;
+//        }
+//    }
+//
+//    choice at M {
+//        SequenceJob(len: int, dna: ByteArr) from M to W;
+//        M calls ScheduleJobs(M);
+//        SequenceResult(res: string) from W to M;
+//    } or {
+//        FrequencyJob() from M to W;
+//        M calls ScheduleFequency(M);
+//        FrequencyResult() from W to M:
+//    }
+//}
+
+nested protocol ScheduleJobs(role M; new role W) {
+    choice at M {
+        SequenceJob(sequence: string, dna: ByteArr) from M to W;
+        M calls ScheduleJobs(M);
+        SequenceResult(res: string) from W to M;
+    } or {
+        FrequencyJob(len: int, dna: ByteArr) from M to W;
+        M calls ScheduleJobs(M);
+        FrequencyResult(res: string) from W to M;
+    } or {
+        Finish() from M to W;
+    }
+}
+
+
+global protocol KNucleotide(role Master, role Worker) {
+    SequenceJob(sequence: string, dna: ByteArr) from Master to Worker;
+    Master calls ScheduleJobs(Master);
+    SequenceResult(res: string) from Worker to Master;
+}

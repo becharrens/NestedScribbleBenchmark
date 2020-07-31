@@ -1,0 +1,38 @@
+module spectralnorm;
+
+type <go> "[]float64" from "builtin" as Vec;
+
+
+global protocol SpectralNorm(role Master, role Worker) {
+    nested protocol Times(role M; new role W) {
+        choice at M {
+            TimesTask(ii: int, n: int, u: Vec, v: Vec) from M to W;
+            M calls Times(M);
+            TimesResult(res: Vec) from W to M;
+        } or {
+            Finish() from M to W;
+        }
+    }
+
+    nested protocol TimesTransp(role M; new role W) {
+        choice at M {
+            TimesTranspTask(ii: int, n: int, u: Vec, v: Vec) from M to W;
+            M calls TimesTransp(M);
+            TimesTranspResult(res: Vec) from W to M;
+        } or {
+            Finish() from M to W;
+        }
+    }
+
+    choice at Master {
+        TimesTask(ii: int, n: int, u: Vec, v: Vec) from Master to Worker;
+        Master calls Times(Master);
+        TimesResult(res: Vec) from Worker to Master;
+        Master calls TimesTransp(Master);
+        Master calls Times(Master);
+        Master calls TimesTransp(Master);
+        do SpectralNorm(Master, Worker);
+    } or {
+        Finish() from Master to Worker;
+    }
+}

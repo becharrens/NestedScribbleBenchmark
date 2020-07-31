@@ -1,0 +1,36 @@
+module knucleotide;
+
+type <go> "[]int" from "builtin" as IntArr;
+
+nested protocol QuickSort2(role P; new role L, role R) {
+    choice at P {
+        LeftParitition(arr: IntArr) from P to L;
+        RightPartition(arr: IntArr) from P to R;
+
+        L calls QuickSort2(L);
+        R calls QuickSort2(R);
+
+        SortedLeft(arr: IntArr) from L to P;
+        SortedRight(arr: IntArr) from R to P;
+    } or {
+        Done() from P to L;
+        Done() from P to R;
+    }
+}
+
+
+global protocol QuickSort(role Partition, role Left, role Right) {
+    choice at Partition {
+        LeftParitition(arr: IntArr) from Partition to Left;
+        RightPartition(arr: IntArr) from Partition to Right;
+
+        Left calls QuickSort2(Left);
+        Right calls QuickSort2(Right);
+
+        SortedLeft(arr: IntArr) from Left to Partition;
+        SortedRight(arr: IntArr) from Right to Partition;
+    } or {
+        Done() from Partition to Left;
+        Done() from Partition to Right;
+    }
+}
