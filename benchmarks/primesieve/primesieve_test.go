@@ -1,8 +1,8 @@
 package primesieve
 
 import (
-	"ScribbleBenchmark/primesieve/protocol"
-	"ScribbleBenchmark/primesieve_base"
+	"NestedScribbleBenchmark/primesieve/protocol"
+	"NestedScribbleBenchmark/primesieve_base"
 	"testing"
 )
 

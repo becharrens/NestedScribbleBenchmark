@@ -1,12 +1,12 @@
 package protocol
 
-import "ScribbleBenchmark/primesieve/messages/primesieve"
-import "ScribbleBenchmark/primesieve/channels/sieve"
-import primesieve_2 "ScribbleBenchmark/primesieve/channels/primesieve"
-import "ScribbleBenchmark/primesieve/invitations"
-import "ScribbleBenchmark/primesieve/callbacks"
-import primesieve_3 "ScribbleBenchmark/primesieve/results/primesieve"
-import "ScribbleBenchmark/primesieve/roles"
+import "NestedScribbleBenchmark/primesieve/messages/primesieve"
+import "NestedScribbleBenchmark/primesieve/channels/sieve"
+import primesieve_2 "NestedScribbleBenchmark/primesieve/channels/primesieve"
+import "NestedScribbleBenchmark/primesieve/invitations"
+import "NestedScribbleBenchmark/primesieve/callbacks"
+import primesieve_3 "NestedScribbleBenchmark/primesieve/results/primesieve"
+import "NestedScribbleBenchmark/primesieve/roles"
 import "sync"
 
 type PrimeSieve_Env interface {

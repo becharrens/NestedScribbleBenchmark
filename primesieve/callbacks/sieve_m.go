@@ -1,8 +1,8 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/primesieve/messages/sieve"
-	sieve_2 "ScribbleBenchmark/primesieve/results/sieve"
+	"NestedScribbleBenchmark/primesieve/messages/sieve"
+	sieve_2 "NestedScribbleBenchmark/primesieve/results/sieve"
 )
 
 type Sieve_M_Env interface {

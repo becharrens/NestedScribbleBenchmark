@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/knucleotide/channels/knucleotide"
-import "ScribbleBenchmark/knucleotide/invitations"
-import "ScribbleBenchmark/knucleotide/callbacks"
-import knucleotide_2 "ScribbleBenchmark/knucleotide/results/knucleotide"
+import "NestedScribbleBenchmark/knucleotide/channels/knucleotide"
+import "NestedScribbleBenchmark/knucleotide/invitations"
+import "NestedScribbleBenchmark/knucleotide/callbacks"
+import knucleotide_2 "NestedScribbleBenchmark/knucleotide/results/knucleotide"
 import "sync"
 
 func KNucleotide_Worker(wg *sync.WaitGroup, roleChannels knucleotide.Worker_Chan, inviteChannels invitations.KNucleotide_Worker_InviteChan, env callbacks.KNucleotide_Worker_Env) knucleotide_2.Worker_Result {
@@ -14,4 +14,4 @@ func KNucleotide_Worker(wg *sync.WaitGroup, roleChannels knucleotide.Worker_Chan
 	roleChannels.Master_SequenceResult <- sequenceresult_msg
 
 	return env.Done()
-} 
+}

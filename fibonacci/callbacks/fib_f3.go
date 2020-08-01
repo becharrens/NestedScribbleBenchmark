@@ -1,9 +1,10 @@
 package callbacks
 
-import "ScribbleBenchmark/fibonacci/messages/fib"
-import fib_2 "ScribbleBenchmark/fibonacci/results/fib"
+import "NestedScribbleBenchmark/fibonacci/messages/fib"
+import fib_2 "NestedScribbleBenchmark/fibonacci/results/fib"
 
 type Fib_F3_Choice int
+
 const (
 	Fib_F3_Fib Fib_F3_Choice = iota
 	Fib_F3_Result
@@ -12,20 +13,20 @@ const (
 type Fib_F3_Env interface {
 	End_To_F2() fib.End
 	Result_To_Res() fib.Result
-	Done() 
-	ResultFrom_Fib_F2(result fib_2.F2_Result) 
+	Done()
+	ResultFrom_Fib_F2(result fib_2.F2_Result)
 	To_Fib_F2_Env() Fib_F2_Env
-	Fib_Setup() 
+	Fib_Setup()
 	F3_Choice() Fib_F3_Choice
-	Fib2_From_F2(fib2 fib.Fib2) 
-	Fib1_From_F1(fib1 fib.Fib1) 
+	Fib2_From_F2(fib2 fib.Fib2)
+	Fib1_From_F1(fib1 fib.Fib1)
 }
 
 type FibF3State struct {
-	Fib1 int
-	Fib int
+	Fib1   int
+	Fib    int
 	Ubound int
-	Idx int
+	Idx    int
 }
 
 func (f *FibF3State) End_To_F2() fib.End {
@@ -33,7 +34,7 @@ func (f *FibF3State) End_To_F2() fib.End {
 }
 
 func (f *FibF3State) Result_To_Res() fib.Result {
-	return fib.Result{Fib:f.Fib}
+	return fib.Result{Fib: f.Fib}
 }
 
 func (f *FibF3State) Done() {

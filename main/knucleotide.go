@@ -1,13 +1,16 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/knucleotide/callbacks"
-	"ScribbleBenchmark/knucleotide/protocol"
-	"ScribbleBenchmark/knucleotide/results/knucleotide"
-	"ScribbleBenchmark/knucleotide_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/knucleotide/callbacks"
+	"NestedScribbleBenchmark/knucleotide/protocol"
+	"NestedScribbleBenchmark/knucleotide/results/knucleotide"
+	"NestedScribbleBenchmark/knucleotide_base"
 	"bufio"
 	"bytes"
+	"fmt"
+	"io/ioutil"
+	"os"
 	"time"
 )
 
@@ -48,7 +51,7 @@ var knucleotideFiles = []string{
 }
 
 func NewKNucleotideEnv(n int) *KNucleotideEnv {
-	b := readFile(n, knucleotideFiles)
+	b := readFile(knucleotideFiles[n])
 	dna := toBits(readSequence(">THREE", b))
 	return &KNucleotideEnv{B: dna}
 }
@@ -62,7 +65,7 @@ func TimeKNucleotide(n int) time.Duration {
 }
 
 func TimeKNucleotideBase(n int) time.Duration {
-	b := readFile(n, knucleotideFiles)
+	b := readFile(knucleotideFiles[n])
 	dna := toBits(readSequence(">THREE", b))
 	start := time.Now()
 	knucleotide_base.KNucleotide(dna)
@@ -120,4 +123,21 @@ func KNucleotideBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.
 	scribble_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotide)
 	base_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotideBase)
 	return scribble_results, base_results
+}
+
+// TODO: Remove
+func readFile(file string) []byte {
+	f, err := os.Open(fmt.Sprintf("testdata/%s", file))
+	if err != nil {
+		panic("Can't open input file")
+	}
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		panic("Can't read input file")
+	}
+	err = f.Close()
+	if err != nil {
+		panic("Can't close input file")
+	}
+	return b
 }

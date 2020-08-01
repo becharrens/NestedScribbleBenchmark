@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/regexredux/channels/regexredux"
-import "ScribbleBenchmark/regexredux/invitations"
-import "ScribbleBenchmark/regexredux/callbacks"
-import regexredux_2 "ScribbleBenchmark/regexredux/results/regexredux"
+import "NestedScribbleBenchmark/regexredux/channels/regexredux"
+import "NestedScribbleBenchmark/regexredux/invitations"
+import "NestedScribbleBenchmark/regexredux/callbacks"
+import regexredux_2 "NestedScribbleBenchmark/regexredux/results/regexredux"
 import "sync"
 
 func RegexRedux_Master(wg *sync.WaitGroup, roleChannels regexredux.Master_Chan, inviteChannels invitations.RegexRedux_Master_InviteChan, env callbacks.RegexRedux_Master_Env) regexredux_2.Master_Result {
@@ -29,4 +29,4 @@ func RegexRedux_Master(wg *sync.WaitGroup, roleChannels regexredux.Master_Chan, 
 	env.NumMatches_From_Worker(nummatches_msg)
 
 	return env.Done()
-} 
+}

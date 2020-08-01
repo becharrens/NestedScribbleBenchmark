@@ -1,7 +1,7 @@
 package callbacks
 
-import "ScribbleBenchmark/fibonacci/messages/fib"
-import fib_2 "ScribbleBenchmark/fibonacci/results/fib"
+import "NestedScribbleBenchmark/fibonacci/messages/fib"
+import fib_2 "NestedScribbleBenchmark/fibonacci/results/fib"
 
 type Fib_F1_Env interface {
 	Done() fib_2.F1_Result
@@ -10,8 +10,8 @@ type Fib_F1_Env interface {
 
 type FibF1State struct {
 	Ubound int
-	Idx int
-	Fib int
+	Idx    int
+	Fib    int
 }
 
 func (f *FibF1State) Done() fib_2.F1_Result {

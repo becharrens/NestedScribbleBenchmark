@@ -1,11 +1,11 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/spectralnorm/callbacks"
-	"ScribbleBenchmark/spectralnorm/protocol"
-	"ScribbleBenchmark/spectralnorm/results/spectralnorm"
-	"ScribbleBenchmark/spectralnorm_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/spectralnorm/callbacks"
+	"NestedScribbleBenchmark/spectralnorm/protocol"
+	"NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
+	"NestedScribbleBenchmark/spectralnorm_base"
 	"runtime"
 	"time"
 )

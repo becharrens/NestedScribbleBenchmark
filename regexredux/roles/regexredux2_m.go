@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/regexredux/channels/regexredux2"
-import "ScribbleBenchmark/regexredux/invitations"
-import "ScribbleBenchmark/regexredux/callbacks"
-import regexredux2_2 "ScribbleBenchmark/regexredux/results/regexredux2"
+import "NestedScribbleBenchmark/regexredux/channels/regexredux2"
+import "NestedScribbleBenchmark/regexredux/invitations"
+import "NestedScribbleBenchmark/regexredux/callbacks"
+import regexredux2_2 "NestedScribbleBenchmark/regexredux/results/regexredux2"
 import "sync"
 
 func RegexRedux2_M(wg *sync.WaitGroup, roleChannels regexredux2.M_Chan, inviteChannels invitations.RegexRedux2_M_InviteChan, env callbacks.RegexRedux2_M_Env) regexredux2_2.M_Result {
@@ -43,4 +43,4 @@ func RegexRedux2_M(wg *sync.WaitGroup, roleChannels regexredux2.M_Chan, inviteCh
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

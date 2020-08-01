@@ -1,8 +1,8 @@
 package quicksort
 
 import (
-	"ScribbleBenchmark/quicksort/callbacks"
-	"ScribbleBenchmark/quicksort/results/quicksort"
+	"NestedScribbleBenchmark/quicksort/callbacks"
+	"NestedScribbleBenchmark/quicksort/results/quicksort"
 )
 
 type QuickSortEnv struct {

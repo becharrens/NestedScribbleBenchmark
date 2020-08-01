@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/ring/channels/ring"
-import "ScribbleBenchmark/ring/invitations"
-import "ScribbleBenchmark/ring/callbacks"
-import ring_2 "ScribbleBenchmark/ring/results/ring"
+import "NestedScribbleBenchmark/ring/channels/ring"
+import "NestedScribbleBenchmark/ring/invitations"
+import "NestedScribbleBenchmark/ring/callbacks"
+import ring_2 "NestedScribbleBenchmark/ring/results/ring"
 import "sync"
 
 func Ring_Start(wg *sync.WaitGroup, roleChannels ring.Start_Chan, inviteChannels invitations.Ring_Start_InviteChan, env callbacks.Ring_Start_Env) ring_2.Start_Result {
@@ -42,4 +42,4 @@ func Ring_Start(wg *sync.WaitGroup, roleChannels ring.Start_Chan, inviteChannels
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

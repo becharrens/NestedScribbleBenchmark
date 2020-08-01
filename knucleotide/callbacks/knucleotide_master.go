@@ -1,10 +1,10 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/knucleotide/messages/knucleotide"
+	"NestedScribbleBenchmark/knucleotide/messages/knucleotide"
 )
-import "ScribbleBenchmark/knucleotide/results/schedulejobs"
-import knucleotide_2 "ScribbleBenchmark/knucleotide/results/knucleotide"
+import "NestedScribbleBenchmark/knucleotide/results/schedulejobs"
+import knucleotide_2 "NestedScribbleBenchmark/knucleotide/results/knucleotide"
 
 type KNucleotide_Master_Env interface {
 	Done() knucleotide_2.Master_Result

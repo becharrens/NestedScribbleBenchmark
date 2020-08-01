@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/fibonacci/channels/fibonacci"
-import "ScribbleBenchmark/fibonacci/invitations"
-import "ScribbleBenchmark/fibonacci/callbacks"
-import fibonacci_2 "ScribbleBenchmark/fibonacci/results/fibonacci"
+import "NestedScribbleBenchmark/fibonacci/channels/fibonacci"
+import "NestedScribbleBenchmark/fibonacci/invitations"
+import "NestedScribbleBenchmark/fibonacci/callbacks"
+import fibonacci_2 "NestedScribbleBenchmark/fibonacci/results/fibonacci"
 import "sync"
 
 func Fibonacci_Start(wg *sync.WaitGroup, roleChannels fibonacci.Start_Chan, inviteChannels invitations.Fibonacci_Start_InviteChan, env callbacks.Fibonacci_Start_Env) fibonacci_2.Start_Result {
@@ -16,13 +16,13 @@ func Fibonacci_Start(wg *sync.WaitGroup, roleChannels fibonacci.Start_Chan, invi
 	env.Fib_Setup()
 	fib_rolechan := invitations.Fib_RoleSetupChan{
 		Res_Chan: inviteChannels.Invite_Start_To_Fib_Res,
-		F1_Chan: inviteChannels.Invite_F1_To_Fib_F1,
-		F2_Chan: inviteChannels.Invite_F2_To_Fib_F2,
+		F1_Chan:  inviteChannels.Invite_F1_To_Fib_F1,
+		F2_Chan:  inviteChannels.Invite_F2_To_Fib_F2,
 	}
 	fib_invitechan := invitations.Fib_InviteSetupChan{
 		Res_InviteChan: inviteChannels.Invite_Start_To_Fib_Res_InviteChan,
-		F1_InviteChan: inviteChannels.Invite_F1_To_Fib_F1_InviteChan,
-		F2_InviteChan: inviteChannels.Invite_F2_To_Fib_F2_InviteChan,
+		F1_InviteChan:  inviteChannels.Invite_F1_To_Fib_F1_InviteChan,
+		F2_InviteChan:  inviteChannels.Invite_F2_To_Fib_F2_InviteChan,
 	}
 	Fib_SendCommChannels(wg, fib_rolechan, fib_invitechan)
 
@@ -33,4 +33,4 @@ func Fibonacci_Start(wg *sync.WaitGroup, roleChannels fibonacci.Start_Chan, invi
 	env.ResultFrom_Fib_Res(fib_res_result)
 
 	return env.Done()
-} 
+}

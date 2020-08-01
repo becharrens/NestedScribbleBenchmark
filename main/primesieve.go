@@ -1,11 +1,11 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/primesieve/callbacks"
-	"ScribbleBenchmark/primesieve/protocol"
-	"ScribbleBenchmark/primesieve/results/primesieve"
-	"ScribbleBenchmark/primesieve_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/primesieve/callbacks"
+	"NestedScribbleBenchmark/primesieve/protocol"
+	"NestedScribbleBenchmark/primesieve/results/primesieve"
+	"NestedScribbleBenchmark/primesieve_base"
 	"time"
 )
 

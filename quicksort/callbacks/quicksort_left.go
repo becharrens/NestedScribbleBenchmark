@@ -1,8 +1,8 @@
 package callbacks
 
-import "ScribbleBenchmark/quicksort/messages/quicksort"
-import "ScribbleBenchmark/quicksort/results/quicksort2"
-import quicksort_2 "ScribbleBenchmark/quicksort/results/quicksort"
+import "NestedScribbleBenchmark/quicksort/messages/quicksort"
+import "NestedScribbleBenchmark/quicksort/results/quicksort2"
+import quicksort_2 "NestedScribbleBenchmark/quicksort/results/quicksort"
 
 type QuickSort_Left_Env interface {
 	Done_From_Partition(done_msg quicksort.Done)

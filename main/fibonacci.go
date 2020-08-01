@@ -1,11 +1,11 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/fibonacci/callbacks"
-	"ScribbleBenchmark/fibonacci/protocol"
-	"ScribbleBenchmark/fibonacci/results/fibonacci"
-	"ScribbleBenchmark/fibonacci_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/fibonacci/callbacks"
+	"NestedScribbleBenchmark/fibonacci/protocol"
+	"NestedScribbleBenchmark/fibonacci/results/fibonacci"
+	"NestedScribbleBenchmark/fibonacci_base"
 	"time"
 )
 

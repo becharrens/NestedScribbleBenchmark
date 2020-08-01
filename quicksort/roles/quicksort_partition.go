@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/quicksort/channels/quicksort"
-import "ScribbleBenchmark/quicksort/invitations"
-import "ScribbleBenchmark/quicksort/callbacks"
-import quicksort_2 "ScribbleBenchmark/quicksort/results/quicksort"
+import "NestedScribbleBenchmark/quicksort/channels/quicksort"
+import "NestedScribbleBenchmark/quicksort/invitations"
+import "NestedScribbleBenchmark/quicksort/callbacks"
+import quicksort_2 "NestedScribbleBenchmark/quicksort/results/quicksort"
 import "sync"
 
 func QuickSort_Partition(wg *sync.WaitGroup, roleChannels quicksort.Partition_Chan, inviteChannels invitations.QuickSort_Partition_InviteChan, env callbacks.QuickSort_Partition_Env) quicksort_2.Partition_Result {
@@ -34,4 +34,4 @@ func QuickSort_Partition(wg *sync.WaitGroup, roleChannels quicksort.Partition_Ch
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

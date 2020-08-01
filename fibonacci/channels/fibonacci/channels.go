@@ -1,6 +1,6 @@
 package fibonacci
 
-import "ScribbleBenchmark/fibonacci/messages/fibonacci"
+import "NestedScribbleBenchmark/fibonacci/messages/fibonacci"
 
 type Start_Chan struct {
 	F1_StartFib1 chan fibonacci.StartFib1

@@ -1,12 +1,12 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/knucleotide/messages/knucleotide"
+	"NestedScribbleBenchmark/knucleotide/messages/knucleotide"
 	"bytes"
 	"fmt"
 	"sort"
 )
-import knucleotide_2 "ScribbleBenchmark/knucleotide/results/knucleotide"
+import knucleotide_2 "NestedScribbleBenchmark/knucleotide/results/knucleotide"
 
 type KNucleotide_Worker_Env interface {
 	Done() knucleotide_2.Worker_Result

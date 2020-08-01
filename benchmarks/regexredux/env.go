@@ -1,8 +1,8 @@
 package regexredux
 
 import (
-	"ScribbleBenchmark/regexredux/callbacks"
-	"ScribbleBenchmark/regexredux/results/regexredux"
+	"NestedScribbleBenchmark/regexredux/callbacks"
+	"NestedScribbleBenchmark/regexredux/results/regexredux"
 
 	"github.com/GRbit/go-pcre"
 )

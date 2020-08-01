@@ -1,12 +1,12 @@
 package roles
 
-import "ScribbleBenchmark/knucleotide/messages/schedulejobs"
-import schedulejobs_2 "ScribbleBenchmark/knucleotide/channels/schedulejobs"
-import "ScribbleBenchmark/knucleotide/invitations"
-import "ScribbleBenchmark/knucleotide/callbacks"
+import "NestedScribbleBenchmark/knucleotide/messages/schedulejobs"
+import schedulejobs_2 "NestedScribbleBenchmark/knucleotide/channels/schedulejobs"
+import "NestedScribbleBenchmark/knucleotide/invitations"
+import "NestedScribbleBenchmark/knucleotide/callbacks"
 import "sync"
 
-func ScheduleJobs_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.ScheduleJobs_RoleSetupChan, inviteChannels invitations.ScheduleJobs_InviteSetupChan)  {
+func ScheduleJobs_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.ScheduleJobs_RoleSetupChan, inviteChannels invitations.ScheduleJobs_InviteSetupChan) {
 	m_w_finish := make(chan schedulejobs.Finish, 1)
 	w_m_frequencyresult := make(chan schedulejobs.FrequencyResult, 1)
 	m_invite_m_2 := make(chan schedulejobs_2.M_Chan, 1)
@@ -18,28 +18,26 @@ func ScheduleJobs_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.
 	m_w_sequencejob := make(chan schedulejobs.SequenceJob, 1)
 
 	w_chan := schedulejobs_2.W_Chan{
-		M_SequenceResult: w_m_sequenceresult,
-		M_SequenceJob: m_w_sequencejob,
+		M_SequenceResult:  w_m_sequenceresult,
+		M_SequenceJob:     m_w_sequencejob,
 		M_FrequencyResult: w_m_frequencyresult,
-		M_FrequencyJob: m_w_frequencyjob,
-		M_Finish: m_w_finish,
+		M_FrequencyJob:    m_w_frequencyjob,
+		M_Finish:          m_w_finish,
 	}
 	m_chan := schedulejobs_2.M_Chan{
-		W_SequenceResult: w_m_sequenceresult,
-		W_SequenceJob: m_w_sequencejob,
+		W_SequenceResult:  w_m_sequenceresult,
+		W_SequenceJob:     m_w_sequencejob,
 		W_FrequencyResult: w_m_frequencyresult,
-		W_FrequencyJob: m_w_frequencyjob,
-		W_Finish: m_w_finish,
+		W_FrequencyJob:    m_w_frequencyjob,
+		W_Finish:          m_w_finish,
 	}
 
-	w_inviteChan := invitations.ScheduleJobs_W_InviteChan{
-
-	}
+	w_inviteChan := invitations.ScheduleJobs_W_InviteChan{}
 	m_inviteChan := invitations.ScheduleJobs_M_InviteChan{
 		Invite_M_To_ScheduleJobs_M_InviteChan_2: m_invite_m_invitechan_2,
-		Invite_M_To_ScheduleJobs_M_InviteChan: m_invite_m_invitechan,
-		Invite_M_To_ScheduleJobs_M_2: m_invite_m_2,
-		Invite_M_To_ScheduleJobs_M: m_invite_m,
+		Invite_M_To_ScheduleJobs_M_InviteChan:   m_invite_m_invitechan,
+		Invite_M_To_ScheduleJobs_M_2:            m_invite_m_2,
+		Invite_M_To_ScheduleJobs_M:              m_invite_m,
 	}
 
 	roleChannels.M_Chan <- m_chan
@@ -50,4 +48,4 @@ func ScheduleJobs_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.
 
 	w_env := callbacks.New_ScheduleJobs_W_State()
 	go ScheduleJobs_W(wg, w_chan, w_inviteChan, w_env)
-} 
+}

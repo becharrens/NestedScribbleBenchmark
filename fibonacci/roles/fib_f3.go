@@ -1,11 +1,11 @@
 package roles
 
-import "ScribbleBenchmark/fibonacci/channels/fib"
-import "ScribbleBenchmark/fibonacci/invitations"
-import "ScribbleBenchmark/fibonacci/callbacks"
+import "NestedScribbleBenchmark/fibonacci/channels/fib"
+import "NestedScribbleBenchmark/fibonacci/invitations"
+import "NestedScribbleBenchmark/fibonacci/callbacks"
 import "sync"
 
-func Fib_F3(wg *sync.WaitGroup, roleChannels fib.F3_Chan, inviteChannels invitations.Fib_F3_InviteChan, env callbacks.Fib_F3_Env)  {
+func Fib_F3(wg *sync.WaitGroup, roleChannels fib.F3_Chan, inviteChannels invitations.Fib_F3_InviteChan, env callbacks.Fib_F3_Env) {
 	defer wg.Done()
 	fib1_msg := <-roleChannels.F1_Fib1
 	env.Fib1_From_F1(fib1_msg)
@@ -19,13 +19,13 @@ func Fib_F3(wg *sync.WaitGroup, roleChannels fib.F3_Chan, inviteChannels invitat
 		env.Fib_Setup()
 		fib_rolechan := invitations.Fib_RoleSetupChan{
 			Res_Chan: inviteChannels.Invite_Res_To_Fib_Res,
-			F1_Chan: inviteChannels.Invite_F2_To_Fib_F1,
-			F2_Chan: inviteChannels.Invite_F3_To_Fib_F2,
+			F1_Chan:  inviteChannels.Invite_F2_To_Fib_F1,
+			F2_Chan:  inviteChannels.Invite_F3_To_Fib_F2,
 		}
 		fib_invitechan := invitations.Fib_InviteSetupChan{
 			Res_InviteChan: inviteChannels.Invite_Res_To_Fib_Res_InviteChan,
-			F1_InviteChan: inviteChannels.Invite_F2_To_Fib_F1_InviteChan,
-			F2_InviteChan: inviteChannels.Invite_F3_To_Fib_F2_InviteChan,
+			F1_InviteChan:  inviteChannels.Invite_F2_To_Fib_F1_InviteChan,
+			F2_InviteChan:  inviteChannels.Invite_F3_To_Fib_F2_InviteChan,
 		}
 		Fib_SendCommChannels(wg, fib_rolechan, fib_invitechan)
 
@@ -36,7 +36,7 @@ func Fib_F3(wg *sync.WaitGroup, roleChannels fib.F3_Chan, inviteChannels invitat
 		env.ResultFrom_Fib_F2(fib_f2_result)
 
 		env.Done()
-		return 
+		return
 	case callbacks.Fib_F3_Result:
 		result_msg := env.Result_To_Res()
 		roleChannels.Res_Result <- result_msg
@@ -45,8 +45,8 @@ func Fib_F3(wg *sync.WaitGroup, roleChannels fib.F3_Chan, inviteChannels invitat
 		roleChannels.F2_End <- end_msg
 
 		env.Done()
-		return 
+		return
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

@@ -1,8 +1,8 @@
 package fannkuch
 
 import (
-	"ScribbleBenchmark/fannkuch/callbacks"
-	"ScribbleBenchmark/fannkuch/results/fannkuch"
+	"NestedScribbleBenchmark/fannkuch/callbacks"
+	"NestedScribbleBenchmark/fannkuch/results/fannkuch"
 )
 
 const NCHUNKS = 720

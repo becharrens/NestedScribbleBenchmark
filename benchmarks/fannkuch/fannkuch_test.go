@@ -1,8 +1,8 @@
 package fannkuch
 
 import (
-	"ScribbleBenchmark/fannkuch/protocol"
-	"ScribbleBenchmark/fannkuch_base"
+	"NestedScribbleBenchmark/fannkuch/protocol"
+	"NestedScribbleBenchmark/fannkuch_base"
 	"testing"
 )
 

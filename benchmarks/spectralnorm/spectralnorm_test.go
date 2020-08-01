@@ -1,8 +1,8 @@
 package spectralnorm
 
 import (
-	"ScribbleBenchmark/spectralnorm/protocol"
-	"ScribbleBenchmark/spectralnorm_base"
+	"NestedScribbleBenchmark/spectralnorm/protocol"
+	"NestedScribbleBenchmark/spectralnorm_base"
 	"testing"
 )
 

@@ -1,9 +1,9 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/regexredux/messages/regexredux"
-	regexredux_2 "ScribbleBenchmark/regexredux/results/regexredux"
-	"ScribbleBenchmark/regexredux/results/regexredux2"
+	"NestedScribbleBenchmark/regexredux/messages/regexredux"
+	regexredux_2 "NestedScribbleBenchmark/regexredux/results/regexredux"
+	"NestedScribbleBenchmark/regexredux/results/regexredux2"
 )
 
 type RegexRedux_Master_Env interface {

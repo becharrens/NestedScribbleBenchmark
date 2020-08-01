@@ -1,12 +1,12 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/spectralnorm/messages/spectralnorm"
+	"NestedScribbleBenchmark/spectralnorm/messages/spectralnorm"
 	"math"
 )
-import "ScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
-import "ScribbleBenchmark/spectralnorm/results/spectralnorm_times"
-import spectralnorm_2 "ScribbleBenchmark/spectralnorm/results/spectralnorm"
+import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
+import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_times"
+import spectralnorm_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
 
 type SpectralNorm_Master_Choice int
 

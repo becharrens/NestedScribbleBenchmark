@@ -1,7 +1,7 @@
 package callbacks
 
-import fannkuchrecursive_2 "ScribbleBenchmark/fannkuch/messages/fannkuchrecursive"
-import "ScribbleBenchmark/fannkuch/results/fannkuchrecursive"
+import fannkuchrecursive_2 "NestedScribbleBenchmark/fannkuch/messages/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
 
 type FannkuchRecursive_Source_Env interface {
 	Result_From_NewWorker_2(result fannkuchrecursive_2.Result)

@@ -1,6 +1,6 @@
 package callbacks
 
-import "ScribbleBenchmark/knucleotide/messages/schedulejobs"
+import "NestedScribbleBenchmark/knucleotide/messages/schedulejobs"
 
 type ScheduleJobs_W_Env interface {
 	Finish_From_M(finish_msg schedulejobs.Finish)

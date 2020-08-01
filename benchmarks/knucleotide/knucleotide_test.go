@@ -1,9 +1,9 @@
 package knucleotide
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/knucleotide/protocol"
-	"ScribbleBenchmark/knucleotide_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/knucleotide/protocol"
+	"NestedScribbleBenchmark/knucleotide_base"
 	"testing"
 )
 
@@ -23,7 +23,6 @@ func BenchmarkKNucleotide(b *testing.B) {
 	}
 	for _, bm := range benchmarks {
 		b.Run(bm.name, func(b *testing.B) {
-
 			input := benchmark.ReadFile(bm.file)
 			dna := toBits(readSequence(">THREE", input))
 			b.ResetTimer()

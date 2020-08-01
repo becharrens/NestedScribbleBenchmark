@@ -1,10 +1,10 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/ring/messages/forward"
+	"NestedScribbleBenchmark/ring/messages/forward"
 	"fmt"
 )
-import forward_2 "ScribbleBenchmark/ring/results/forward"
+import forward_2 "NestedScribbleBenchmark/ring/results/forward"
 
 type Forward_S_Env interface {
 	Done() forward_2.S_Result

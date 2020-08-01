@@ -1,8 +1,8 @@
 package callbacks
 
 import (
-	forward_2 "ScribbleBenchmark/ring/messages/forward"
-	"ScribbleBenchmark/ring/results/forward"
+	forward_2 "NestedScribbleBenchmark/ring/messages/forward"
+	"NestedScribbleBenchmark/ring/results/forward"
 	"fmt"
 )
 

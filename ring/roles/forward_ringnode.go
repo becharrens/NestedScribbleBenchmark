@@ -1,11 +1,11 @@
 package roles
 
-import "ScribbleBenchmark/ring/channels/forward"
-import "ScribbleBenchmark/ring/invitations"
-import "ScribbleBenchmark/ring/callbacks"
+import "NestedScribbleBenchmark/ring/channels/forward"
+import "NestedScribbleBenchmark/ring/invitations"
+import "NestedScribbleBenchmark/ring/callbacks"
 import "sync"
 
-func Forward_RingNode(wg *sync.WaitGroup, roleChannels forward.RingNode_Chan, inviteChannels invitations.Forward_RingNode_InviteChan, env callbacks.Forward_RingNode_Env)  {
+func Forward_RingNode(wg *sync.WaitGroup, roleChannels forward.RingNode_Chan, inviteChannels invitations.Forward_RingNode_InviteChan, env callbacks.Forward_RingNode_Env) {
 	defer wg.Done()
 	msg_msg := <-roleChannels.S_Msg
 	env.Msg_From_S(msg_msg)
@@ -31,14 +31,14 @@ func Forward_RingNode(wg *sync.WaitGroup, roleChannels forward.RingNode_Chan, in
 		env.ResultFrom_Forward_S(forward_s_result)
 
 		env.Done()
-		return 
+		return
 	case callbacks.Forward_RingNode_Msg:
 		msg_msg_2 := env.Msg_To_E()
 		roleChannels.E_Msg <- msg_msg_2
 
 		env.Done()
-		return 
+		return
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

@@ -1,8 +1,8 @@
 package callbacks
 
-import "ScribbleBenchmark/fannkuch/messages/fannkuch"
-import "ScribbleBenchmark/fannkuch/results/fannkuchrecursive"
-import fannkuch_2 "ScribbleBenchmark/fannkuch/results/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/messages/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
+import fannkuch_2 "NestedScribbleBenchmark/fannkuch/results/fannkuch"
 
 type Fannkuch_Main_Env interface {
 	Result_From_Worker_2(result fannkuch.Result)

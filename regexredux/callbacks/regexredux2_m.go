@@ -1,9 +1,9 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/regexredux/messages/regexredux2"
+	"NestedScribbleBenchmark/regexredux/messages/regexredux2"
 )
-import regexredux2_2 "ScribbleBenchmark/regexredux/results/regexredux2"
+import regexredux2_2 "NestedScribbleBenchmark/regexredux/results/regexredux2"
 
 type RegexRedux2_M_Choice int
 

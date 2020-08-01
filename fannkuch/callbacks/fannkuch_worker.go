@@ -1,9 +1,9 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/fannkuch/messages/fannkuch"
-	fannkuch_2 "ScribbleBenchmark/fannkuch/results/fannkuch"
-	"ScribbleBenchmark/fannkuch/results/fannkuchrecursive"
+	"NestedScribbleBenchmark/fannkuch/messages/fannkuch"
+	fannkuch_2 "NestedScribbleBenchmark/fannkuch/results/fannkuch"
+	"NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
 )
 
 type Fannkuch_Worker_Choice int

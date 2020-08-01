@@ -1,8 +1,8 @@
 package knucleotide
 
 import (
-	"ScribbleBenchmark/knucleotide/callbacks"
-	"ScribbleBenchmark/knucleotide/results/knucleotide"
+	"NestedScribbleBenchmark/knucleotide/callbacks"
+	"NestedScribbleBenchmark/knucleotide/results/knucleotide"
 	"bufio"
 	"bytes"
 )

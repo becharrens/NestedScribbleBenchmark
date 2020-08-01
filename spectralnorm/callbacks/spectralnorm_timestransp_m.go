@@ -1,7 +1,7 @@
 package callbacks
 
-import "ScribbleBenchmark/spectralnorm/messages/spectralnorm_timestransp"
-import spectralnorm_timestransp_2 "ScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
+import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm_timestransp"
+import spectralnorm_timestransp_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
 
 type SpectralNorm_TimesTransp_M_Choice int
 

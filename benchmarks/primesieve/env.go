@@ -1,8 +1,8 @@
 package primesieve
 
 import (
-	"ScribbleBenchmark/primesieve/callbacks"
-	"ScribbleBenchmark/primesieve/results/primesieve"
+	"NestedScribbleBenchmark/primesieve/callbacks"
+	"NestedScribbleBenchmark/primesieve/results/primesieve"
 )
 
 type PrimeSieveEnv struct {

@@ -1,7 +1,7 @@
 package callbacks
 
-import "ScribbleBenchmark/quicksort/messages/quicksort2"
-import quicksort2_2 "ScribbleBenchmark/quicksort/results/quicksort2"
+import "NestedScribbleBenchmark/quicksort/messages/quicksort2"
+import quicksort2_2 "NestedScribbleBenchmark/quicksort/results/quicksort2"
 
 type QuickSort2_R_Env interface {
 	SortedRight_To_P() quicksort2.SortedRight

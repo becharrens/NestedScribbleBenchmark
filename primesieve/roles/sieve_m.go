@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/primesieve/channels/sieve"
-import "ScribbleBenchmark/primesieve/invitations"
-import "ScribbleBenchmark/primesieve/callbacks"
-import sieve_2 "ScribbleBenchmark/primesieve/results/sieve"
+import "NestedScribbleBenchmark/primesieve/channels/sieve"
+import "NestedScribbleBenchmark/primesieve/invitations"
+import "NestedScribbleBenchmark/primesieve/callbacks"
+import sieve_2 "NestedScribbleBenchmark/primesieve/results/sieve"
 import "sync"
 
 func Sieve_M(wg *sync.WaitGroup, roleChannels sieve.M_Chan, inviteChannels invitations.Sieve_M_InviteChan, env callbacks.Sieve_M_Env) sieve_2.M_Result {

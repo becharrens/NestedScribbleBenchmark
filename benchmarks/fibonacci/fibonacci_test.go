@@ -1,8 +1,8 @@
 package fibonacci
 
 import (
-	"ScribbleBenchmark/fibonacci/protocol"
-	"ScribbleBenchmark/fibonacci_base"
+	"NestedScribbleBenchmark/fibonacci/protocol"
+	"NestedScribbleBenchmark/fibonacci_base"
 	"testing"
 )
 

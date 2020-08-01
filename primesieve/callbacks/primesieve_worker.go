@@ -1,10 +1,10 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/primesieve/messages/primesieve"
-	"ScribbleBenchmark/primesieve/results/sieve"
+	"NestedScribbleBenchmark/primesieve/messages/primesieve"
+	"NestedScribbleBenchmark/primesieve/results/sieve"
 
-	primesieve_2 "ScribbleBenchmark/primesieve/results/primesieve"
+	primesieve_2 "NestedScribbleBenchmark/primesieve/results/primesieve"
 )
 
 type PrimeSieve_Worker_Choice int

@@ -1,11 +1,11 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/ring/messages/ring"
+	"NestedScribbleBenchmark/ring/messages/ring"
 	"fmt"
 )
-import ring_2 "ScribbleBenchmark/ring/results/ring"
-import "ScribbleBenchmark/ring/results/forward"
+import ring_2 "NestedScribbleBenchmark/ring/results/ring"
+import "NestedScribbleBenchmark/ring/results/forward"
 
 type Ring_Start_Choice int
 

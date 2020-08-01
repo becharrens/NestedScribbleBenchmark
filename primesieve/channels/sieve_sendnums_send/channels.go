@@ -1,6 +1,6 @@
 package sieve_sendnums_send
 
-import "ScribbleBenchmark/primesieve/messages/sieve_sendnums_send"
+import "NestedScribbleBenchmark/primesieve/messages/sieve_sendnums_send"
 
 type R_Chan struct {
 	S_End chan sieve_sendnums_send.End

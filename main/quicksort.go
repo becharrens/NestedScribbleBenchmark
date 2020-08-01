@@ -1,11 +1,11 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/quicksort/callbacks"
-	"ScribbleBenchmark/quicksort/protocol"
-	"ScribbleBenchmark/quicksort/results/quicksort"
-	"ScribbleBenchmark/quicksort_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/quicksort/callbacks"
+	"NestedScribbleBenchmark/quicksort/protocol"
+	"NestedScribbleBenchmark/quicksort/results/quicksort"
+	"NestedScribbleBenchmark/quicksort_base"
 	"fmt"
 	"math/rand"
 	"time"

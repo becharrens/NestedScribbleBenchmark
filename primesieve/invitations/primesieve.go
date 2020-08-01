@@ -1,7 +1,7 @@
 package invitations
 
-import "ScribbleBenchmark/primesieve/channels/sieve"
-import "ScribbleBenchmark/primesieve/channels/primesieve"
+import "NestedScribbleBenchmark/primesieve/channels/sieve"
+import "NestedScribbleBenchmark/primesieve/channels/primesieve"
 
 type PrimeSieve_RoleSetupChan struct {
 	Master_Chan chan primesieve.Master_Chan

@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/spectralnorm/channels/spectralnorm_timestransp"
-import "ScribbleBenchmark/spectralnorm/invitations"
-import "ScribbleBenchmark/spectralnorm/callbacks"
-import spectralnorm_timestransp_2 "ScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
+import "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm_timestransp"
+import "NestedScribbleBenchmark/spectralnorm/invitations"
+import "NestedScribbleBenchmark/spectralnorm/callbacks"
+import spectralnorm_timestransp_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
 import "sync"
 
 func SpectralNorm_TimesTransp_M(wg *sync.WaitGroup, roleChannels spectralnorm_timestransp.M_Chan, inviteChannels invitations.SpectralNorm_TimesTransp_M_InviteChan, env callbacks.SpectralNorm_TimesTransp_M_Env) spectralnorm_timestransp_2.M_Result {
@@ -40,4 +40,4 @@ func SpectralNorm_TimesTransp_M(wg *sync.WaitGroup, roleChannels spectralnorm_ti
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

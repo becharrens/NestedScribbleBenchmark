@@ -1,7 +1,7 @@
 package callbacks
 
-import "ScribbleBenchmark/spectralnorm/messages/spectralnorm"
-import spectralnorm_2 "ScribbleBenchmark/spectralnorm/results/spectralnorm"
+import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm"
+import spectralnorm_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
 
 type SpectralNorm_Worker_Env interface {
 	Finish_From_Master(finish_msg spectralnorm.Finish)

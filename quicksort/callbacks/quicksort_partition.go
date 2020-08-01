@@ -1,9 +1,9 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/quicksort/messages/quicksort"
+	"NestedScribbleBenchmark/quicksort/messages/quicksort"
 )
-import quicksort_2 "ScribbleBenchmark/quicksort/results/quicksort"
+import quicksort_2 "NestedScribbleBenchmark/quicksort/results/quicksort"
 
 type QuickSort_Partition_Choice int
 

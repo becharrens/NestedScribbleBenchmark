@@ -1,6 +1,6 @@
 package callbacks
 
-import "ScribbleBenchmark/spectralnorm/messages/spectralnorm_times"
+import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm_times"
 
 type SpectralNorm_Times_W_Env interface {
 	Finish_From_M(finish_msg spectralnorm_times.Finish)

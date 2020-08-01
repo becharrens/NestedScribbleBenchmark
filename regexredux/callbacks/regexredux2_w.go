@@ -1,7 +1,7 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/regexredux/messages/regexredux2"
+	"NestedScribbleBenchmark/regexredux/messages/regexredux2"
 
 	"github.com/GRbit/go-pcre"
 )

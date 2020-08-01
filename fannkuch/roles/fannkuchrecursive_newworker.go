@@ -1,11 +1,11 @@
 package roles
 
-import "ScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
-import "ScribbleBenchmark/fannkuch/invitations"
-import "ScribbleBenchmark/fannkuch/callbacks"
+import "NestedScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/invitations"
+import "NestedScribbleBenchmark/fannkuch/callbacks"
 import "sync"
 
-func FannkuchRecursive_NewWorker(wg *sync.WaitGroup, roleChannels fannkuchrecursive.NewWorker_Chan, inviteChannels invitations.FannkuchRecursive_NewWorker_InviteChan, env callbacks.FannkuchRecursive_NewWorker_Env)  {
+func FannkuchRecursive_NewWorker(wg *sync.WaitGroup, roleChannels fannkuchrecursive.NewWorker_Chan, inviteChannels invitations.FannkuchRecursive_NewWorker_InviteChan, env callbacks.FannkuchRecursive_NewWorker_Env) {
 	defer wg.Done()
 	task_msg := <-roleChannels.Worker_Task
 	env.Task_From_Worker(task_msg)
@@ -34,14 +34,14 @@ func FannkuchRecursive_NewWorker(wg *sync.WaitGroup, roleChannels fannkuchrecurs
 		roleChannels.Source_Result <- result_msg
 
 		env.Done()
-		return 
+		return
 	case callbacks.FannkuchRecursive_NewWorker_Result:
 		result_msg_2 := env.Result_To_Source_2()
 		roleChannels.Source_Result_2 <- result_msg_2
 
 		env.Done()
-		return 
+		return
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

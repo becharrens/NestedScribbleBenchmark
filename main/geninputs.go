@@ -210,7 +210,7 @@ func check(e error) {
 }
 
 func newFileWriter(fileName string) (*os.File, *bufio.Writer) {
-	filepath := fmt.Sprintf("/Users/becharrens/Documents/go/src/ScribbleBenchmark/testdata/%s", fileName)
+	filepath := fmt.Sprintf("/Users/becharrens/Documents/go/src/NestedScribbleBenchmark/testdata/%s", fileName)
 	f, err := os.Create(filepath)
 	check(err)
 	w := bufio.NewWriter(f)

@@ -1,12 +1,12 @@
 package roles
 
-import "ScribbleBenchmark/ring/messages/forward"
-import forward_2 "ScribbleBenchmark/ring/channels/forward"
-import "ScribbleBenchmark/ring/invitations"
-import "ScribbleBenchmark/ring/callbacks"
+import "NestedScribbleBenchmark/ring/messages/forward"
+import forward_2 "NestedScribbleBenchmark/ring/channels/forward"
+import "NestedScribbleBenchmark/ring/invitations"
+import "NestedScribbleBenchmark/ring/callbacks"
 import "sync"
 
-func Forward_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Forward_RoleSetupChan, inviteChannels invitations.Forward_InviteSetupChan)  {
+func Forward_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Forward_RoleSetupChan, inviteChannels invitations.Forward_InviteSetupChan) {
 	ringnode_e_msg := make(chan forward.Msg, 1)
 	ringnode_invite_e := make(chan forward_2.E_Chan, 1)
 	ringnode_invite_e_invitechan := make(chan invitations.Forward_E_InviteChan, 1)
@@ -25,18 +25,16 @@ func Forward_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Forwa
 		RingNode_Msg: ringnode_e_msg,
 	}
 
-	s_inviteChan := invitations.Forward_S_InviteChan{
-
-	}
+	s_inviteChan := invitations.Forward_S_InviteChan{}
 	ringnode_inviteChan := invitations.Forward_RingNode_InviteChan{
 		Invite_RingNode_To_Forward_S_InviteChan: ringnode_invite_ringnode_invitechan,
-		Invite_RingNode_To_Forward_S: ringnode_invite_ringnode,
-		Invite_E_To_Forward_E_InviteChan: ringnode_invite_e_invitechan,
-		Invite_E_To_Forward_E: ringnode_invite_e,
+		Invite_RingNode_To_Forward_S:            ringnode_invite_ringnode,
+		Invite_E_To_Forward_E_InviteChan:        ringnode_invite_e_invitechan,
+		Invite_E_To_Forward_E:                   ringnode_invite_e,
 	}
 	e_inviteChan := invitations.Forward_E_InviteChan{
 		RingNode_Invite_To_Forward_E_InviteChan: ringnode_invite_e_invitechan,
-		RingNode_Invite_To_Forward_E: ringnode_invite_e,
+		RingNode_Invite_To_Forward_E:            ringnode_invite_e,
 	}
 
 	roleChannels.S_Chan <- s_chan
@@ -49,4 +47,4 @@ func Forward_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Forwa
 
 	ringnode_env := callbacks.New_Forward_RingNode_State()
 	go Forward_RingNode(wg, ringnode_chan, ringnode_inviteChan, ringnode_env)
-} 
+}

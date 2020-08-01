@@ -1,8 +1,8 @@
 package spectralnorm
 
 import (
-	"ScribbleBenchmark/spectralnorm/callbacks"
-	"ScribbleBenchmark/spectralnorm/results/spectralnorm"
+	"NestedScribbleBenchmark/spectralnorm/callbacks"
+	"NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
 	"runtime"
 )
 

@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/knucleotide/channels/schedulejobs"
-import "ScribbleBenchmark/knucleotide/invitations"
-import "ScribbleBenchmark/knucleotide/callbacks"
-import schedulejobs_2 "ScribbleBenchmark/knucleotide/results/schedulejobs"
+import "NestedScribbleBenchmark/knucleotide/channels/schedulejobs"
+import "NestedScribbleBenchmark/knucleotide/invitations"
+import "NestedScribbleBenchmark/knucleotide/callbacks"
+import schedulejobs_2 "NestedScribbleBenchmark/knucleotide/results/schedulejobs"
 import "sync"
 
 func ScheduleJobs_M(wg *sync.WaitGroup, roleChannels schedulejobs.M_Chan, inviteChannels invitations.ScheduleJobs_M_InviteChan, env callbacks.ScheduleJobs_M_Env) schedulejobs_2.M_Result {
@@ -63,4 +63,4 @@ func ScheduleJobs_M(wg *sync.WaitGroup, roleChannels schedulejobs.M_Chan, invite
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

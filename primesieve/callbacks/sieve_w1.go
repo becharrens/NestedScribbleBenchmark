@@ -1,8 +1,8 @@
 package callbacks
 
-import "ScribbleBenchmark/primesieve/messages/sieve"
-import "ScribbleBenchmark/primesieve/results/sieve_sendnums"
-import sieve_2 "ScribbleBenchmark/primesieve/results/sieve"
+import "NestedScribbleBenchmark/primesieve/messages/sieve"
+import "NestedScribbleBenchmark/primesieve/results/sieve_sendnums"
+import sieve_2 "NestedScribbleBenchmark/primesieve/results/sieve"
 
 type Sieve_W1_Env interface {
 	Done() sieve_2.W1_Result

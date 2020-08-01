@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/fibonacci/channels/fib"
-import "ScribbleBenchmark/fibonacci/invitations"
-import "ScribbleBenchmark/fibonacci/callbacks"
-import fib_2 "ScribbleBenchmark/fibonacci/results/fib"
+import "NestedScribbleBenchmark/fibonacci/channels/fib"
+import "NestedScribbleBenchmark/fibonacci/invitations"
+import "NestedScribbleBenchmark/fibonacci/callbacks"
+import fib_2 "NestedScribbleBenchmark/fibonacci/results/fib"
 import "sync"
 
 func Fib_F1(wg *sync.WaitGroup, roleChannels fib.F1_Chan, inviteChannels invitations.Fib_F1_InviteChan, env callbacks.Fib_F1_Env) fib_2.F1_Result {
@@ -11,4 +11,4 @@ func Fib_F1(wg *sync.WaitGroup, roleChannels fib.F1_Chan, inviteChannels invitat
 	roleChannels.F3_Fib1 <- fib1_msg
 
 	return env.Done()
-} 
+}

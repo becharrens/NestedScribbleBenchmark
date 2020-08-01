@@ -1,6 +1,6 @@
 package primesieve
 
-import "ScribbleBenchmark/primesieve/messages/primesieve"
+import "NestedScribbleBenchmark/primesieve/messages/primesieve"
 
 type Master_Chan struct {
 	Worker_Finish     chan primesieve.Finish

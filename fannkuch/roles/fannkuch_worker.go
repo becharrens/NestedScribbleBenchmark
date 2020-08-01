@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/fannkuch/channels/fannkuch"
-import "ScribbleBenchmark/fannkuch/invitations"
-import "ScribbleBenchmark/fannkuch/callbacks"
-import fannkuch_2 "ScribbleBenchmark/fannkuch/results/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/channels/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/invitations"
+import "NestedScribbleBenchmark/fannkuch/callbacks"
+import fannkuch_2 "NestedScribbleBenchmark/fannkuch/results/fannkuch"
 import "sync"
 
 func Fannkuch_Worker(wg *sync.WaitGroup, roleChannels fannkuch.Worker_Chan, inviteChannels invitations.Fannkuch_Worker_InviteChan, env callbacks.Fannkuch_Worker_Env) fannkuch_2.Worker_Result {
@@ -42,4 +42,4 @@ func Fannkuch_Worker(wg *sync.WaitGroup, roleChannels fannkuch.Worker_Chan, invi
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

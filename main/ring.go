@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ScribbleBenchmark/ring/callbacks"
-	"ScribbleBenchmark/ring/results/ring"
+	"NestedScribbleBenchmark/ring/callbacks"
+	"NestedScribbleBenchmark/ring/results/ring"
 )
 
 type RingEnv struct {

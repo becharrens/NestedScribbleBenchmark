@@ -1,8 +1,8 @@
 package fibonacci
 
 import (
-	"ScribbleBenchmark/fibonacci/callbacks"
-	"ScribbleBenchmark/fibonacci/results/fibonacci"
+	"NestedScribbleBenchmark/fibonacci/callbacks"
+	"NestedScribbleBenchmark/fibonacci/results/fibonacci"
 )
 
 type FibonacciEnv struct {

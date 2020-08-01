@@ -1,8 +1,8 @@
 package callbacks
 
-import "ScribbleBenchmark/fibonacci/messages/fibonacci"
-import fibonacci_2 "ScribbleBenchmark/fibonacci/results/fibonacci"
-import "ScribbleBenchmark/fibonacci/results/fib"
+import "NestedScribbleBenchmark/fibonacci/messages/fibonacci"
+import fibonacci_2 "NestedScribbleBenchmark/fibonacci/results/fibonacci"
+import "NestedScribbleBenchmark/fibonacci/results/fib"
 
 type Fibonacci_F2_Env interface {
 	Done() fibonacci_2.F2_Result

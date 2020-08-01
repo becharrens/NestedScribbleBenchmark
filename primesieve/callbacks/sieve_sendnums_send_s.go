@@ -1,8 +1,8 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/primesieve/messages/sieve_sendnums_send"
-	sieve_sendnums_send_2 "ScribbleBenchmark/primesieve/results/sieve_sendnums_send"
+	"NestedScribbleBenchmark/primesieve/messages/sieve_sendnums_send"
+	sieve_sendnums_send_2 "NestedScribbleBenchmark/primesieve/results/sieve_sendnums_send"
 )
 
 type Sieve_SendNums_SEND_S_Choice int

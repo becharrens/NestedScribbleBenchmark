@@ -1,9 +1,9 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/knucleotide/messages/schedulejobs"
+	"NestedScribbleBenchmark/knucleotide/messages/schedulejobs"
 )
-import schedulejobs_2 "ScribbleBenchmark/knucleotide/results/schedulejobs"
+import schedulejobs_2 "NestedScribbleBenchmark/knucleotide/results/schedulejobs"
 
 type ScheduleJobs_M_Choice int
 

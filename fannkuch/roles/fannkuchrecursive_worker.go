@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
-import "ScribbleBenchmark/fannkuch/invitations"
-import "ScribbleBenchmark/fannkuch/callbacks"
-import fannkuchrecursive_2 "ScribbleBenchmark/fannkuch/results/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/invitations"
+import "NestedScribbleBenchmark/fannkuch/callbacks"
+import fannkuchrecursive_2 "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
 import "sync"
 
 func FannkuchRecursive_Worker(wg *sync.WaitGroup, roleChannels fannkuchrecursive.Worker_Chan, inviteChannels invitations.FannkuchRecursive_Worker_InviteChan, env callbacks.FannkuchRecursive_Worker_Env) fannkuchrecursive_2.Worker_Result {
@@ -11,4 +11,4 @@ func FannkuchRecursive_Worker(wg *sync.WaitGroup, roleChannels fannkuchrecursive
 	roleChannels.NewWorker_Task <- task_msg
 
 	return env.Done()
-} 
+}

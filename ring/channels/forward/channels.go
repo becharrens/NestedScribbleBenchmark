@@ -1,6 +1,6 @@
 package forward
 
-import "ScribbleBenchmark/ring/messages/forward"
+import "NestedScribbleBenchmark/ring/messages/forward"
 
 type S_Chan struct {
 	RingNode_Msg chan forward.Msg

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/fannkuch/callbacks"
-	"ScribbleBenchmark/fannkuch/protocol"
-	"ScribbleBenchmark/fannkuch/results/fannkuch"
-	"ScribbleBenchmark/fannkuch_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/fannkuch/callbacks"
+	"NestedScribbleBenchmark/fannkuch/protocol"
+	"NestedScribbleBenchmark/fannkuch/results/fannkuch"
+	"NestedScribbleBenchmark/fannkuch_base"
 	"time"
 )
 
@@ -62,8 +62,8 @@ func NewFannkuchEnv(n int) *FannkuchEnv {
 }
 
 func TimeFannkuch(n int) time.Duration {
-	env := NewFannkuchEnv(n)
 	start := time.Now()
+	env := NewFannkuchEnv(n)
 	protocol.Fannkuch(env)
 	elapsed := time.Since(start)
 	return elapsed

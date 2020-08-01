@@ -1,8 +1,8 @@
 package quicksort
 
 import (
-	"ScribbleBenchmark/quicksort/protocol"
-	"ScribbleBenchmark/quicksort_base"
+	"NestedScribbleBenchmark/quicksort/protocol"
+	"NestedScribbleBenchmark/quicksort_base"
 	"math/rand"
 	"testing"
 )

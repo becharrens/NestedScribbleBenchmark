@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/benchmark"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -27,7 +27,7 @@ func boolToInt(b bool) int {
 }
 
 func main() {
-	iterations := 1
+	nIterations := flag.Int("iterations", 1000, "Number of iterations for benchmark")
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
 	runFib := flag.Bool("fib", false, "Run benchmark on fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
@@ -38,6 +38,7 @@ func main() {
 	runQuickSort := flag.Bool("quicksort", false, "Run benchmark on quicksort protocol")
 
 	flag.Parse()
+	iterations := *nIterations
 	numResults := boolToInt(*runFib) + boolToInt(*runFannkuch) + boolToInt(*runSieve) +
 		boolToInt(*runRegexRedux) + boolToInt(*runSpectralNorm) + boolToInt(*runKNucleotide) +
 		boolToInt(*runQuickSort)
@@ -79,15 +80,15 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("primesieve-base", baseResults) + "\n;;")
 		idx++
 	}
-	if *runRegexRedux {
-		fmt.Println("RegexRedux")
-		scribbleResults, baseResults := RegexReduxBenchmark(iterations)
-		PrintAvgResults(scribbleResults, baseResults)
-		strResults[idx] = (benchmark.ResultsToString("regexredux-scribble", scribbleResults) + "\n;;")
-		idx++
-		strResults[idx] = (benchmark.ResultsToString("regexredux-base", baseResults) + "\n;;")
-		idx++
-	}
+	// if *runRegexRedux {
+	// 	fmt.Println("RegexRedux")
+	// 	scribbleResults, baseResults := RegexReduxBenchmark(iterations)
+	// 	PrintAvgResults(scribbleResults, baseResults)
+	// 	strResults[idx] = (benchmark.ResultsToString("regexredux-scribble", scribbleResults) + "\n;;")
+	// 	idx++
+	// 	strResults[idx] = (benchmark.ResultsToString("regexredux-base", baseResults) + "\n;;")
+	// 	idx++
+	// }
 	if *runSpectralNorm {
 		fmt.Println("SpectralNorm")
 		scribbleResults, baseResults := SpectralNormBenchmark(iterations)

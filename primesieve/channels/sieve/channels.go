@@ -1,6 +1,6 @@
 package sieve
 
-import "ScribbleBenchmark/primesieve/messages/sieve"
+import "NestedScribbleBenchmark/primesieve/messages/sieve"
 
 type M_Chan struct {
 	W2_Finish chan sieve.Finish

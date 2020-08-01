@@ -1,9 +1,9 @@
 package roles
 
-import "ScribbleBenchmark/spectralnorm/channels/spectralnorm"
-import "ScribbleBenchmark/spectralnorm/invitations"
-import "ScribbleBenchmark/spectralnorm/callbacks"
-import spectralnorm_2 "ScribbleBenchmark/spectralnorm/results/spectralnorm"
+import "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm"
+import "NestedScribbleBenchmark/spectralnorm/invitations"
+import "NestedScribbleBenchmark/spectralnorm/callbacks"
+import spectralnorm_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
 import "sync"
 
 func SpectralNorm_Master(wg *sync.WaitGroup, roleChannels spectralnorm.Master_Chan, inviteChannels invitations.SpectralNorm_Master_InviteChan, env callbacks.SpectralNorm_Master_Env) spectralnorm_2.Master_Result {
@@ -102,4 +102,4 @@ func SpectralNorm_Master(wg *sync.WaitGroup, roleChannels spectralnorm.Master_Ch
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

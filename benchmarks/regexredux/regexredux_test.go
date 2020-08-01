@@ -1,9 +1,9 @@
 package regexredux
 
 import (
-	"ScribbleBenchmark/benchmark"
-	"ScribbleBenchmark/regexredux/protocol"
-	"ScribbleBenchmark/regexredux_base"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/regexredux/protocol"
+	"NestedScribbleBenchmark/regexredux_base"
 	"testing"
 )
 

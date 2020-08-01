@@ -1,6 +1,6 @@
 package invitations
 
-import "ScribbleBenchmark/primesieve/channels/sieve_sendnums_send"
+import "NestedScribbleBenchmark/primesieve/channels/sieve_sendnums_send"
 
 type Sieve_SendNums_SEND_RoleSetupChan struct {
 	R_Chan chan sieve_sendnums_send.R_Chan

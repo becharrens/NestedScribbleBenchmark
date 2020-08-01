@@ -1,11 +1,11 @@
 package callbacks
 
 import (
-	"ScribbleBenchmark/regexredux/messages/regexredux"
+	"NestedScribbleBenchmark/regexredux/messages/regexredux"
 
 	"github.com/GRbit/go-pcre"
 )
-import regexredux_2 "ScribbleBenchmark/regexredux/results/regexredux"
+import regexredux_2 "NestedScribbleBenchmark/regexredux/results/regexredux"
 
 type RegexRedux_Worker_Env interface {
 	Done() regexredux_2.Worker_Result
