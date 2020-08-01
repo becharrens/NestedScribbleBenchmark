@@ -8,9 +8,6 @@ import (
 	"NestedScribbleBenchmark/knucleotide_base"
 	"bufio"
 	"bytes"
-	"fmt"
-	"io/ioutil"
-	"os"
 	"time"
 )
 
@@ -123,21 +120,4 @@ func KNucleotideBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.
 	scribble_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotide)
 	base_results := benchmark.TimeImpl(kNucleotideParams, repetitions, TimeKNucleotideBase)
 	return scribble_results, base_results
-}
-
-// TODO: Remove
-func readFile(file string) []byte {
-	f, err := os.Open(fmt.Sprintf("testdata/%s", file))
-	if err != nil {
-		panic("Can't open input file")
-	}
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		panic("Can't read input file")
-	}
-	err = f.Close()
-	if err != nil {
-		panic("Can't close input file")
-	}
-	return b
 }

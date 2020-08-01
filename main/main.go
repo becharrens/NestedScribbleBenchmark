@@ -80,15 +80,15 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("primesieve-base", baseResults) + "\n;;")
 		idx++
 	}
-	// if *runRegexRedux {
-	// 	fmt.Println("RegexRedux")
-	// 	scribbleResults, baseResults := RegexReduxBenchmark(iterations)
-	// 	PrintAvgResults(scribbleResults, baseResults)
-	// 	strResults[idx] = (benchmark.ResultsToString("regexredux-scribble", scribbleResults) + "\n;;")
-	// 	idx++
-	// 	strResults[idx] = (benchmark.ResultsToString("regexredux-base", baseResults) + "\n;;")
-	// 	idx++
-	// }
+	if *runRegexRedux {
+		fmt.Println("RegexRedux")
+		scribbleResults, baseResults := RegexReduxBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("regexredux-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("regexredux-base", baseResults) + "\n;;")
+		idx++
+	}
 	if *runSpectralNorm {
 		fmt.Println("SpectralNorm")
 		scribbleResults, baseResults := SpectralNormBenchmark(iterations)
