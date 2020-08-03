@@ -49,7 +49,8 @@ func (q *QuickSortEnv) Right_Result(result quicksort.Right_Result) {
 
 var quickSortParams = []int{
 	// 1000,
-	1000, 10000, 25000, 50000, 75000, 100000, 125000,
+	100000, 500000, 1000000, 2000000, 5000000, 10000000, 50000000, 100000000,
+	// 1000, 10000, 25000, 50000, 75000, 100000, 125000
 }
 
 func NewQuickSortEnv(n int) *QuickSortEnv {

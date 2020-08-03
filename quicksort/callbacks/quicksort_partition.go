@@ -13,7 +13,8 @@ const (
 )
 
 const (
-	SEQ_THRESHOLD = 1024
+	// SEQ_THRESHOLD = 1024
+	SEQ_THRESHOLD = 4000
 )
 
 type QuickSort_Partition_Env interface {
