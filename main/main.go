@@ -102,9 +102,9 @@ func main() {
 		fmt.Println("KNucleotide")
 		scribbleResults, baseResults := KNucleotideBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
-		strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
+		strResults[idx] = (benchmark.ResultsToString("knucleotide-scribble", scribbleResults) + "\n;;")
 		idx++
-		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
+		strResults[idx] = (benchmark.ResultsToString("knucleotide-base", baseResults) + "\n;;")
 		idx++
 	}
 	if *runQuickSort {
