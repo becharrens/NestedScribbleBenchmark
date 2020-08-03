@@ -12,10 +12,12 @@ const (
 	QuickSort_Partition_Done
 )
 
-const (
-	// SEQ_THRESHOLD = 1024
-	SEQ_THRESHOLD = 4000
-)
+// const (
+// 	// SEQ_THRESHOLD = 1024
+// 	SEQ_THRESHOLD = 6000
+// )
+
+var SEQ_THRESHOLD = 1024
 
 type QuickSort_Partition_Env interface {
 	Done_To_Right() quicksort.Done
@@ -29,9 +31,10 @@ type QuickSort_Partition_Env interface {
 }
 
 type QuickSortPartitionState struct {
-	Arr       []int
-	SortedArr []int
-	Pivot     int
+	Arr          []int
+	SortedArr    []int
+	Pivot        int
+	SeqThreshold int
 }
 
 func (q *QuickSortPartitionState) Done_To_Right() quicksort.Done {
@@ -64,6 +67,7 @@ func (q *QuickSortPartitionState) LeftParitition_To_Left() quicksort.LeftParitit
 }
 
 func (q *QuickSortPartitionState) Partition_Choice() QuickSort_Partition_Choice {
+	SEQ_THRESHOLD = q.SeqThreshold
 	q.SortedArr = q.Arr
 	if len(q.Arr) < SEQ_THRESHOLD {
 		seqQuickSort(q.Arr)

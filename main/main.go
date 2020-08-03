@@ -109,12 +109,13 @@ func main() {
 	}
 	if *runQuickSort {
 		fmt.Println("QuickSort")
-		scribbleResults, baseResults := QuickSortBenchmark(iterations)
-		PrintAvgResults(scribbleResults, baseResults)
-		strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
-		idx++
-		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
-		idx++
+		// scribbleResults, baseResults := QuickSortBenchmark(iterations)
+		// PrintAvgResults(scribbleResults, baseResults)
+		// strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
+		// idx++
+		// strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
+		// idx++
+		QSThresholdSearch(iterations)
 	}
 	result := strings.Join(strResults, "\n")
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)

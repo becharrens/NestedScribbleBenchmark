@@ -7,6 +7,7 @@ import (
 	"NestedScribbleBenchmark/quicksort/results/quicksort"
 	"NestedScribbleBenchmark/quicksort_base"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"time"
 )
@@ -18,14 +19,18 @@ const (
 // var Seed int64 = 815267917
 var Seed int64 = 274734990
 
+var SEQ_THRESHOLD = 1024
+
 type QuickSortEnv struct {
-	Arr       []int
-	SortedArr []int
+	Arr          []int
+	SortedArr    []int
+	SeqThreshold int
 }
 
 func (q *QuickSortEnv) New_Partition_Env() callbacks.QuickSort_Partition_Env {
 	return &callbacks.QuickSortPartitionState{
-		Arr: q.Arr,
+		Arr:          q.Arr,
+		SeqThreshold: SEQ_THRESHOLD,
 	}
 }
 
@@ -49,8 +54,8 @@ func (q *QuickSortEnv) Right_Result(result quicksort.Right_Result) {
 
 var quickSortParams = []int{
 	// 1000,
-	100000, 500000, 1000000, 2000000, 5000000, 10000000, 50000000, 100000000,
-	// 1000, 10000, 25000, 50000, 75000, 100000, 125000
+	1000, 10000, 25000, 50000, 75000, 125000,
+	100000, 500000, 1000000, 2000000, 3000000, 5000000, 7500000, 10000000, 15000000, 30000000, 45000000, 60000000,
 }
 
 func NewQuickSortEnv(n int) *QuickSortEnv {
@@ -102,6 +107,22 @@ func QuickSortBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.Be
 	fmt.Println("Scribble done")
 	rand.Seed(Seed)
 	base_results := benchmark.TimeImpl(quickSortParams, repetitions, TimeQuickSortBase)
+	fmt.Println("Base done")
 	// return base_results, base_results
 	return scribble_results, base_results
+}
+
+func QSThresholdSearch(repetitions int) {
+	for i := 500; i < 10001; i += 500 {
+		fmt.Println("Threshold =", i)
+		SEQ_THRESHOLD = i
+		scribble_results, base_results := QuickSortBenchmark(repetitions)
+		scrResStr := benchmark.ResultsToString("quicksort-scribble", scribble_results) + "\n;;"
+		baseResStr := benchmark.ResultsToString("quicksort-base", base_results) + "\n;;"
+		resultName := fmt.Sprintf("benchmark-results%d.txt", i)
+		err := ioutil.WriteFile(resultName, []byte(scrResStr+baseResStr), 0644)
+		if err != nil {
+			panic("Error while writing to file")
+		}
+	}
 }
