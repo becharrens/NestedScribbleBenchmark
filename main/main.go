@@ -36,12 +36,12 @@ func main() {
 	runSpectralNorm := flag.Bool("snorm", false, "Run benchmark on spectralnorm protocol")
 	runKNucleotide := flag.Bool("knucl", false, "Run benchmark on quicksort protocol")
 	runQuickSort := flag.Bool("quicksort", false, "Run benchmark on quicksort protocol")
-
+	runAll := flag.Bool("all", false, "Run all protocols")
 	flag.Parse()
 	iterations := *nIterations
-	numResults := boolToInt(*runFib) + boolToInt(*runFannkuch) + boolToInt(*runSieve) +
-		boolToInt(*runRegexRedux) + boolToInt(*runSpectralNorm) + boolToInt(*runKNucleotide) +
-		boolToInt(*runQuickSort)
+	numResults := boolToInt(*runFib || *runAll) + boolToInt(*runFannkuch || *runAll) + boolToInt(*runSieve || *runAll) +
+		boolToInt(*runRegexRedux || *runAll) + boolToInt(*runSpectralNorm || *runAll) + boolToInt(*runKNucleotide || *runAll) +
+		boolToInt(*runQuickSort || *runAll)
 	strResults := make([]string, 2*numResults)
 	if *genInputs {
 		GenKNucleotideInputs()
@@ -51,7 +51,7 @@ func main() {
 		return
 	}
 	idx := 0
-	if *runFib {
+	if *runFib || *runAll {
 		fmt.Println("Fibonacci")
 		scribbleResults, baseResults := FibonacciBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
@@ -61,7 +61,7 @@ func main() {
 		idx++
 	}
 
-	if *runFannkuch {
+	if *runFannkuch || *runAll {
 		fmt.Println("Fannkuch")
 		scribbleResults, baseResults := FannkuchBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
@@ -71,7 +71,7 @@ func main() {
 		idx++
 	}
 
-	if *runSieve {
+	if *runSieve || *runAll {
 		fmt.Println("Primesieve")
 		scribbleResults, baseResults := PrimeSieveBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
@@ -80,7 +80,7 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("primesieve-base", baseResults) + "\n;;")
 		idx++
 	}
-	if *runRegexRedux {
+	if *runRegexRedux || *runAll {
 		fmt.Println("RegexRedux")
 		scribbleResults, baseResults := RegexReduxBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
@@ -89,7 +89,7 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("regexredux-base", baseResults) + "\n;;")
 		idx++
 	}
-	if *runSpectralNorm {
+	if *runSpectralNorm || *runAll {
 		fmt.Println("SpectralNorm")
 		scribbleResults, baseResults := SpectralNormBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
@@ -98,7 +98,7 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("spectralnorm-base", baseResults) + "\n;;")
 		idx++
 	}
-	if *runKNucleotide {
+	if *runKNucleotide || *runAll {
 		fmt.Println("KNucleotide")
 		scribbleResults, baseResults := KNucleotideBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
@@ -107,18 +107,19 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("knucleotide-base", baseResults) + "\n;;")
 		idx++
 	}
-	if *runQuickSort {
+	if *runQuickSort || *runAll {
 		fmt.Println("QuickSort")
-		// scribbleResults, baseResults := QuickSortBenchmark(iterations)
-		// PrintAvgResults(scribbleResults, baseResults)
-		// strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
-		// idx++
-		// strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
-		// idx++
-		QSThresholdSearch(iterations)
+		scribbleResults, baseResults := QuickSortBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
+		idx++
 	}
 	result := strings.Join(strResults, "\n")
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)
+	// TODO: remove
+	QSThresholdSearch(iterations)
 	if err != nil {
 		panic("Error while writing to file")
 	}

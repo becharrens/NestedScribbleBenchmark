@@ -1,9 +1,11 @@
 package quicksort_base
 
-const (
-	// SEQ_THRESHOLD = 1024
-	SEQ_THRESHOLD = 4000
-)
+// const (
+// SEQ_THRESHOLD = 1024
+// SEQ_THRESHOLD = 3500
+// )
+
+var SEQ_THRESHOLD = 3500
 
 func swap(arr []int, i, j int) {
 	arr[i], arr[j] = arr[j], arr[i]

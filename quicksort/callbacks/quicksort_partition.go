@@ -17,7 +17,7 @@ const (
 // 	SEQ_THRESHOLD = 6000
 // )
 
-var SEQ_THRESHOLD = 1024
+var SEQ_THRESHOLD = 3500
 
 type QuickSort_Partition_Env interface {
 	Done_To_Right() quicksort.Done
