@@ -118,8 +118,6 @@ func main() {
 	}
 	result := strings.Join(strResults, "\n")
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)
-	// TODO: remove
-	QSThresholdSearch(iterations)
 	if err != nil {
 		panic("Error while writing to file")
 	}

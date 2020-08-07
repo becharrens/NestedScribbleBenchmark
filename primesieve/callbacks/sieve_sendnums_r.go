@@ -16,7 +16,7 @@ type Sieve_SendNums_R_Env interface {
 }
 
 type SieveSendNumsRState struct {
-	// Num          int
+	FilterPrime  int
 	NumsReceived []int
 }
 
@@ -29,6 +29,7 @@ func (s *SieveSendNumsRState) End_From_S(end sieve_sendnums.End) {
 
 func (s *SieveSendNumsRState) Num_From_S(num sieve_sendnums.Num) {
 	// s.Num = num.N
+	s.FilterPrime = num.N
 	s.NumsReceived = append(s.NumsReceived, num.N)
 	// fmt.Println("r: len nums_received", len(s.NumsReceived))
 
@@ -41,7 +42,10 @@ func (s *SieveSendNumsRState) ResultFrom_Sieve_SendNums_SEND_R(result sieve_send
 }
 
 func (s *SieveSendNumsRState) To_Sieve_SendNums_SEND_R_Env() Sieve_SendNums_SEND_R_Env {
-	return &SieveSendNumsSENDRState{NumsReceived: s.NumsReceived}
+	return &SieveSendNumsSENDRState{
+		FilterPrime:  s.FilterPrime,
+		NumsReceived: s.NumsReceived,
+	}
 }
 
 func (s *SieveSendNumsRState) Sieve_SendNums_SEND_Setup() {

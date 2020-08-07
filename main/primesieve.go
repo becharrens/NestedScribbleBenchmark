@@ -53,8 +53,9 @@ func TimePrimeSieve(n int) time.Duration {
 
 func TimePrimeSieveBase(n int) time.Duration {
 	start := time.Now()
-	_ = primesieve_base.PrimeSieve(n)
-	return time.Since(start)
+	primesieve_base.PrimeSieve(n)
+	elapsed := time.Since(start)
+	return elapsed
 }
 
 func PrimeSieveBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
