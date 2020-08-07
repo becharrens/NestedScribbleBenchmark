@@ -18,7 +18,7 @@ func fibCalc(fib1Chan, fib2Chan, sendChan1, sendChan2, resChan chan int,
 	fib1 := <-fib1Chan
 	fib2 := <-fib2Chan
 	fib := fib1 + fib2
-	prevStopChan <- returnFib
+	prevStopChan <- returnFib // If worker is returning a result, prev worker should stop
 	if returnFib {
 		resChan <- fib
 	} else {

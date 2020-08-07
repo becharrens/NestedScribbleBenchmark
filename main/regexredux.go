@@ -1,17 +1,17 @@
 package main
 
 import (
-    "NestedScribbleBenchmark/benchmark"
-    "NestedScribbleBenchmark/regexredux/callbacks"
-    "NestedScribbleBenchmark/regexredux/protocol"
-    "NestedScribbleBenchmark/regexredux/results/regexredux"
-    "NestedScribbleBenchmark/regexredux_base"
-    "fmt"
-    "io/ioutil"
-    "os"
-    "time"
+	"NestedScribbleBenchmark/benchmark"
+	"NestedScribbleBenchmark/regexredux/callbacks"
+	"NestedScribbleBenchmark/regexredux/protocol"
+	"NestedScribbleBenchmark/regexredux/results/regexredux"
+	"NestedScribbleBenchmark/regexredux_base"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"time"
 
-    "github.com/GRbit/go-pcre"
+	"github.com/GRbit/go-pcre"
 )
 
 type RegexReduxEnv struct {

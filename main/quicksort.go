@@ -19,7 +19,7 @@ const (
 // var Seed int64 = 815267917
 var Seed int64 = 274734990
 
-var SEQ_THRESHOLD = 3500
+var SEQ_THRESHOLD = 7500
 
 type QuickSortEnv struct {
 	Arr          []int
