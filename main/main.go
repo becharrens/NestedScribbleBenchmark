@@ -28,6 +28,7 @@ func boolToInt(b bool) int {
 
 func main() {
 	nIterations := flag.Int("iterations", 1000, "Number of iterations for benchmark")
+	minTime := flag.Int("time", 10, "Minimum number of seconds to execute the benchmark for")
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
 	runFib := flag.Bool("fib", false, "Run benchmark on fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
@@ -38,6 +39,7 @@ func main() {
 	runQuickSort := flag.Bool("quicksort", false, "Run benchmark on quicksort protocol")
 	runAll := flag.Bool("all", false, "Run all protocols")
 	flag.Parse()
+	benchmark.MinExecTime = *minTime * benchmark.SECOND
 	iterations := *nIterations
 	numResults := boolToInt(*runFib || *runAll) + boolToInt(*runFannkuch || *runAll) + boolToInt(*runSieve || *runAll) +
 		boolToInt(*runRegexRedux || *runAll) + boolToInt(*runSpectralNorm || *runAll) + boolToInt(*runKNucleotide || *runAll) +
@@ -115,6 +117,8 @@ func main() {
 		idx++
 		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
 		idx++
+		fmt.Printf("\nThreshold search\n\n")
+		QSThresholdSearch(iterations)
 	}
 	result := strings.Join(strResults, "\n")
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)

@@ -15,8 +15,10 @@ type BenchmarkTimes map[int][]time.Duration
 type TimeFunction func(int) time.Duration
 
 const (
-	MIN_EXECTIME = 10000000000
+	SECOND = 1000000000
 )
+
+var MinExecTime = 10000000000
 
 func TimeImpl(values []int, repetitions int, implFunction TimeFunction) BenchmarkTimes {
 	results := make(map[int][]time.Duration)
@@ -27,7 +29,7 @@ func TimeImpl(values []int, repetitions int, implFunction TimeFunction) Benchmar
 		// for j := 0; j < repetitions; j++ {
 		var j int
 		requirement := 0.0
-		for j = 0; rs.Mean()*float64(j) < float64(MIN_EXECTIME) || j < repetitions || rs.StandardDeviation()/rs.Mean() > 0.05+requirement; j++ {
+		for j = 0; rs.Mean()*float64(j) < float64(MinExecTime) || j < repetitions || rs.StandardDeviation()/rs.Mean() > 0.05+requirement; j++ {
 			times = append(times, implFunction(val))
 			rs.Push(float64(times[j]))
 			requirement += 0.00001
