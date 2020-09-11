@@ -113,11 +113,12 @@ func QuickSortBenchmark(repetitions int) (benchmark.BenchmarkTimes, benchmark.Be
 }
 
 func QuickSortBenchmark2(seqThreshold, repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
+	SEQ_THRESHOLD = seqThreshold
+	quicksort_base.SEQ_THRESHOLD = seqThreshold
 	rand.Seed(Seed)
 	scribble_results := benchmark.TimeImpl(quickSortParams, repetitions, TimeQuickSort)
 	fmt.Println("Scribble done")
 	rand.Seed(Seed)
-	quicksort_base.SEQ_THRESHOLD = seqThreshold
 	base_results := benchmark.TimeImpl(quickSortParams, repetitions, TimeQuickSortBase)
 	fmt.Println("Base done")
 	return scribble_results, base_results
@@ -126,7 +127,6 @@ func QuickSortBenchmark2(seqThreshold, repetitions int) (benchmark.BenchmarkTime
 func QSThresholdSearch(repetitions int) {
 	for i := 500; i < 10001; i += 500 {
 		fmt.Println("Threshold =", i)
-		SEQ_THRESHOLD = i
 		scribble_results, base_results := QuickSortBenchmark2(i, repetitions)
 		scrResStr := benchmark.ResultsToString("quicksort-scribble", scribble_results) + "\n;;"
 		baseResStr := benchmark.ResultsToString("quicksort-base", base_results) + "\n;;"
