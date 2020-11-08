@@ -58,14 +58,14 @@ func RegexRedux(b []byte) {
 
 	mresults := make([]chan int, len(variants))
 	for i := 0; i < len(variants); i++ {
-		mresults[i] = make(chan int)
+		mresults[i] = make(chan int, 1)
 
 		go func(ch chan int, s string) {
 			ch <- countMatches(s, b)
 		}(mresults[i], variants[i])
 	}
 
-	lenresult := make(chan int)
+	lenresult := make(chan int, 1)
 
 	go func(b []byte) {
 		for i := 0; i < len(substs); i++ {

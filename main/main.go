@@ -30,7 +30,8 @@ func main() {
 	nIterations := flag.Int("iterations", 1000, "Number of iterations for benchmark")
 	minTime := flag.Int("time", 10, "Minimum number of seconds to execute the benchmark for")
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
-	runFib := flag.Bool("fib", false, "Run benchmark on fibonacci protocol")
+	runFib := flag.Bool("fib", false, "Run benchmark on bounded old_fibonacci protocol")
+	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded old_fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
 	runRegexRedux := flag.Bool("redux", false, "Run benchmark on regexredux protocol")
@@ -43,7 +44,7 @@ func main() {
 	iterations := *nIterations
 	numResults := boolToInt(*runFib || *runAll) + boolToInt(*runFannkuch || *runAll) + boolToInt(*runSieve || *runAll) +
 		boolToInt(*runRegexRedux || *runAll) + boolToInt(*runSpectralNorm || *runAll) + boolToInt(*runKNucleotide || *runAll) +
-		boolToInt(*runQuickSort || *runAll)
+		boolToInt(*runQuickSort || *runAll) + boolToInt(*runBoundedFib || *runAll)
 	strResults := make([]string, 2*numResults)
 	if *genInputs {
 		GenKNucleotideInputs()
@@ -57,9 +58,19 @@ func main() {
 		fmt.Println("Fibonacci")
 		scribbleResults, baseResults := FibonacciBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
-		strResults[idx] = (benchmark.ResultsToString("fibonacci-scribble", scribbleResults) + "\n;;")
+		strResults[idx] = (benchmark.ResultsToString("old_fibonacci-scribble", scribbleResults) + "\n;;")
 		idx++
-		strResults[idx] = (benchmark.ResultsToString("fibonacci-base", baseResults) + "\n;;")
+		strResults[idx] = (benchmark.ResultsToString("old_fibonacci-base", baseResults) + "\n;;")
+		idx++
+	}
+
+	if *runBoundedFib || *runAll {
+		fmt.Println("`BoundedFibonacci")
+		scribbleResults, baseResults := BoundedFibonacciBenchmark(iterations)
+		PrintAvgResults(scribbleResults, baseResults)
+		strResults[idx] = (benchmark.ResultsToString("boundedfibonacci-scribble", scribbleResults) + "\n;;")
+		idx++
+		strResults[idx] = (benchmark.ResultsToString("boundedfibonacci-base", baseResults) + "\n;;")
 		idx++
 	}
 
@@ -126,6 +137,11 @@ func main() {
 		panic("Error while writing to file")
 	}
 }
+
+// func main() {
+// 	bounded_fib_base.FibSequence()
+//
+// }
 
 func PrintResult(n int, res int, chk int) {
 	fmt.Printf("%d\nPfannkuchen(%d) = %d\n", chk, n, res)

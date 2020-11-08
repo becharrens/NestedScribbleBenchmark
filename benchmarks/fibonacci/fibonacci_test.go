@@ -1,8 +1,8 @@
 package fibonacci
 
 import (
-	"NestedScribbleBenchmark/fibonacci/protocol"
-	"NestedScribbleBenchmark/fibonacci_base"
+	"NestedScribbleBenchmark/bounded_fib_base"
+	"NestedScribbleBenchmark/old_fibonacci/protocol"
 	"testing"
 )
 
@@ -71,7 +71,7 @@ func BenchmarkFibonacciBase(b *testing.B) {
 	for _, bm := range benchmarks {
 		b.Run(bm.name, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				fibonacci_base.Fibonacci(bm.n)
+				bounded_fib_base.Fibonacci(bm.n)
 			}
 		})
 	}
