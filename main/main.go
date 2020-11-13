@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"strconv"
 	"strings"
 )
 
@@ -30,7 +29,6 @@ func main() {
 	nIterations := flag.Int("iterations", 1000, "Number of iterations for benchmark")
 	minTime := flag.Int("time", 10, "Minimum number of seconds to execute the benchmark for")
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
-	runFib := flag.Bool("fib", false, "Run benchmark on bounded old_fibonacci protocol")
 	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded old_fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
@@ -39,12 +37,14 @@ func main() {
 	runKNucleotide := flag.Bool("knucl", false, "Run benchmark on quicksort protocol")
 	runQuickSort := flag.Bool("quicksort", false, "Run benchmark on quicksort protocol")
 	runAll := flag.Bool("all", false, "Run all protocols")
+	runUnboundedFib := flag.Bool("ubfib-scr", false, "Run Fibonacci Sequence protocol")
+	runUnboundedFibBase := flag.Bool("ubfib-base", false, "Run Fibonacci Sequence protocol")
 	flag.Parse()
 	benchmark.MinExecTime = *minTime * benchmark.SECOND
 	iterations := *nIterations
-	numResults := boolToInt(*runFib || *runAll) + boolToInt(*runFannkuch || *runAll) + boolToInt(*runSieve || *runAll) +
+	numResults := boolToInt(*runFannkuch || *runAll) + boolToInt(*runSieve || *runAll) +
 		boolToInt(*runRegexRedux || *runAll) + boolToInt(*runSpectralNorm || *runAll) + boolToInt(*runKNucleotide || *runAll) +
-		boolToInt(*runQuickSort || *runAll) + boolToInt(*runBoundedFib || *runAll)
+		boolToInt(*runBoundedFib || *runAll)
 	strResults := make([]string, 2*numResults)
 	if *genInputs {
 		GenKNucleotideInputs()
@@ -54,18 +54,9 @@ func main() {
 		return
 	}
 	idx := 0
-	if *runFib || *runAll {
-		fmt.Println("Fibonacci")
-		scribbleResults, baseResults := FibonacciBenchmark(iterations)
-		PrintAvgResults(scribbleResults, baseResults)
-		strResults[idx] = (benchmark.ResultsToString("old_fibonacci-scribble", scribbleResults) + "\n;;")
-		idx++
-		strResults[idx] = (benchmark.ResultsToString("old_fibonacci-base", baseResults) + "\n;;")
-		idx++
-	}
 
 	if *runBoundedFib || *runAll {
-		fmt.Println("`BoundedFibonacci")
+		fmt.Println("BoundedFibonacci")
 		scribbleResults, baseResults := BoundedFibonacciBenchmark(iterations)
 		PrintAvgResults(scribbleResults, baseResults)
 		strResults[idx] = (benchmark.ResultsToString("boundedfibonacci-scribble", scribbleResults) + "\n;;")
@@ -122,12 +113,6 @@ func main() {
 	}
 	if *runQuickSort || *runAll {
 		fmt.Println("QuickSort")
-		scribbleResults, baseResults := QuickSortBenchmark(iterations)
-		PrintAvgResults(scribbleResults, baseResults)
-		strResults[idx] = (benchmark.ResultsToString("quicksort-scribble", scribbleResults) + "\n;;")
-		idx++
-		strResults[idx] = (benchmark.ResultsToString("quicksort-base", baseResults) + "\n;;")
-		idx++
 		fmt.Printf("\nThreshold search\n\n")
 		QSThresholdSearch(iterations)
 	}
@@ -136,21 +121,15 @@ func main() {
 	if err != nil {
 		panic("Error while writing to file")
 	}
+
+	if *runUnboundedFib {
+		RunUboundedFibonacci()
+	} else if *runUnboundedFibBase {
+		RunUboundedFibonacciBase()
+	}
 }
 
 // func main() {
-// 	bounded_fib_base.FibSequence()
-//
+// 	// bounded_fib_base.FibSequence()
+// bounded_fib_base.Fibonacci(10)
 // }
-
-func PrintResult(n int, res int, chk int) {
-	fmt.Printf("%d\nPfannkuchen(%d) = %d\n", chk, n, res)
-}
-
-func PrintPrimes(n int, primes []int) {
-	strPrimes := make([]string, len(primes))
-	for i, prime := range primes {
-		strPrimes[i] = strconv.Itoa(prime)
-	}
-	fmt.Printf("Primes up to %d: %s\n", n, strings.Join(strPrimes, ", "))
-}
