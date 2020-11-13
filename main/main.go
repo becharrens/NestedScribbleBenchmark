@@ -26,19 +26,27 @@ func boolToInt(b bool) int {
 }
 
 func main() {
+	// Benchmark parameters
 	nIterations := flag.Int("iterations", 1000, "Number of iterations for benchmark")
 	minTime := flag.Int("time", 10, "Minimum number of seconds to execute the benchmark for")
+
+	// Gen inputs for benchmarks
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
-	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded old_fibonacci protocol")
+
+	// Flags for benchmarks
+	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded fibonacci protocol")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
 	runRegexRedux := flag.Bool("redux", false, "Run benchmark on regexredux protocol")
 	runSpectralNorm := flag.Bool("snorm", false, "Run benchmark on spectralnorm protocol")
 	runKNucleotide := flag.Bool("knucl", false, "Run benchmark on quicksort protocol")
-	runQuickSort := flag.Bool("quicksort", false, "Run benchmark on quicksort protocol")
-	runAll := flag.Bool("all", false, "Run all protocols")
+	runQuickSort := flag.Bool("quicksort", false, "Run benchmark for quicksort protocol with different thresholds")
+	runAll := flag.Bool("all", false, "Run all benchmarks")
+
+	// Flags for running protocols
 	runUnboundedFib := flag.Bool("ubfib-scr", false, "Run Fibonacci Sequence protocol")
 	runUnboundedFibBase := flag.Bool("ubfib-base", false, "Run Fibonacci Sequence protocol")
+	ringSize := flag.Int("ring", 0, "Run Ring protocol of size n")
 	flag.Parse()
 	benchmark.MinExecTime = *minTime * benchmark.SECOND
 	iterations := *nIterations
@@ -120,6 +128,13 @@ func main() {
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)
 	if err != nil {
 		panic("Error while writing to file")
+	}
+
+	if *ringSize > 0 {
+		if *ringSize < 2 {
+			panic("ring size should be >= 2")
+		}
+		RunRing(*ringSize)
 	}
 
 	if *runUnboundedFib {
