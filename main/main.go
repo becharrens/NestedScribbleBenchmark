@@ -119,15 +119,16 @@ func main() {
 		strResults[idx] = (benchmark.ResultsToString("knucleotide-base", baseResults) + "\n;;")
 		idx++
 	}
-	if *runQuickSort || *runAll {
-		fmt.Println("QuickSort")
-		fmt.Printf("\nThreshold search\n\n")
-		QSThresholdSearch(iterations)
-	}
 	result := strings.Join(strResults, "\n")
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)
 	if err != nil {
 		panic("Error while writing to file")
+	}
+
+	if *runQuickSort || *runAll {
+		fmt.Println("QuickSort")
+		fmt.Printf("\nThreshold search\n\n")
+		QSThresholdSearch(iterations)
 	}
 
 	if *ringSize > 0 {
