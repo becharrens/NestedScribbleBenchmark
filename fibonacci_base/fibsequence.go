@@ -1,16 +1,17 @@
-package bounded_fib_base
+package fibonacci_base
 
 import (
 	"fmt"
+	"strconv"
 )
 
 // func Fib1(fib int, next chan int) {
 // 	next <- fib
 // }
 func Fib2(fib int, next chan int) {
-	fmt.Println("sending", fib)
+	// fmt.Println("sending", fib)
 	next <- fib
-	fmt.Println("sending", fib)
+	// fmt.Println("sending", fib)
 	next <- fib
 }
 func Fib3(resChan, fib1Chan, fib2Chan chan int) {
@@ -31,7 +32,7 @@ func FibSequence() {
 	// Send first old_fibonacci number
 	fib1Chan <- 1
 	// Print Fibonacci sequence
-	for i := 0; i < 2; i++ {
-		fmt.Println(<-resChan)
+	for i := 3; ; i++ {
+		fmt.Println("Fib "+strconv.Itoa(i)+":", <-resChan)
 	}
 }
