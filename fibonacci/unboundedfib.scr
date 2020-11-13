@@ -1,0 +1,19 @@
+module fibonacci;
+
+(*# NestedProtocols #*)
+
+// Unbounded Fib sequence
+
+nested protocol Fib(role Res, role F1, role F2; new role F3) {
+    Fib1(val:int) from F1 to F3;
+    Fib2(val:int) from F2 to F3;
+    NextFib(val:int) from F3 to Res;
+    F3 calls Fib(Res, F2, F3);
+}
+
+
+global protocol Fibonacci(role Start, role F1, role F2) {
+    StartFib1(val:int) from Start to F1;
+    StartFib2(val:int) from Start to F2;
+    Start calls Fib(Start, F1, F2);
+}
