@@ -40,9 +40,9 @@ func (r *RingEndState) Done() ring_2.End_Result {
 }
 
 func (r *RingEndState) Msg_To_Start() ring.Msg {
-	fmt.Printf("ring end: sending Msg{msg:%s, nhops left:%d} to start\n", r.Msg, r.NHops)
+	fmt.Printf("ring end: sending Msg{msg:%s, nhops left:%d} to start\n", r.Msg, r.NHops-1)
 	return ring.Msg{
-		Hops: r.NHops,
+		Hops: r.NHops - 1,
 		Msg:  r.Msg,
 	}
 }

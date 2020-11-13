@@ -60,7 +60,7 @@ func (f *ForwardRingNodeState) RingNode_Choice() Forward_RingNode_Choice {
 }
 
 func (f *ForwardRingNodeState) Msg_From_S(msg forward.Msg) {
-	f.NHops = msg.Hops - 1
+	f.NHops = msg.Hops
 	f.Msg = msg.Msg
 	fmt.Printf("forward ringnode: received Msg{msg:%s, nhops left:%d} from s\n", f.Msg, msg.Hops)
 }

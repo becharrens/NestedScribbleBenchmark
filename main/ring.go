@@ -2,8 +2,12 @@ package main
 
 import (
 	"NestedScribbleBenchmark/ring/callbacks"
+	"NestedScribbleBenchmark/ring/protocol"
 	"NestedScribbleBenchmark/ring/results/ring"
+	"fmt"
 )
+
+const RING_MSG = "PASS IT ON"
 
 type RingEnv struct {
 	SendMsg string
@@ -30,10 +34,16 @@ func (r *RingEnv) Start_Result(result ring.Start_Result) {
 func (r *RingEnv) End_Result(result ring.End_Result) {
 }
 
-func NewRingEnv(msg string, nhops int) *RingEnv {
+func NewRingEnv(msg string, ringSize int) *RingEnv {
 	return &RingEnv{
 		SendMsg: msg,
-		NHops:   nhops,
+		NHops:   ringSize,
 		RecvMsg: "",
 	}
+}
+
+func RunRing(ringSize int) {
+	env := NewRingEnv(RING_MSG, ringSize)
+	protocol.Ring(env)
+	fmt.Println("Message which went around the ring: '" + env.RecvMsg + "'")
 }
