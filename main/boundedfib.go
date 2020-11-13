@@ -3,9 +3,9 @@ package main
 import (
 	"NestedScribbleBenchmark/benchmark"
 	"NestedScribbleBenchmark/bounded_fib_base"
+	"NestedScribbleBenchmark/boundedfibonacci/callbacks"
+	"NestedScribbleBenchmark/boundedfibonacci/protocol"
 	"NestedScribbleBenchmark/boundedfibonacci/results/boundedfibonacci"
-	"NestedScribbleBenchmark/old_fibonacci/callbacks"
-	"NestedScribbleBenchmark/old_fibonacci/protocol"
 	"time"
 )
 
@@ -18,19 +18,19 @@ type BoundedFibonacciEnv struct {
 	Result int
 }
 
-func (f *BoundedFibonacciEnv) New_Start_Env() callbacks.Fibonacci_Start_Env {
-	return &callbacks.FibonacciStartState{
+func (f *BoundedFibonacciEnv) New_Start_Env() callbacks.BoundedFibonacci_Start_Env {
+	return &callbacks.BoundedFibonacciStartState{
 		N:   f.N,
 		Fib: 0,
 	}
 }
 
-func (f *BoundedFibonacciEnv) New_F1_Env() callbacks.Fibonacci_F1_Env {
-	return &callbacks.FibonnaciF1State{}
+func (f *BoundedFibonacciEnv) New_F1_Env() callbacks.BoundedFibonacci_F1_Env {
+	return &callbacks.BoundedFibonnaciF1State{}
 }
 
-func (f *BoundedFibonacciEnv) New_F2_Env() callbacks.Fibonacci_F2_Env {
-	return &callbacks.FibonacciF2State{}
+func (f *BoundedFibonacciEnv) New_F2_Env() callbacks.BoundedFibonacci_F2_Env {
+	return &callbacks.BoundedFibonacciF2State{}
 }
 
 func (f *BoundedFibonacciEnv) Start_Result(result boundedfibonacci.Start_Result) {
@@ -51,9 +51,9 @@ func NewBoundedFibonacciEnv(n int) *BoundedFibonacciEnv {
 }
 
 func TimeBoundedFibonacci(n int) time.Duration {
-	env := NewFibonacciEnv(n)
+	env := NewBoundedFibonacciEnv(n)
 	start := time.Now()
-	protocol.Fibonacci(env)
+	protocol.BoundedFibonacci(env)
 	elapsed := time.Since(start)
 	return elapsed
 }
