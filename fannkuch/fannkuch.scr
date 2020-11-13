@@ -1,3 +1,7 @@
+module fannkuch;
+
+(*# NestedProtocols #*)
+
 nested protocol FannkuchRecursive(role Source, role Worker; new role NewWorker) {
     Task(IdxMin:int, Chunksz:int, Fact:[]int, N:int) from Worker to NewWorker;
     choice at NewWorker {

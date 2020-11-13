@@ -1,5 +1,7 @@
 module knucleotide;
 
+(*# NestedProtocols #*)
+
 type <go> "[]byte" from "builtin" as ByteArr;
 
 //nested protocol ScheduleJobs(role M; new role W) {

@@ -1,5 +1,7 @@
 module primesieve;
 
+(*# NestedProtocols #*)
+
 nested protocol Sieve(role M, role W1; new role W2) {
 
     nested protocol SendNums(role S, role R) {

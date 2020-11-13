@@ -1,7 +1,8 @@
 module spectralnorm;
 
-type <go> "[]float64" from "builtin" as Vec;
+(*# NestedProtocols #*)
 
+type <go> "[]float64" from "builtin" as Vec;
 
 global protocol SpectralNorm(role Master, role Worker) {
     nested protocol Times(role M; new role W) {

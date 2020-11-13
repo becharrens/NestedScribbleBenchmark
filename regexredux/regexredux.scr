@@ -1,5 +1,7 @@
 module regexredux;
 
+(*# NestedProtocols #*)
+
 type <go> "[]byte" from "..." as ByteArr;
 
 nested protocol RegexRedux2(role M; new role W) {

@@ -1,5 +1,7 @@
 module ring;
 
+(*# NestedProtocols #*)
+
 nested protocol Forward(role S, role E; new role RingNode) {
     msg(msg:string, hops:int) from S to RingNode;
     choice at RingNode {
