@@ -143,8 +143,3 @@ func main() {
 		RunUboundedFibonacciBase()
 	}
 }
-
-// func main() {
-// 	// bounded_fib_base.FibSequence()
-// bounded_fib_base.Fibonacci(10)
-// }
