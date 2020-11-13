@@ -2,9 +2,7 @@ package benchmark
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -80,20 +78,4 @@ func ResultsToString(name string, results BenchmarkTimes) string {
 		idx++
 	}
 	return fmt.Sprintf("%s\n%s", name, strings.Join(output, "\n"))
-}
-
-func ReadFile(filename string) []byte {
-	f, err := os.Open(fmt.Sprintf("../../testdata/%s", filename))
-	if err != nil {
-		panic("Can't open input file")
-	}
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		panic("Can't read input file")
-	}
-	err = f.Close()
-	if err != nil {
-		panic("Can't close input file")
-	}
-	return b
 }
