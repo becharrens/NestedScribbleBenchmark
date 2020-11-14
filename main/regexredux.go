@@ -82,7 +82,7 @@ func TimeRegexReduxBase(n int) time.Duration {
 }
 
 func readFile(file string) []byte {
-	f, err := os.Open(fmt.Sprintf("../data/%s", file))
+	f, err := os.Open(fmt.Sprintf("NestedScribbleBenchmark/data/%s", file))
 	if err != nil {
 		panic("Can't open input file")
 	}
