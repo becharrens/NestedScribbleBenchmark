@@ -40,7 +40,7 @@ func (q *QuickSort2PState) Done() quicksort2_2.P_Result {
 }
 
 func (q *QuickSort2PState) SortedRight_From_R(sortedright_msg quicksort2.SortedRight) {
-	copy(q.SortedArr[q.Pivot+1:], sortedright_msg.Arr)
+	// copy(q.SortedArr[q.Pivot+1:], sortedright_msg.Arr)
 }
 
 func (q *QuickSort2PState) SortedLeft_From_L(sortedleft_msg quicksort2.SortedLeft) {

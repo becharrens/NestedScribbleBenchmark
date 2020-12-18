@@ -15,8 +15,6 @@ nested protocol RegexRedux2(role M; new role W) {
   }
 }
 
-global protocol RegexRedux(role Master, role Worker) {
-  Task(pattern: string, b: ByteArr) from Master to Worker;
+global protocol RegexRedux(role Master) {
   Master calls RegexRedux2(Master);
-  NumMatches(nmatches: int) from Worker to Master;
 }

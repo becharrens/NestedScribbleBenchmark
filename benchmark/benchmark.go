@@ -30,7 +30,9 @@ func TimeImpl(values []int, repetitions int, implFunction TimeFunction) Benchmar
 		for j = 0; rs.Mean()*float64(j) < float64(MinExecTime) || j < repetitions || rs.StandardDeviation()/rs.Mean() > 0.05+requirement; j++ {
 			times = append(times, implFunction(val))
 			rs.Push(float64(times[j]))
-			requirement += 0.00001
+			if j > repetitions {
+				requirement += 0.00001
+			}
 		}
 		fmt.Printf("val: %d - repetitions: %d, mean: %f, sd: %f\n", val, j, rs.Mean(), rs.StandardDeviation())
 		results[val] = times

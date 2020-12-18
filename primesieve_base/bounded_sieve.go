@@ -58,32 +58,43 @@ package primesieve_base
 // 	return primes
 // }
 
+var NumChannels = 0
+
+func Main(primes []int, recvPrimes chan int, morePrimes chan bool) []int {
+	if <-morePrimes {
+		prime := <-recvPrimes
+		primes := append(primes, prime)
+		return Main(primes, recvPrimes, morePrimes)
+	} else {
+		return primes
+	}
+}
+
 func PrimeSieve(n int) []int {
 	if n < 2 {
 		panic("n should be >= 2")
 	}
-	sendUbound := make(chan int, 1)
+	sendInt := make(chan int, 1)
 	recvPrimes := make(chan int, 1)
-	filterPrime := make(chan int, 1)
+	// filterPrime := make(chan int, 1)
+	morePrimes := make(chan bool, 1)
+	NumChannels += 3
 
-	go FirstWorker(sendUbound, filterPrime, recvPrimes)
-	sendUbound <- n
-	filterPrime <- 2
+	go FirstWorker(sendInt, recvPrimes, morePrimes)
+	sendInt <- n
+	sendInt <- 2
 	primes := []int{2}
-	for prime := range recvPrimes {
-		primes = append(primes, prime)
-	}
-	return primes
+	return Main(primes, recvPrimes, morePrimes)
 }
 
-func FirstWorker(nChan, filterPrime <-chan int, resChan chan<- int) {
-	ubound := <-nChan
-	firstPrime := <-filterPrime
+func FirstWorker(intChan <-chan int, resChan chan<- int, morePrimes chan<- bool) {
+	ubound := <-intChan
+	firstPrime := <-intChan
 	primes := genPrimes(ubound, firstPrime)
-	SieveChoice(primes, resChan)
+	SieveChoice(primes, resChan, morePrimes)
 }
 
-func SieveWorker(primeChan, primesIn <-chan int, resChan chan<- int) {
+func SieveWorker(primeChan, primesIn <-chan int, resChan chan<- int, morePrimes chan<- bool) {
 	filterPrime := <-primeChan
 	var primes []int
 	for prime := range primesIn {
@@ -91,17 +102,19 @@ func SieveWorker(primeChan, primesIn <-chan int, resChan chan<- int) {
 			primes = append(primes, prime)
 		}
 	}
-	SieveChoice(primes, resChan)
+	SieveChoice(primes, resChan, morePrimes)
 }
 
-func SieveChoice(primes []int, resChan chan<- int) {
+func SieveChoice(primes []int, resChan chan<- int, morePrimes chan<- bool) {
 	if len(primes) == 0 {
-		close(resChan)
+		morePrimes <- false
 	} else {
+		morePrimes <- true
 		resChan <- primes[0]
 		filterPrimeChan := make(chan int, 1)
 		sendPrimes := make(chan int, 1)
-		go SieveWorker(filterPrimeChan, sendPrimes, resChan)
+		NumChannels += 2
+		go SieveWorker(filterPrimeChan, sendPrimes, resChan, morePrimes)
 		forwardPrimes(primes, filterPrimeChan, sendPrimes)
 	}
 }

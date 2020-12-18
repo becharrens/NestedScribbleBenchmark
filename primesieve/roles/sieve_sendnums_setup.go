@@ -1,6 +1,8 @@
 package roles
 
-import "NestedScribbleBenchmark/primesieve/messages/sieve_sendnums"
+import (
+	"NestedScribbleBenchmark/primesieve/messages/sieve_sendnums"
+)
 import "NestedScribbleBenchmark/primesieve/channels/sieve_sendnums_send"
 import sieve_sendnums_2 "NestedScribbleBenchmark/primesieve/channels/sieve_sendnums"
 import "NestedScribbleBenchmark/primesieve/invitations"

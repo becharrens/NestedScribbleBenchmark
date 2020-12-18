@@ -1,11 +1,13 @@
 package roles
 
-import "NestedScribbleBenchmark/primesieve/messages/sieve"
-import "NestedScribbleBenchmark/primesieve/channels/sieve_sendnums"
-import sieve_2 "NestedScribbleBenchmark/primesieve/channels/sieve"
-import "NestedScribbleBenchmark/primesieve/invitations"
-import "NestedScribbleBenchmark/primesieve/callbacks"
-import "sync"
+import (
+	"NestedScribbleBenchmark/primesieve/callbacks"
+	sieve_2 "NestedScribbleBenchmark/primesieve/channels/sieve"
+	"NestedScribbleBenchmark/primesieve/channels/sieve_sendnums"
+	"NestedScribbleBenchmark/primesieve/invitations"
+	"NestedScribbleBenchmark/primesieve/messages/sieve"
+	"sync"
+)
 
 func Sieve_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Sieve_RoleSetupChan, inviteChannels invitations.Sieve_InviteSetupChan) {
 	w2_m_finish := make(chan sieve.Finish, 1)

@@ -41,8 +41,6 @@ nested protocol ScheduleJobs(role M; new role W) {
 }
 
 
-global protocol KNucleotide(role Master, role Worker) {
-    SequenceJob(sequence: string, dna: ByteArr) from Master to Worker;
+global protocol KNucleotide(role Master) {
     Master calls ScheduleJobs(Master);
-    SequenceResult(res: string) from Worker to Master;
 }
