@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/regexredux/messages"
 import "NestedScribbleBenchmark/regexredux/channels/regexredux2"
 import "NestedScribbleBenchmark/regexredux/invitations"
 import "NestedScribbleBenchmark/regexredux/callbacks"
@@ -10,10 +11,13 @@ func RegexRedux2_M(wg *sync.WaitGroup, roleChannels regexredux2.M_Chan, inviteCh
 	m_choice := env.M_Choice()
 	switch m_choice {
 	case callbacks.RegexRedux2_M_Task:
-		task_msg := env.Task_To_W()
-		roleChannels.W_Task <- task_msg
+		pattern, b := env.Task_To_W()
+		roleChannels.Label_To_W <- messages.Task
+		roleChannels.String_To_W <- pattern
+		roleChannels.ByteArr_To_W <- b
 
 		env.RegexRedux2_Setup()
+
 		regexredux2_rolechan := invitations.RegexRedux2_RoleSetupChan{
 			M_Chan: inviteChannels.Invite_M_To_RegexRedux2_M,
 		}
@@ -28,16 +32,19 @@ func RegexRedux2_M(wg *sync.WaitGroup, roleChannels regexredux2.M_Chan, inviteCh
 		regexredux2_m_result := RegexRedux2_M(wg, regexredux2_m_chan, regexredux2_m_inviteChan, regexredux2_m_env)
 		env.ResultFrom_RegexRedux2_M(regexredux2_m_result)
 
-		nummatches_msg := <-roleChannels.W_NumMatches
-		env.NumMatches_From_W(nummatches_msg)
+		<-roleChannels.Label_From_W
+		nmatches := <-roleChannels.Int_From_W
+		env.NumMatches_From_W(nmatches)
 
 		return env.Done()
 	case callbacks.RegexRedux2_M_CalcLength:
-		calclength_msg := env.CalcLength_To_W()
-		roleChannels.W_CalcLength <- calclength_msg
+		b_2 := env.CalcLength_To_W()
+		roleChannels.Label_To_W <- messages.CalcLength
+		roleChannels.ByteArr_To_W <- b_2
 
-		length_msg := <-roleChannels.W_Length
-		env.Length_From_W(length_msg)
+		<-roleChannels.Label_From_W
+		len := <-roleChannels.Int_From_W
+		env.Length_From_W(len)
 
 		return env.Done()
 	default:

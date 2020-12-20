@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/primesieve/messages"
 import "NestedScribbleBenchmark/primesieve/channels/sieve_sendnums"
 import "NestedScribbleBenchmark/primesieve/invitations"
 import "NestedScribbleBenchmark/primesieve/callbacks"
@@ -7,22 +8,35 @@ import sieve_sendnums_2 "NestedScribbleBenchmark/primesieve/results/sieve_sendnu
 import "sync"
 
 func Sieve_SendNums_S(wg *sync.WaitGroup, roleChannels sieve_sendnums.S_Chan, inviteChannels invitations.Sieve_SendNums_S_InviteChan, env callbacks.Sieve_SendNums_S_Env) sieve_sendnums_2.S_Result {
-	s_choice := env.S_Choice()
-	switch s_choice {
+	s_choice_2 := env.S_Choice()
+	switch s_choice_2 {
 	case callbacks.Sieve_SendNums_S_Num:
-		num_msg := env.Num_To_R()
-		roleChannels.R_Num <- num_msg
+		n := env.Num_To_R()
+		roleChannels.Label_To_R <- messages.Num
+		roleChannels.Int_To_R <- n
 
-		sieve_sendnums_send_s_chan := <-inviteChannels.R_Invite_To_Sieve_SendNums_SEND_S
-		sieve_sendnums_send_s_inviteChan := <-inviteChannels.R_Invite_To_Sieve_SendNums_SEND_S_InviteChan
-		sieve_sendnums_send_s_env := env.To_Sieve_SendNums_SEND_S_Env()
-		sieve_sendnums_send_s_result := Sieve_SendNums_SEND_S(wg, sieve_sendnums_send_s_chan, sieve_sendnums_send_s_inviteChan, sieve_sendnums_send_s_env)
-		env.ResultFrom_Sieve_SendNums_SEND_S(sieve_sendnums_send_s_result)
+	SEND:
+		for {
+			s_choice := env.S_Choice_2()
+			switch s_choice {
+			case callbacks.Sieve_SendNums_S_Num_2:
+				n_2 := env.Num_To_R_2()
+				roleChannels.Label_To_R <- messages.Num
+				roleChannels.Int_To_R <- n_2
 
-		return env.Done()
+				continue SEND
+			case callbacks.Sieve_SendNums_S_End_2:
+				env.End_To_R()
+				roleChannels.Label_To_R <- messages.End
+
+				return env.Done()
+			default:
+				panic("Invalid choice was made")
+			}
+		}
 	case callbacks.Sieve_SendNums_S_End:
-		end_msg := env.End_To_R()
-		roleChannels.R_End <- end_msg
+		env.End_To_R_2()
+		roleChannels.Label_To_R <- messages.End
 
 		return env.Done()
 	default:

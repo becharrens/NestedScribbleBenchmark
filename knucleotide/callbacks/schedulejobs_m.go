@@ -1,9 +1,6 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/knucleotide/messages/schedulejobs"
-)
-import schedulejobs_2 "NestedScribbleBenchmark/knucleotide/results/schedulejobs"
+import "NestedScribbleBenchmark/knucleotide/results/schedulejobs"
 
 type ScheduleJobs_M_Choice int
 
@@ -14,18 +11,18 @@ const (
 )
 
 type ScheduleJobs_M_Env interface {
-	Finish_To_W() schedulejobs.Finish
-	FrequencyResult_From_W(frequencyresult_msg schedulejobs.FrequencyResult)
-	ResultFrom_ScheduleJobs_M_2(result schedulejobs_2.M_Result)
+	Finish_To_W()
+	FrequencyResult_From_W(res string)
+	ResultFrom_ScheduleJobs_M_2(result schedulejobs.M_Result)
 	To_ScheduleJobs_M_Env_2() ScheduleJobs_M_Env
 	ScheduleJobs_Setup_2()
-	FrequencyJob_To_W() schedulejobs.FrequencyJob
-	Done() schedulejobs_2.M_Result
-	SequenceResult_From_W(sequenceresult_msg schedulejobs.SequenceResult)
-	ResultFrom_ScheduleJobs_M(result schedulejobs_2.M_Result)
+	FrequencyJob_To_W() (int, []byte)
+	Done() schedulejobs.M_Result
+	SequenceResult_From_W(res string)
+	ResultFrom_ScheduleJobs_M(result schedulejobs.M_Result)
 	To_ScheduleJobs_M_Env() ScheduleJobs_M_Env
 	ScheduleJobs_Setup()
-	SequenceJob_To_W() schedulejobs.SequenceJob
+	SequenceJob_To_W() (string, []byte)
 	M_Choice() ScheduleJobs_M_Choice
 }
 
@@ -36,16 +33,15 @@ type ScheduleJobsMState struct {
 	TaskType   TaskType
 }
 
-func (s *ScheduleJobsMState) Finish_To_W() schedulejobs.Finish {
-	return schedulejobs.Finish{}
+func (s *ScheduleJobsMState) Finish_To_W() {
 }
 
-func (s *ScheduleJobsMState) FrequencyResult_From_W(frequencyresult_msg schedulejobs.FrequencyResult) {
+func (s *ScheduleJobsMState) FrequencyResult_From_W(res string) {
 	// TODO: Uncomment
-	// fmt.Println(frequencyresult_msg.Res)
+	// fmt.Println(res)
 }
 
-func (s *ScheduleJobsMState) ResultFrom_ScheduleJobs_M_2(result schedulejobs_2.M_Result) {
+func (s *ScheduleJobsMState) ResultFrom_ScheduleJobs_M_2(result schedulejobs.M_Result) {
 }
 
 func (s *ScheduleJobsMState) To_ScheduleJobs_M_Env_2() ScheduleJobs_M_Env {
@@ -62,23 +58,20 @@ func (s *ScheduleJobsMState) To_ScheduleJobs_M_Env_2() ScheduleJobs_M_Env {
 func (s *ScheduleJobsMState) ScheduleJobs_Setup_2() {
 }
 
-func (s *ScheduleJobsMState) FrequencyJob_To_W() schedulejobs.FrequencyJob {
-	return schedulejobs.FrequencyJob{
-		Dna: s.Dna,
-		Len: Lengths[s.LengthIdx],
-	}
+func (s *ScheduleJobsMState) FrequencyJob_To_W() (int, []byte) {
+	return Lengths[s.LengthIdx], s.Dna
 }
 
-func (s *ScheduleJobsMState) Done() schedulejobs_2.M_Result {
-	return schedulejobs_2.M_Result{}
+func (s *ScheduleJobsMState) Done() schedulejobs.M_Result {
+	return schedulejobs.M_Result{}
 }
 
-func (s *ScheduleJobsMState) SequenceResult_From_W(sequenceresult_msg schedulejobs.SequenceResult) {
+func (s *ScheduleJobsMState) SequenceResult_From_W(res string) {
 	// TODO: Uncomment
-	// fmt.Println(sequenceresult_msg.Res)
+	// fmt.Println(res)
 }
 
-func (s *ScheduleJobsMState) ResultFrom_ScheduleJobs_M(result schedulejobs_2.M_Result) {
+func (s *ScheduleJobsMState) ResultFrom_ScheduleJobs_M(result schedulejobs.M_Result) {
 }
 
 func (s *ScheduleJobsMState) To_ScheduleJobs_M_Env() ScheduleJobs_M_Env {
@@ -95,11 +88,8 @@ func (s *ScheduleJobsMState) To_ScheduleJobs_M_Env() ScheduleJobs_M_Env {
 func (s *ScheduleJobsMState) ScheduleJobs_Setup() {
 }
 
-func (s *ScheduleJobsMState) SequenceJob_To_W() schedulejobs.SequenceJob {
-	return schedulejobs.SequenceJob{
-		Dna:      s.Dna,
-		Sequence: Patterns[s.PatternIdx],
-	}
+func (s *ScheduleJobsMState) SequenceJob_To_W() (string, []byte) {
+	return Patterns[s.PatternIdx], s.Dna
 }
 
 func (s *ScheduleJobsMState) M_Choice() ScheduleJobs_M_Choice {

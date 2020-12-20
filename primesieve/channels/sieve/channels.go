@@ -1,18 +1,20 @@
 package sieve
 
-import "NestedScribbleBenchmark/primesieve/messages/sieve"
+import "NestedScribbleBenchmark/primesieve/messages"
 
 type M_Chan struct {
-	W2_Finish chan sieve.Finish
-	W2_Prime  chan sieve.Prime
+	Int_From_W2   chan int
+	Label_From_W2 chan messages.PrimeSieve_Label
 }
 
 type W1_Chan struct {
-	W2_FilterPrime chan sieve.FilterPrime
+	Int_To_W2   chan int
+	Label_To_W2 chan messages.PrimeSieve_Label
 }
 
 type W2_Chan struct {
-	M_Finish       chan sieve.Finish
-	M_Prime        chan sieve.Prime
-	W1_FilterPrime chan sieve.FilterPrime
+	Int_From_W1   chan int
+	Int_To_M      chan int
+	Label_From_W1 chan messages.PrimeSieve_Label
+	Label_To_M    chan messages.PrimeSieve_Label
 }

@@ -1,17 +1,16 @@
 package callbacks
 
-import "NestedScribbleBenchmark/quicksort/messages/quicksort"
 import "NestedScribbleBenchmark/quicksort/results/quicksort2"
-import quicksort_2 "NestedScribbleBenchmark/quicksort/results/quicksort"
+import "NestedScribbleBenchmark/quicksort/results/quicksort"
 
 type QuickSort_Left_Env interface {
-	Done_From_Partition(done_msg quicksort.Done)
-	Done() quicksort_2.Left_Result
-	SortedLeft_To_Partition() quicksort.SortedLeft
+	Done_From_Partition()
+	Done() quicksort.Left_Result
+	SortedLeft_To_Partition() []int
 	ResultFrom_QuickSort2_P(result quicksort2.P_Result)
 	To_QuickSort2_P_Env() QuickSort2_P_Env
 	QuickSort2_Setup()
-	LeftParitition_From_Partition(leftparitition_msg quicksort.LeftParitition)
+	LeftParitition_From_Partition(arr []int)
 }
 
 type QuickSortLeftState struct {
@@ -19,15 +18,15 @@ type QuickSortLeftState struct {
 	SortedArr []int
 }
 
-func (q *QuickSortLeftState) Done_From_Partition(done_msg quicksort.Done) {
+func (q *QuickSortLeftState) Done_From_Partition() {
 }
 
-func (q *QuickSortLeftState) Done() quicksort_2.Left_Result {
-	return quicksort_2.Left_Result{}
+func (q *QuickSortLeftState) Done() quicksort.Left_Result {
+	return quicksort.Left_Result{}
 }
 
-func (q *QuickSortLeftState) SortedLeft_To_Partition() quicksort.SortedLeft {
-	return quicksort.SortedLeft{Arr: q.SortedArr}
+func (q *QuickSortLeftState) SortedLeft_To_Partition() []int {
+	return q.SortedArr
 }
 
 func (q *QuickSortLeftState) ResultFrom_QuickSort2_P(result quicksort2.P_Result) {
@@ -43,6 +42,6 @@ func (q *QuickSortLeftState) To_QuickSort2_P_Env() QuickSort2_P_Env {
 func (q *QuickSortLeftState) QuickSort2_Setup() {
 }
 
-func (q *QuickSortLeftState) LeftParitition_From_Partition(leftparitition_msg quicksort.LeftParitition) {
-	q.Arr = leftparitition_msg.Arr
+func (q *QuickSortLeftState) LeftParitition_From_Partition(arr []int) {
+	q.Arr = arr
 }

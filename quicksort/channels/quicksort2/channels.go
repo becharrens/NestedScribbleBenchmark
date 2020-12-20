@@ -1,24 +1,28 @@
 package quicksort2
 
-import "NestedScribbleBenchmark/quicksort/messages/quicksort2"
+import "NestedScribbleBenchmark/quicksort/messages"
 
 type P_Chan struct {
-	L_Done           chan quicksort2.Done
-	L_LeftParitition chan quicksort2.LeftParitition
-	L_SortedLeft     chan quicksort2.SortedLeft
-	R_Done           chan quicksort2.Done
-	R_RightPartition chan quicksort2.RightPartition
-	R_SortedRight    chan quicksort2.SortedRight
+	IntArr_From_L chan []int
+	IntArr_From_R chan []int
+	IntArr_To_L   chan []int
+	IntArr_To_R   chan []int
+	Label_From_L  chan messages.QuickSort_Label
+	Label_From_R  chan messages.QuickSort_Label
+	Label_To_L    chan messages.QuickSort_Label
+	Label_To_R    chan messages.QuickSort_Label
 }
 
 type L_Chan struct {
-	P_Done           chan quicksort2.Done
-	P_LeftParitition chan quicksort2.LeftParitition
-	P_SortedLeft     chan quicksort2.SortedLeft
+	IntArr_From_P chan []int
+	IntArr_To_P   chan []int
+	Label_From_P  chan messages.QuickSort_Label
+	Label_To_P    chan messages.QuickSort_Label
 }
 
 type R_Chan struct {
-	P_Done           chan quicksort2.Done
-	P_RightPartition chan quicksort2.RightPartition
-	P_SortedRight    chan quicksort2.SortedRight
+	IntArr_From_P chan []int
+	IntArr_To_P   chan []int
+	Label_From_P  chan messages.QuickSort_Label
+	Label_To_P    chan messages.QuickSort_Label
 }

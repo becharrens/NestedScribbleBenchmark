@@ -1,32 +1,32 @@
 package roles
 
-import "NestedScribbleBenchmark/primesieve/messages/primesieve"
+import "NestedScribbleBenchmark/primesieve/messages"
 import "NestedScribbleBenchmark/primesieve/channels/sieve"
-import primesieve_2 "NestedScribbleBenchmark/primesieve/channels/primesieve"
+import "NestedScribbleBenchmark/primesieve/channels/primesieve"
 import "NestedScribbleBenchmark/primesieve/invitations"
 import "sync"
 
 func PrimeSieve_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.PrimeSieve_RoleSetupChan, inviteChannels invitations.PrimeSieve_InviteSetupChan) {
-	worker_master_finish := make(chan primesieve.Finish, 1)
 	worker_invite_worker := make(chan sieve.W1_Chan, 1)
 	worker_invite_worker_invitechan := make(chan invitations.Sieve_W1_InviteChan, 1)
 	worker_invite_master := make(chan sieve.M_Chan, 1)
 	worker_invite_master_invitechan := make(chan invitations.Sieve_M_InviteChan, 1)
-	worker_master_prime := make(chan primesieve.Prime, 1)
-	master_worker_ubound := make(chan primesieve.UBound, 1)
-	master_worker_firstprime := make(chan primesieve.FirstPrime, 1)
+	worker_master_int := make(chan int, 1)
+	worker_master_label := make(chan messages.PrimeSieve_Label, 1)
+	master_worker_int := make(chan int, 1)
+	master_worker_label := make(chan messages.PrimeSieve_Label, 1)
 
-	worker_chan := primesieve_2.Worker_Chan{
-		Master_UBound:     master_worker_ubound,
-		Master_Prime:      worker_master_prime,
-		Master_FirstPrime: master_worker_firstprime,
-		Master_Finish:     worker_master_finish,
+	worker_chan := primesieve.Worker_Chan{
+		Label_To_Master:   worker_master_label,
+		Label_From_Master: master_worker_label,
+		Int_To_Master:     worker_master_int,
+		Int_From_Master:   master_worker_int,
 	}
-	master_chan := primesieve_2.Master_Chan{
-		Worker_UBound:     master_worker_ubound,
-		Worker_Prime:      worker_master_prime,
-		Worker_FirstPrime: master_worker_firstprime,
-		Worker_Finish:     worker_master_finish,
+	master_chan := primesieve.Master_Chan{
+		Label_To_Worker:   master_worker_label,
+		Label_From_Worker: worker_master_label,
+		Int_To_Worker:     master_worker_int,
+		Int_From_Worker:   worker_master_int,
 	}
 
 	worker_inviteChan := invitations.PrimeSieve_Worker_InviteChan{

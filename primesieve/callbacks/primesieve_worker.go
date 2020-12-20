@@ -1,11 +1,7 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/primesieve/messages/primesieve"
-	"NestedScribbleBenchmark/primesieve/results/sieve"
-
-	primesieve_2 "NestedScribbleBenchmark/primesieve/results/primesieve"
-)
+import "NestedScribbleBenchmark/primesieve/results/sieve"
+import "NestedScribbleBenchmark/primesieve/results/primesieve"
 
 type PrimeSieve_Worker_Choice int
 
@@ -15,15 +11,15 @@ const (
 )
 
 type PrimeSieve_Worker_Env interface {
-	Finish_To_Master() primesieve.Finish
-	Done() primesieve_2.Worker_Result
+	Finish_To_Master()
+	Done() primesieve.Worker_Result
 	ResultFrom_Sieve_W1(result sieve.W1_Result)
 	To_Sieve_W1_Env() Sieve_W1_Env
 	Sieve_Setup()
-	Prime_To_Master() primesieve.Prime
+	Prime_To_Master() int
 	Worker_Choice() PrimeSieve_Worker_Choice
-	UBound_From_Master(ubound primesieve.UBound)
-	FirstPrime_From_Master(firstprime primesieve.FirstPrime)
+	UBound_From_Master(n int)
+	FirstPrime_From_Master(prime int)
 }
 
 type PrimeSieveWorkerState struct {
@@ -32,8 +28,8 @@ type PrimeSieveWorkerState struct {
 	PossiblePrimes []int
 }
 
-func (p *PrimeSieveWorkerState) FirstPrime_From_Master(firstprime primesieve.FirstPrime) {
-	p.FirstPrime = firstprime.Prime
+func (p *PrimeSieveWorkerState) FirstPrime_From_Master(prime int) {
+	p.FirstPrime = prime
 }
 
 func (p *PrimeSieveWorkerState) Worker_Choice() PrimeSieve_Worker_Choice {
@@ -43,13 +39,13 @@ func (p *PrimeSieveWorkerState) Worker_Choice() PrimeSieve_Worker_Choice {
 	return PrimeSieve_Worker_Prime
 }
 
-func (p *PrimeSieveWorkerState) UBound_From_Master(ubound primesieve.UBound) {
-	p.UBound = ubound.N
+func (p *PrimeSieveWorkerState) UBound_From_Master(n int) {
+	p.UBound = n
 	p.PossiblePrimes = initPossiblePrimes(p.FirstPrime, p.UBound)
 }
 
-func (p *PrimeSieveWorkerState) Prime_To_Master() primesieve.Prime {
-	return primesieve.Prime{N: p.PossiblePrimes[0]}
+func (p *PrimeSieveWorkerState) Prime_To_Master() int {
+	return p.PossiblePrimes[0]
 }
 
 func (p *PrimeSieveWorkerState) Sieve_Setup() {
@@ -65,17 +61,16 @@ func (p *PrimeSieveWorkerState) To_Sieve_W1_Env() Sieve_W1_Env {
 func (p *PrimeSieveWorkerState) ResultFrom_Sieve_W1(result sieve.W1_Result) {
 }
 
-func (p *PrimeSieveWorkerState) Finish_To_Master() primesieve.Finish {
-	return primesieve.Finish{}
+func (p *PrimeSieveWorkerState) Finish_To_Master() {
 }
 
-func (p *PrimeSieveWorkerState) Done() primesieve_2.Worker_Result {
-	return primesieve_2.Worker_Result{}
+func (p *PrimeSieveWorkerState) Done() primesieve.Worker_Result {
+	return primesieve.Worker_Result{}
 }
 
 func initPossiblePrimes(firstPrime, ubound int) []int {
 	var result []int
-	for i := 2; i < ubound; i++ {
+	for i := 3; i < ubound; i++ {
 		if i%firstPrime > 0 {
 			result = append(result, i)
 		}

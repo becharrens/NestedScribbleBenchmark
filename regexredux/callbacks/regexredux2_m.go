@@ -1,9 +1,8 @@
 package callbacks
 
 import (
-	"NestedScribbleBenchmark/regexredux/messages/regexredux2"
+	"NestedScribbleBenchmark/regexredux/results/regexredux2"
 )
-import regexredux2_2 "NestedScribbleBenchmark/regexredux/results/regexredux2"
 
 type RegexRedux2_M_Choice int
 
@@ -13,15 +12,27 @@ const (
 )
 
 type RegexRedux2_M_Env interface {
-	Length_From_W(length_msg regexredux2.Length)
-	CalcLength_To_W() regexredux2.CalcLength
-	Done() regexredux2_2.M_Result
-	NumMatches_From_W(nummatches_msg regexredux2.NumMatches)
-	ResultFrom_RegexRedux2_M(result regexredux2_2.M_Result)
+	Length_From_W(len int)
+	CalcLength_To_W() []byte
+	Done() regexredux2.M_Result
+	NumMatches_From_W(nmatches int)
+	ResultFrom_RegexRedux2_M(result regexredux2.M_Result)
 	To_RegexRedux2_M_Env() RegexRedux2_M_Env
 	RegexRedux2_Setup()
-	Task_To_W() regexredux2.Task
+	Task_To_W() (string, []byte)
 	M_Choice() RegexRedux2_M_Choice
+}
+
+var variants = []string{
+	"agggtaa[cgt]|[acg]ttaccct",
+	"agggta[cgt]a|t[acg]taccct",
+	"agggt[cgt]aa|tt[acg]accct",
+	"aggg[acg]aaa|ttt[cgt]ccct",
+	"agg[act]taaa|ttta[agt]cct",
+	"ag[act]gtaaa|tttac[agt]ct",
+	"a[act]ggtaaa|tttacc[agt]t",
+	"[cgt]gggtaaa|tttaccc[acg]",
+	"agggtaaa|tttaccct",
 }
 
 type RegexRedux2MState struct {
@@ -32,24 +43,24 @@ type RegexRedux2MState struct {
 	ResLength  int
 }
 
-func (r *RegexRedux2MState) Length_From_W(length_msg regexredux2.Length) {
-	r.ResLength = length_msg.Len
+func (r *RegexRedux2MState) Length_From_W(len int) {
+	r.ResLength = len
 }
 
-func (r *RegexRedux2MState) CalcLength_To_W() regexredux2.CalcLength {
-	return regexredux2.CalcLength{B: r.B}
+func (r *RegexRedux2MState) CalcLength_To_W() []byte {
+	return r.B
 }
 
-func (r *RegexRedux2MState) Done() regexredux2_2.M_Result {
-	return regexredux2_2.M_Result{Length: r.ResLength}
+func (r *RegexRedux2MState) Done() regexredux2.M_Result {
+	return regexredux2.M_Result{Length: r.ResLength}
 }
 
-func (r *RegexRedux2MState) NumMatches_From_W(nummatches_msg regexredux2.NumMatches) {
+func (r *RegexRedux2MState) NumMatches_From_W(nmatches int) {
 	// TODO: Uncomment
 	// fmt.Printf("%s %d\n", variants[r.VariantIdx], nummatches_msg.Nmatches)
 }
 
-func (r *RegexRedux2MState) ResultFrom_RegexRedux2_M(result regexredux2_2.M_Result) {
+func (r *RegexRedux2MState) ResultFrom_RegexRedux2_M(result regexredux2.M_Result) {
 	r.ResLength = result.Length
 }
 
@@ -65,11 +76,8 @@ func (r *RegexRedux2MState) To_RegexRedux2_M_Env() RegexRedux2_M_Env {
 func (r *RegexRedux2MState) RegexRedux2_Setup() {
 }
 
-func (r *RegexRedux2MState) Task_To_W() regexredux2.Task {
-	return regexredux2.Task{
-		B:       r.B,
-		Pattern: variants[r.VariantIdx],
-	}
+func (r *RegexRedux2MState) Task_To_W() (string, []byte) {
+	return variants[r.VariantIdx], r.B
 }
 
 func (r *RegexRedux2MState) M_Choice() RegexRedux2_M_Choice {

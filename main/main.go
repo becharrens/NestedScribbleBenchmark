@@ -14,7 +14,8 @@ func PrintAvgResults(times1 benchmark.BenchmarkTimes, times2 benchmark.Benchmark
 		sd1 := benchmark.StandardDeviation(times1[key])
 		avg2 := benchmark.Average(times2[key])
 		sd2 := benchmark.StandardDeviation(times2[key])
-		fmt.Printf("%d - Scribble: %d, %f, Base: %d, %f\n", key, avg1, sd1, avg2, sd2)
+		speedup := float64(avg2) / float64(avg1)
+		fmt.Printf("%d - Scribble: %d, %f, Base: %d, %f, Ratio: %f\n", key, avg1, sd1, avg2, sd2, speedup)
 	}
 }
 

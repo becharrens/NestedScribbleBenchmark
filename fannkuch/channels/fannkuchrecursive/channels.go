@@ -1,18 +1,20 @@
 package fannkuchrecursive
 
-import "NestedScribbleBenchmark/fannkuch/messages/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/messages"
 
 type Source_Chan struct {
-	NewWorker_Result   chan fannkuchrecursive.Result
-	NewWorker_Result_2 chan fannkuchrecursive.Result
+	Int_From_NewWorker   chan int
+	Label_From_NewWorker chan messages.Fannkuch_Label
 }
 
 type Worker_Chan struct {
-	NewWorker_Task chan fannkuchrecursive.Task
+	Int_To_NewWorker   chan int
+	Label_To_NewWorker chan messages.Fannkuch_Label
 }
 
 type NewWorker_Chan struct {
-	Source_Result   chan fannkuchrecursive.Result
-	Source_Result_2 chan fannkuchrecursive.Result
-	Worker_Task     chan fannkuchrecursive.Task
+	Int_From_Worker   chan int
+	Int_To_Source     chan int
+	Label_From_Worker chan messages.Fannkuch_Label
+	Label_To_Source   chan messages.Fannkuch_Label
 }

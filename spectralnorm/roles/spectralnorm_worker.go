@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/spectralnorm/messages"
 import "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm"
 import "NestedScribbleBenchmark/spectralnorm/invitations"
 import "NestedScribbleBenchmark/spectralnorm/callbacks"
@@ -7,13 +8,20 @@ import spectralnorm_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm
 import "sync"
 
 func SpectralNorm_Worker(wg *sync.WaitGroup, roleChannels spectralnorm.Worker_Chan, inviteChannels invitations.SpectralNorm_Worker_InviteChan, env callbacks.SpectralNorm_Worker_Env) spectralnorm_2.Worker_Result {
-	select {
-	case timestask_msg := <-roleChannels.Master_TimesTask:
-		env.TimesTask_From_Master(timestask_msg)
+	master_choice := <-roleChannels.Label_From_Master
+	switch master_choice {
+	case messages.TimesTask:
+		ii := <-roleChannels.Int_From_Master
+		n := <-roleChannels.Int_From_Master
+		u := <-roleChannels.Vec_From_Master
+		v := <-roleChannels.Vec_From_Master
+		env.TimesTask_From_Master(ii, n, u, v)
 
-		timesresult_msg := env.TimesResult_To_Master()
-		roleChannels.Master_TimesResult <- timesresult_msg
+		res := env.TimesResult_To_Master()
+		roleChannels.Label_To_Master <- messages.TimesResult
+		roleChannels.Vec_To_Master <- res
 
+		<-roleChannels.Label_From_Master
 		spectralnorm_worker_chan := <-inviteChannels.Master_Invite_To_SpectralNorm_Worker
 		spectralnorm_worker_inviteChan := <-inviteChannels.Master_Invite_To_SpectralNorm_Worker_InviteChan
 		spectralnorm_worker_env := env.To_SpectralNorm_Worker_Env()
@@ -21,9 +29,11 @@ func SpectralNorm_Worker(wg *sync.WaitGroup, roleChannels spectralnorm.Worker_Ch
 		env.ResultFrom_SpectralNorm_Worker(spectralnorm_worker_result)
 
 		return env.Done()
-	case finish_msg := <-roleChannels.Master_Finish:
-		env.Finish_From_Master(finish_msg)
+	case messages.Finish:
+		env.Finish_From_Master()
 
 		return env.Done()
+	default:
+		panic("Invalid choice was made")
 	}
 }

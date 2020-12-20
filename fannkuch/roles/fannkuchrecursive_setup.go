@@ -1,31 +1,34 @@
 package roles
 
-import "NestedScribbleBenchmark/fannkuch/messages/fannkuchrecursive"
-import fannkuchrecursive_2 "NestedScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/messages"
+import "NestedScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
 import "NestedScribbleBenchmark/fannkuch/invitations"
 import "NestedScribbleBenchmark/fannkuch/callbacks"
 import "sync"
 
 func FannkuchRecursive_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.FannkuchRecursive_RoleSetupChan, inviteChannels invitations.FannkuchRecursive_InviteSetupChan) {
-	newworker_source_result_2 := make(chan fannkuchrecursive.Result, 1)
-	newworker_source_result := make(chan fannkuchrecursive.Result, 1)
-	newworker_invite_newworker := make(chan fannkuchrecursive_2.Worker_Chan, 1)
+	newworker_source_int := make(chan int, 1)
+	newworker_invite_newworker := make(chan fannkuchrecursive.Worker_Chan, 1)
 	newworker_invite_newworker_invitechan := make(chan invitations.FannkuchRecursive_Worker_InviteChan, 1)
-	newworker_invite_source := make(chan fannkuchrecursive_2.Source_Chan, 1)
+	newworker_source_label := make(chan messages.Fannkuch_Label, 1)
+	newworker_invite_source := make(chan fannkuchrecursive.Source_Chan, 1)
 	newworker_invite_source_invitechan := make(chan invitations.FannkuchRecursive_Source_InviteChan, 1)
-	worker_newworker_task := make(chan fannkuchrecursive.Task, 1)
+	worker_newworker_int := make(chan int, 1)
+	worker_newworker_label := make(chan messages.Fannkuch_Label, 1)
 
-	worker_chan := fannkuchrecursive_2.Worker_Chan{
-		NewWorker_Task: worker_newworker_task,
+	worker_chan := fannkuchrecursive.Worker_Chan{
+		Label_To_NewWorker: worker_newworker_label,
+		Int_To_NewWorker:   worker_newworker_int,
 	}
-	source_chan := fannkuchrecursive_2.Source_Chan{
-		NewWorker_Result_2: newworker_source_result_2,
-		NewWorker_Result:   newworker_source_result,
+	source_chan := fannkuchrecursive.Source_Chan{
+		Label_From_NewWorker: newworker_source_label,
+		Int_From_NewWorker:   newworker_source_int,
 	}
-	newworker_chan := fannkuchrecursive_2.NewWorker_Chan{
-		Worker_Task:     worker_newworker_task,
-		Source_Result_2: newworker_source_result_2,
-		Source_Result:   newworker_source_result,
+	newworker_chan := fannkuchrecursive.NewWorker_Chan{
+		Label_To_Source:   newworker_source_label,
+		Label_From_Worker: worker_newworker_label,
+		Int_To_Source:     newworker_source_int,
+		Int_From_Worker:   worker_newworker_int,
 	}
 
 	worker_inviteChan := invitations.FannkuchRecursive_Worker_InviteChan{}

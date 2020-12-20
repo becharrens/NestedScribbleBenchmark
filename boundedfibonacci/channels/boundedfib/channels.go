@@ -1,23 +1,29 @@
 package boundedfib
 
-import "NestedScribbleBenchmark/boundedfibonacci/messages/boundedfib"
+import "NestedScribbleBenchmark/boundedfibonacci/messages"
 
 type Res_Chan struct {
-	F3_Result chan boundedfib.Result
+	Int_From_F3   chan int
+	Label_From_F3 chan messages.BoundedFibonacci_Label
 }
 
 type F1_Chan struct {
-	F3_Fib1 chan boundedfib.Fib1
+	Int_To_F3   chan int
+	Label_To_F3 chan messages.BoundedFibonacci_Label
 }
 
 type F2_Chan struct {
-	F3_End chan boundedfib.End
-	F3_Fib2 chan boundedfib.Fib2
+	Int_To_F3     chan int
+	Label_From_F3 chan messages.BoundedFibonacci_Label
+	Label_To_F3   chan messages.BoundedFibonacci_Label
 }
 
 type F3_Chan struct {
-	F1_Fib1 chan boundedfib.Fib1
-	F2_End chan boundedfib.End
-	F2_Fib2 chan boundedfib.Fib2
-	Res_Result chan boundedfib.Result
+	Int_From_F1   chan int
+	Int_From_F2   chan int
+	Int_To_Res    chan int
+	Label_From_F1 chan messages.BoundedFibonacci_Label
+	Label_From_F2 chan messages.BoundedFibonacci_Label
+	Label_To_F2   chan messages.BoundedFibonacci_Label
+	Label_To_Res  chan messages.BoundedFibonacci_Label
 }

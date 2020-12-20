@@ -1,29 +1,22 @@
 package callbacks
 
-import "NestedScribbleBenchmark/fannkuch/messages/fannkuchrecursive"
-import fannkuchrecursive_2 "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
 
 type FannkuchRecursive_Worker_Env interface {
-	Done() fannkuchrecursive_2.Worker_Result
-	Task_To_NewWorker() fannkuchrecursive.Task
+	Done() fannkuchrecursive.Worker_Result
+	Task_To_NewWorker() (int, int, int)
 }
 
 type FannkuchRecursiveWorkerState struct {
-	Fact    []int
 	IdxMin  int
 	N       int
 	Chunksz int
 }
 
-func (f *FannkuchRecursiveWorkerState) Done() fannkuchrecursive_2.Worker_Result {
-	return fannkuchrecursive_2.Worker_Result{}
+func (f *FannkuchRecursiveWorkerState) Done() fannkuchrecursive.Worker_Result {
+	return fannkuchrecursive.Worker_Result{}
 }
 
-func (f *FannkuchRecursiveWorkerState) Task_To_NewWorker() fannkuchrecursive.Task {
-	return fannkuchrecursive.Task{
-		Chunksz: f.Chunksz,
-		Fact:    f.Fact,
-		IdxMin:  f.IdxMin,
-		N:       f.N,
-	}
+func (f *FannkuchRecursiveWorkerState) Task_To_NewWorker() (int, int, int) {
+	return f.IdxMin, f.Chunksz, f.N
 }

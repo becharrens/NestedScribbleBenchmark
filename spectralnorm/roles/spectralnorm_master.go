@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/spectralnorm/messages"
 import "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm"
 import "NestedScribbleBenchmark/spectralnorm/invitations"
 import "NestedScribbleBenchmark/spectralnorm/callbacks"
@@ -10,10 +11,15 @@ func SpectralNorm_Master(wg *sync.WaitGroup, roleChannels spectralnorm.Master_Ch
 	master_choice := env.Master_Choice()
 	switch master_choice {
 	case callbacks.SpectralNorm_Master_TimesTask:
-		timestask_msg := env.TimesTask_To_Worker()
-		roleChannels.Worker_TimesTask <- timestask_msg
+		ii, n, u, v := env.TimesTask_To_Worker()
+		roleChannels.Label_To_Worker <- messages.TimesTask
+		roleChannels.Int_To_Worker <- ii
+		roleChannels.Int_To_Worker <- n
+		roleChannels.Vec_To_Worker <- u
+		roleChannels.Vec_To_Worker <- v
 
 		env.SpectralNorm_Times_Setup()
+
 		spectralnorm_times_rolechan := invitations.SpectralNorm_Times_RoleSetupChan{
 			M_Chan: inviteChannels.Invite_Master_To_SpectralNorm_Times_M,
 		}
@@ -28,10 +34,12 @@ func SpectralNorm_Master(wg *sync.WaitGroup, roleChannels spectralnorm.Master_Ch
 		spectralnorm_times_m_result := SpectralNorm_Times_M(wg, spectralnorm_times_m_chan, spectralnorm_times_m_inviteChan, spectralnorm_times_m_env)
 		env.ResultFrom_SpectralNorm_Times_M(spectralnorm_times_m_result)
 
-		timesresult_msg := <-roleChannels.Worker_TimesResult
-		env.TimesResult_From_Worker(timesresult_msg)
+		<-roleChannels.Label_From_Worker
+		res := <-roleChannels.Vec_From_Worker
+		env.TimesResult_From_Worker(res)
 
 		env.SpectralNorm_TimesTransp_Setup()
+
 		spectralnorm_timestransp_rolechan := invitations.SpectralNorm_TimesTransp_RoleSetupChan{
 			M_Chan: inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M,
 		}
@@ -47,36 +55,40 @@ func SpectralNorm_Master(wg *sync.WaitGroup, roleChannels spectralnorm.Master_Ch
 		env.ResultFrom_SpectralNorm_TimesTransp_M(spectralnorm_timestransp_m_result)
 
 		env.SpectralNorm_Times_Setup_2()
+
 		spectralnorm_times_rolechan_2 := invitations.SpectralNorm_Times_RoleSetupChan{
-			M_Chan: inviteChannels.Invite_Master_To_SpectralNorm_Times_M_2,
+			M_Chan: inviteChannels.Invite_Master_To_SpectralNorm_Times_M,
 		}
 		spectralnorm_times_invitechan_2 := invitations.SpectralNorm_Times_InviteSetupChan{
-			M_InviteChan: inviteChannels.Invite_Master_To_SpectralNorm_Times_M_InviteChan_2,
+			M_InviteChan: inviteChannels.Invite_Master_To_SpectralNorm_Times_M_InviteChan,
 		}
 		SpectralNorm_Times_SendCommChannels(wg, spectralnorm_times_rolechan_2, spectralnorm_times_invitechan_2)
 
-		spectralnorm_times_m_chan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_Times_M_2
-		spectralnorm_times_m_inviteChan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_Times_M_InviteChan_2
+		spectralnorm_times_m_chan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_Times_M
+		spectralnorm_times_m_inviteChan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_Times_M_InviteChan
 		spectralnorm_times_m_env_2 := env.To_SpectralNorm_Times_M_Env_2()
 		spectralnorm_times_m_result_2 := SpectralNorm_Times_M(wg, spectralnorm_times_m_chan_2, spectralnorm_times_m_inviteChan_2, spectralnorm_times_m_env_2)
 		env.ResultFrom_SpectralNorm_Times_M_2(spectralnorm_times_m_result_2)
 
 		env.SpectralNorm_TimesTransp_Setup_2()
+
 		spectralnorm_timestransp_rolechan_2 := invitations.SpectralNorm_TimesTransp_RoleSetupChan{
-			M_Chan: inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M_2,
+			M_Chan: inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M,
 		}
 		spectralnorm_timestransp_invitechan_2 := invitations.SpectralNorm_TimesTransp_InviteSetupChan{
-			M_InviteChan: inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M_InviteChan_2,
+			M_InviteChan: inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M_InviteChan,
 		}
 		SpectralNorm_TimesTransp_SendCommChannels(wg, spectralnorm_timestransp_rolechan_2, spectralnorm_timestransp_invitechan_2)
 
-		spectralnorm_timestransp_m_chan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M_2
-		spectralnorm_timestransp_m_inviteChan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M_InviteChan_2
+		spectralnorm_timestransp_m_chan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M
+		spectralnorm_timestransp_m_inviteChan_2 := <-inviteChannels.Invite_Master_To_SpectralNorm_TimesTransp_M_InviteChan
 		spectralnorm_timestransp_m_env_2 := env.To_SpectralNorm_TimesTransp_M_Env_2()
 		spectralnorm_timestransp_m_result_2 := SpectralNorm_TimesTransp_M(wg, spectralnorm_timestransp_m_chan_2, spectralnorm_timestransp_m_inviteChan_2, spectralnorm_timestransp_m_env_2)
 		env.ResultFrom_SpectralNorm_TimesTransp_M_2(spectralnorm_timestransp_m_result_2)
 
 		env.SpectralNorm_Setup()
+
+		roleChannels.Label_To_Worker <- messages.SpectralNorm_Master_Worker
 		spectralnorm_rolechan := invitations.SpectralNorm_RoleSetupChan{
 			Master_Chan: inviteChannels.Invite_Master_To_SpectralNorm_Master,
 			Worker_Chan: inviteChannels.Invite_Worker_To_SpectralNorm_Worker,
@@ -95,8 +107,8 @@ func SpectralNorm_Master(wg *sync.WaitGroup, roleChannels spectralnorm.Master_Ch
 
 		return env.Done()
 	case callbacks.SpectralNorm_Master_Finish:
-		finish_msg := env.Finish_To_Worker()
-		roleChannels.Worker_Finish <- finish_msg
+		env.Finish_To_Worker()
+		roleChannels.Label_To_Worker <- messages.Finish
 
 		return env.Done()
 	default:

@@ -1,7 +1,6 @@
 package callbacks
 
-import "NestedScribbleBenchmark/quicksort/messages/quicksort2"
-import quicksort2_2 "NestedScribbleBenchmark/quicksort/results/quicksort2"
+import "NestedScribbleBenchmark/quicksort/results/quicksort2"
 
 type QuickSort2_P_Choice int
 
@@ -11,13 +10,13 @@ const (
 )
 
 type QuickSort2_P_Env interface {
-	Done_To_R() quicksort2.Done
-	Done_To_L() quicksort2.Done
-	Done() quicksort2_2.P_Result
-	SortedRight_From_R(sortedright_msg quicksort2.SortedRight)
-	SortedLeft_From_L(sortedleft_msg quicksort2.SortedLeft)
-	RightPartition_To_R() quicksort2.RightPartition
-	LeftParitition_To_L() quicksort2.LeftParitition
+	Done_To_R()
+	Done_To_L()
+	Done() quicksort2.P_Result
+	SortedRight_From_R(arr []int)
+	SortedLeft_From_L(arr []int)
+	RightPartition_To_R() []int
+	LeftParitition_To_L() []int
 	P_Choice() QuickSort2_P_Choice
 }
 
@@ -27,33 +26,31 @@ type QuickSort2PState struct {
 	Pivot     int
 }
 
-func (q *QuickSort2PState) Done_To_R() quicksort2.Done {
-	return quicksort2.Done{}
+func (q *QuickSort2PState) Done_To_R() {
 }
 
-func (q *QuickSort2PState) Done_To_L() quicksort2.Done {
-	return quicksort2.Done{}
+func (q *QuickSort2PState) Done_To_L() {
 }
 
-func (q *QuickSort2PState) Done() quicksort2_2.P_Result {
-	return quicksort2_2.P_Result{SortedArr: q.SortedArr}
+func (q *QuickSort2PState) Done() quicksort2.P_Result {
+	return quicksort2.P_Result{SortedArr: q.SortedArr}
 }
 
-func (q *QuickSort2PState) SortedRight_From_R(sortedright_msg quicksort2.SortedRight) {
-	// copy(q.SortedArr[q.Pivot+1:], sortedright_msg.Arr)
+func (q *QuickSort2PState) SortedRight_From_R(arr []int) {
+	// copy(q.SortedArr[q.Pivot+1:], arr)
 }
 
-func (q *QuickSort2PState) SortedLeft_From_L(sortedleft_msg quicksort2.SortedLeft) {
+func (q *QuickSort2PState) SortedLeft_From_L(arr []int) {
 	// q.SortedArr = make([]int, len(q.Arr))
 	// copy(q.SortedArr, sortedleft_msg.Arr)
 }
 
-func (q *QuickSort2PState) RightPartition_To_R() quicksort2.RightPartition {
-	return quicksort2.RightPartition{Arr: q.Arr[q.Pivot+1:]}
+func (q *QuickSort2PState) RightPartition_To_R() []int {
+	return q.Arr[q.Pivot+1:]
 }
 
-func (q *QuickSort2PState) LeftParitition_To_L() quicksort2.LeftParitition {
-	return quicksort2.LeftParitition{Arr: q.Arr[:q.Pivot+1]}
+func (q *QuickSort2PState) LeftParitition_To_L() []int {
+	return q.Arr[:q.Pivot+1]
 }
 
 func (q *QuickSort2PState) P_Choice() QuickSort2_P_Choice {

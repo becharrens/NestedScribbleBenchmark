@@ -1,7 +1,6 @@
 package callbacks
 
-import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm_times"
-import spectralnorm_times_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_times"
+import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_times"
 
 type SpectralNorm_Times_M_Choice int
 
@@ -11,13 +10,13 @@ const (
 )
 
 type SpectralNorm_Times_M_Env interface {
-	Finish_To_W() spectralnorm_times.Finish
-	Done() spectralnorm_times_2.M_Result
-	TimesResult_From_W(timesresult_msg spectralnorm_times.TimesResult)
-	ResultFrom_SpectralNorm_Times_M(result spectralnorm_times_2.M_Result)
+	Finish_To_W()
+	Done() spectralnorm_times.M_Result
+	TimesResult_From_W(res []float64)
+	ResultFrom_SpectralNorm_Times_M(result spectralnorm_times.M_Result)
 	To_SpectralNorm_Times_M_Env() SpectralNorm_Times_M_Env
 	SpectralNorm_Times_Setup()
-	TimesTask_To_W() spectralnorm_times.TimesTask
+	TimesTask_To_W() (int, int, []float64, []float64)
 	M_Choice() SpectralNorm_Times_M_Choice
 }
 
@@ -28,19 +27,18 @@ type SpectralNorm_TimesMState struct {
 	NCPU int
 }
 
-func (s *SpectralNorm_TimesMState) Finish_To_W() spectralnorm_times.Finish {
-	return spectralnorm_times.Finish{}
+func (s *SpectralNorm_TimesMState) Finish_To_W() {
 }
 
-func (s *SpectralNorm_TimesMState) Done() spectralnorm_times_2.M_Result {
-	return spectralnorm_times_2.M_Result{Vec: s.V}
+func (s *SpectralNorm_TimesMState) Done() spectralnorm_times.M_Result {
+	return spectralnorm_times.M_Result{Vec: s.V}
 }
 
-func (s *SpectralNorm_TimesMState) TimesResult_From_W(timesresult_msg spectralnorm_times.TimesResult) {
+func (s *SpectralNorm_TimesMState) TimesResult_From_W(res []float64) {
 	// s.V = timesresult_msg.Res
 }
 
-func (s *SpectralNorm_TimesMState) ResultFrom_SpectralNorm_Times_M(result spectralnorm_times_2.M_Result) {
+func (s *SpectralNorm_TimesMState) ResultFrom_SpectralNorm_Times_M(result spectralnorm_times.M_Result) {
 	// s.V = result.Vec
 }
 
@@ -56,13 +54,8 @@ func (s *SpectralNorm_TimesMState) To_SpectralNorm_Times_M_Env() SpectralNorm_Ti
 func (s *SpectralNorm_TimesMState) SpectralNorm_Times_Setup() {
 }
 
-func (s *SpectralNorm_TimesMState) TimesTask_To_W() spectralnorm_times.TimesTask {
-	return spectralnorm_times.TimesTask{
-		Ii: s.I * len(s.V) / s.NCPU,
-		N:  (s.I + 1) * len(s.V) / s.NCPU,
-		U:  s.U,
-		V:  s.V,
-	}
+func (s *SpectralNorm_TimesMState) TimesTask_To_W() (int, int, []float64, []float64) {
+	return s.I * len(s.V) / s.NCPU, (s.I + 1) * len(s.V) / s.NCPU, s.U, s.V
 }
 
 func (s *SpectralNorm_TimesMState) M_Choice() SpectralNorm_Times_M_Choice {

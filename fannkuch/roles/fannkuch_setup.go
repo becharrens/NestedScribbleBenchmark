@@ -1,29 +1,32 @@
 package roles
 
-import "NestedScribbleBenchmark/fannkuch/messages/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/messages"
 import "NestedScribbleBenchmark/fannkuch/channels/fannkuchrecursive"
-import fannkuch_2 "NestedScribbleBenchmark/fannkuch/channels/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/channels/fannkuch"
 import "NestedScribbleBenchmark/fannkuch/invitations"
 import "sync"
 
 func Fannkuch_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Fannkuch_RoleSetupChan, inviteChannels invitations.Fannkuch_InviteSetupChan) {
-	worker_main_result_2 := make(chan fannkuch.Result, 1)
-	worker_main_result := make(chan fannkuch.Result, 1)
+	worker_main_int := make(chan int, 1)
 	worker_invite_worker := make(chan fannkuchrecursive.Worker_Chan, 1)
 	worker_invite_worker_invitechan := make(chan invitations.FannkuchRecursive_Worker_InviteChan, 1)
+	worker_main_label := make(chan messages.Fannkuch_Label, 1)
 	worker_invite_main := make(chan fannkuchrecursive.Source_Chan, 1)
 	worker_invite_main_invitechan := make(chan invitations.FannkuchRecursive_Source_InviteChan, 1)
-	main_worker_task := make(chan fannkuch.Task, 1)
+	main_worker_int := make(chan int, 1)
+	main_worker_label := make(chan messages.Fannkuch_Label, 1)
 
-	worker_chan := fannkuch_2.Worker_Chan{
-		Main_Task:     main_worker_task,
-		Main_Result_2: worker_main_result_2,
-		Main_Result:   worker_main_result,
+	worker_chan := fannkuch.Worker_Chan{
+		Label_To_Main:   worker_main_label,
+		Label_From_Main: main_worker_label,
+		Int_To_Main:     worker_main_int,
+		Int_From_Main:   main_worker_int,
 	}
-	main_chan := fannkuch_2.Main_Chan{
-		Worker_Task:     main_worker_task,
-		Worker_Result_2: worker_main_result_2,
-		Worker_Result:   worker_main_result,
+	main_chan := fannkuch.Main_Chan{
+		Label_To_Worker:   main_worker_label,
+		Label_From_Worker: worker_main_label,
+		Int_To_Worker:     main_worker_int,
+		Int_From_Worker:   worker_main_int,
 	}
 
 	worker_inviteChan := invitations.Fannkuch_Worker_InviteChan{

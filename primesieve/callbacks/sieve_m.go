@@ -1,16 +1,13 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/primesieve/messages/sieve"
-	sieve_2 "NestedScribbleBenchmark/primesieve/results/sieve"
-)
+import "NestedScribbleBenchmark/primesieve/results/sieve"
 
 type Sieve_M_Env interface {
-	Finish_From_W2(finish sieve.Finish)
-	Done() sieve_2.M_Result
-	ResultFrom_Sieve_M(result sieve_2.M_Result)
+	Finish_From_W2()
+	Done() sieve.M_Result
+	ResultFrom_Sieve_M(result sieve.M_Result)
 	To_Sieve_M_Env() Sieve_M_Env
-	Prime_From_W2(prime sieve.Prime)
+	Prime_From_W2(n int)
 }
 
 type SieveMState struct {
@@ -19,9 +16,9 @@ type SieveMState struct {
 	EndNum   int
 }
 
-func (s *SieveMState) Prime_From_W2(prime sieve.Prime) {
+func (s *SieveMState) Prime_From_W2(n int) {
 	// fmt.Println("m: StartNum ", s.StartNum)
-	s.Primes = append(s.Primes, prime.N)
+	s.Primes = append(s.Primes, n)
 }
 
 func (s *SieveMState) To_Sieve_M_Env() Sieve_M_Env {
@@ -31,15 +28,15 @@ func (s *SieveMState) To_Sieve_M_Env() Sieve_M_Env {
 	}
 }
 
-func (s *SieveMState) ResultFrom_Sieve_M(result sieve_2.M_Result) {
+func (s *SieveMState) ResultFrom_Sieve_M(result sieve.M_Result) {
 	s.Primes = result.Primes
 }
 
-func (s *SieveMState) Finish_From_W2(finish sieve.Finish) {
+func (s *SieveMState) Finish_From_W2() {
 	// fmt.Println("m: StartNum ", s.StartNum)
 }
 
-func (s *SieveMState) Done() sieve_2.M_Result {
+func (s *SieveMState) Done() sieve.M_Result {
 	// fmt.Println("m: EndNum ", s.StartNum)
-	return sieve_2.M_Result{Primes: s.Primes}
+	return sieve.M_Result{Primes: s.Primes}
 }

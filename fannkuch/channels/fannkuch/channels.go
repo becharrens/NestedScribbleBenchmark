@@ -1,15 +1,17 @@
 package fannkuch
 
-import "NestedScribbleBenchmark/fannkuch/messages/fannkuch"
+import "NestedScribbleBenchmark/fannkuch/messages"
 
 type Main_Chan struct {
-	Worker_Result   chan fannkuch.Result
-	Worker_Result_2 chan fannkuch.Result
-	Worker_Task     chan fannkuch.Task
+	Int_From_Worker   chan int
+	Int_To_Worker     chan int
+	Label_From_Worker chan messages.Fannkuch_Label
+	Label_To_Worker   chan messages.Fannkuch_Label
 }
 
 type Worker_Chan struct {
-	Main_Result   chan fannkuch.Result
-	Main_Result_2 chan fannkuch.Result
-	Main_Task     chan fannkuch.Task
+	Int_From_Main   chan int
+	Int_To_Main     chan int
+	Label_From_Main chan messages.Fannkuch_Label
+	Label_To_Main   chan messages.Fannkuch_Label
 }

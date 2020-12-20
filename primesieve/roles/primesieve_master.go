@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/primesieve/messages"
 import "NestedScribbleBenchmark/primesieve/channels/primesieve"
 import "NestedScribbleBenchmark/primesieve/invitations"
 import "NestedScribbleBenchmark/primesieve/callbacks"
@@ -7,16 +8,21 @@ import primesieve_2 "NestedScribbleBenchmark/primesieve/results/primesieve"
 import "sync"
 
 func PrimeSieve_Master(wg *sync.WaitGroup, roleChannels primesieve.Master_Chan, inviteChannels invitations.PrimeSieve_Master_InviteChan, env callbacks.PrimeSieve_Master_Env) primesieve_2.Master_Result {
-	firstprime_msg := env.FirstPrime_To_Worker()
-	roleChannels.Worker_FirstPrime <- firstprime_msg
+	prime := env.FirstPrime_To_Worker()
+	roleChannels.Label_To_Worker <- messages.FirstPrime
+	roleChannels.Int_To_Worker <- prime
 
-	ubound_msg := env.UBound_To_Worker()
-	roleChannels.Worker_UBound <- ubound_msg
+	n := env.UBound_To_Worker()
+	roleChannels.Label_To_Worker <- messages.UBound
+	roleChannels.Int_To_Worker <- n
 
-	select {
-	case prime_msg := <-roleChannels.Worker_Prime:
-		env.Prime_From_Worker(prime_msg)
+	worker_choice := <-roleChannels.Label_From_Worker
+	switch worker_choice {
+	case messages.Prime:
+		n_2 := <-roleChannels.Int_From_Worker
+		env.Prime_From_Worker(n_2)
 
+		<-roleChannels.Label_From_Worker
 		sieve_m_chan := <-inviteChannels.Worker_Invite_To_Sieve_M
 		sieve_m_inviteChan := <-inviteChannels.Worker_Invite_To_Sieve_M_InviteChan
 		sieve_m_env := env.To_Sieve_M_Env()
@@ -24,9 +30,11 @@ func PrimeSieve_Master(wg *sync.WaitGroup, roleChannels primesieve.Master_Chan, 
 		env.ResultFrom_Sieve_M(sieve_m_result)
 
 		return env.Done()
-	case finish_msg := <-roleChannels.Worker_Finish:
-		env.Finish_From_Worker(finish_msg)
+	case messages.Finish:
+		env.Finish_From_Worker()
 
 		return env.Done()
+	default:
+		panic("Invalid choice was made")
 	}
 }

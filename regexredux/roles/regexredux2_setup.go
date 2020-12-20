@@ -1,30 +1,33 @@
 package roles
 
-import "NestedScribbleBenchmark/regexredux/messages/regexredux2"
-import regexredux2_2 "NestedScribbleBenchmark/regexredux/channels/regexredux2"
+import "NestedScribbleBenchmark/regexredux/messages"
+import "NestedScribbleBenchmark/regexredux/channels/regexredux2"
 import "NestedScribbleBenchmark/regexredux/invitations"
 import "NestedScribbleBenchmark/regexredux/callbacks"
 import "sync"
 
 func RegexRedux2_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.RegexRedux2_RoleSetupChan, inviteChannels invitations.RegexRedux2_InviteSetupChan) {
-	w_m_length := make(chan regexredux2.Length, 1)
-	m_w_calclength := make(chan regexredux2.CalcLength, 1)
-	w_m_nummatches := make(chan regexredux2.NumMatches, 1)
-	m_invite_m := make(chan regexredux2_2.M_Chan, 1)
+	w_m_int := make(chan int, 1)
+	w_m_label := make(chan messages.RegexRedux_Label, 1)
+	m_invite_m := make(chan regexredux2.M_Chan, 1)
 	m_invite_m_invitechan := make(chan invitations.RegexRedux2_M_InviteChan, 1)
-	m_w_task := make(chan regexredux2.Task, 1)
+	m_w_bytearr := make(chan []byte, 1)
+	m_w_string := make(chan string, 1)
+	m_w_label := make(chan messages.RegexRedux_Label, 1)
 
-	w_chan := regexredux2_2.W_Chan{
-		M_Task:       m_w_task,
-		M_NumMatches: w_m_nummatches,
-		M_Length:     w_m_length,
-		M_CalcLength: m_w_calclength,
+	w_chan := regexredux2.W_Chan{
+		String_From_M:  m_w_string,
+		Label_To_M:     w_m_label,
+		Label_From_M:   m_w_label,
+		Int_To_M:       w_m_int,
+		ByteArr_From_M: m_w_bytearr,
 	}
-	m_chan := regexredux2_2.M_Chan{
-		W_Task:       m_w_task,
-		W_NumMatches: w_m_nummatches,
-		W_Length:     w_m_length,
-		W_CalcLength: m_w_calclength,
+	m_chan := regexredux2.M_Chan{
+		String_To_W:  m_w_string,
+		Label_To_W:   m_w_label,
+		Label_From_W: w_m_label,
+		Int_From_W:   w_m_int,
+		ByteArr_To_W: m_w_bytearr,
 	}
 
 	w_inviteChan := invitations.RegexRedux2_W_InviteChan{}

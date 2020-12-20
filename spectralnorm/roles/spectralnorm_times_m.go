@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/spectralnorm/messages"
 import "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm_times"
 import "NestedScribbleBenchmark/spectralnorm/invitations"
 import "NestedScribbleBenchmark/spectralnorm/callbacks"
@@ -10,10 +11,15 @@ func SpectralNorm_Times_M(wg *sync.WaitGroup, roleChannels spectralnorm_times.M_
 	m_choice := env.M_Choice()
 	switch m_choice {
 	case callbacks.SpectralNorm_Times_M_TimesTask:
-		timestask_msg := env.TimesTask_To_W()
-		roleChannels.W_TimesTask <- timestask_msg
+		ii, n, u, v := env.TimesTask_To_W()
+		roleChannels.Label_To_W <- messages.TimesTask
+		roleChannels.Int_To_W <- ii
+		roleChannels.Int_To_W <- n
+		roleChannels.Vec_To_W <- u
+		roleChannels.Vec_To_W <- v
 
 		env.SpectralNorm_Times_Setup()
+
 		spectralnorm_times_rolechan := invitations.SpectralNorm_Times_RoleSetupChan{
 			M_Chan: inviteChannels.Invite_M_To_SpectralNorm_Times_M,
 		}
@@ -28,13 +34,14 @@ func SpectralNorm_Times_M(wg *sync.WaitGroup, roleChannels spectralnorm_times.M_
 		spectralnorm_times_m_result := SpectralNorm_Times_M(wg, spectralnorm_times_m_chan, spectralnorm_times_m_inviteChan, spectralnorm_times_m_env)
 		env.ResultFrom_SpectralNorm_Times_M(spectralnorm_times_m_result)
 
-		timesresult_msg := <-roleChannels.W_TimesResult
-		env.TimesResult_From_W(timesresult_msg)
+		<-roleChannels.Label_From_W
+		res := <-roleChannels.Vec_From_W
+		env.TimesResult_From_W(res)
 
 		return env.Done()
 	case callbacks.SpectralNorm_Times_M_Finish:
-		finish_msg := env.Finish_To_W()
-		roleChannels.W_Finish <- finish_msg
+		env.Finish_To_W()
+		roleChannels.Label_To_W <- messages.Finish
 
 		return env.Done()
 	default:

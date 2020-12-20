@@ -1,30 +1,13 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/regexredux/messages/regexredux"
-	regexredux_2 "NestedScribbleBenchmark/regexredux/results/regexredux"
-	"NestedScribbleBenchmark/regexredux/results/regexredux2"
-)
+import "NestedScribbleBenchmark/regexredux/results/regexredux2"
+import "NestedScribbleBenchmark/regexredux/results/regexredux"
 
 type RegexRedux_Master_Env interface {
-	Done() regexredux_2.Master_Result
-	NumMatches_From_Worker(nummatches_msg regexredux.NumMatches)
+	Done() regexredux.Master_Result
 	ResultFrom_RegexRedux2_M(result regexredux2.M_Result)
 	To_RegexRedux2_M_Env() RegexRedux2_M_Env
 	RegexRedux2_Setup()
-	Task_To_Worker() regexredux.Task
-}
-
-var variants = []string{
-	"agggtaa[cgt]|[acg]ttaccct",
-	"agggta[cgt]a|t[acg]taccct",
-	"agggt[cgt]aa|tt[acg]accct",
-	"aggg[acg]aaa|ttt[cgt]ccct",
-	"agg[act]taaa|ttta[agt]cct",
-	"ag[act]gtaaa|tttac[agt]ct",
-	"a[act]ggtaaa|tttacc[agt]t",
-	"[cgt]gggtaaa|tttaccc[acg]",
-	"agggtaaa|tttaccct",
 }
 
 type RegexReduxMasterState struct {
@@ -35,14 +18,8 @@ type RegexReduxMasterState struct {
 	Len  int
 }
 
-func (r *RegexReduxMasterState) Done() regexredux_2.Master_Result {
-	return regexredux_2.Master_Result{}
-}
-
-func (r *RegexReduxMasterState) NumMatches_From_Worker(nummatches_msg regexredux.NumMatches) {
-	// TODO: Uncomment
-	// fmt.Printf("%s %d\n", variants[r.Idx], nummatches_msg.Nmatches)
-	// fmt.Printf("\n%d\n%d\n%d\n", r.ILen, r.CLen, r.Len)
+func (r *RegexReduxMasterState) Done() regexredux.Master_Result {
+	return regexredux.Master_Result{}
 }
 
 func (r *RegexReduxMasterState) ResultFrom_RegexRedux2_M(result regexredux2.M_Result) {
@@ -59,11 +36,4 @@ func (r *RegexReduxMasterState) To_RegexRedux2_M_Env() RegexRedux2_M_Env {
 }
 
 func (r *RegexReduxMasterState) RegexRedux2_Setup() {
-}
-
-func (r *RegexReduxMasterState) Task_To_Worker() regexredux.Task {
-	return regexredux.Task{
-		B:       r.B,
-		Pattern: variants[r.Idx],
-	}
 }

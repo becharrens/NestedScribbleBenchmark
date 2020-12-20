@@ -131,6 +131,7 @@ func QSThresholdSearch(repetitions int) {
 		scrResStr := benchmark.ResultsToString("quicksort-scribble", scribble_results) + "\n;;"
 		baseResStr := benchmark.ResultsToString("quicksort-base", base_results) + "\n;;"
 		resultName := fmt.Sprintf("benchmark-results%d.txt", i)
+		PrintAvgResults(scribble_results, base_results)
 		err := ioutil.WriteFile(resultName, []byte(scrResStr+"\n"+baseResStr), 0644)
 		if err != nil {
 			panic("Error while writing to file")

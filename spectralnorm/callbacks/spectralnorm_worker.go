@@ -1,42 +1,41 @@
 package callbacks
 
-import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm"
-import spectralnorm_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
+import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
 
 type SpectralNorm_Worker_Env interface {
-	Finish_From_Master(finish_msg spectralnorm.Finish)
-	Done() spectralnorm_2.Worker_Result
-	ResultFrom_SpectralNorm_Worker(result spectralnorm_2.Worker_Result)
+	Finish_From_Master()
+	Done() spectralnorm.Worker_Result
+	ResultFrom_SpectralNorm_Worker(result spectralnorm.Worker_Result)
 	To_SpectralNorm_Worker_Env() SpectralNorm_Worker_Env
-	TimesResult_To_Master() spectralnorm.TimesResult
-	TimesTask_From_Master(timestask_msg spectralnorm.TimesTask)
+	TimesResult_To_Master() []float64
+	TimesTask_From_Master(ii int, n int, u []float64, v []float64)
 }
 
 type SpectralNormWorkerState struct {
 	V []float64
 }
 
-func (s *SpectralNormWorkerState) Finish_From_Master(finish_msg spectralnorm.Finish) {
+func (s *SpectralNormWorkerState) Finish_From_Master() {
 }
 
-func (s *SpectralNormWorkerState) Done() spectralnorm_2.Worker_Result {
-	return spectralnorm_2.Worker_Result{}
+func (s *SpectralNormWorkerState) Done() spectralnorm.Worker_Result {
+	return spectralnorm.Worker_Result{}
 }
 
-func (s *SpectralNormWorkerState) ResultFrom_SpectralNorm_Worker(result spectralnorm_2.Worker_Result) {
+func (s *SpectralNormWorkerState) ResultFrom_SpectralNorm_Worker(result spectralnorm.Worker_Result) {
 }
 
 func (s *SpectralNormWorkerState) To_SpectralNorm_Worker_Env() SpectralNorm_Worker_Env {
 	return &SpectralNormWorkerState{}
 }
 
-func (s *SpectralNormWorkerState) TimesResult_To_Master() spectralnorm.TimesResult {
-	return spectralnorm.TimesResult{Res: s.V}
+func (s *SpectralNormWorkerState) TimesResult_To_Master() []float64 {
+	return s.V
 }
 
-func (s *SpectralNormWorkerState) TimesTask_From_Master(timestask_msg spectralnorm.TimesTask) {
-	s.V = timestask_msg.V
-	Times(timestask_msg.Ii, timestask_msg.N, s.V, timestask_msg.U)
+func (s *SpectralNormWorkerState) TimesTask_From_Master(ii int, n int, u []float64, v []float64) {
+	s.V = v
+	Times(ii, n, s.V, u)
 }
 
 func Times(ii, n int, v, u []float64) {

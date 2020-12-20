@@ -33,14 +33,7 @@ func (r *RegexReduxEnv) New_Master_Env() callbacks.RegexRedux_Master_Env {
 	}
 }
 
-func (r *RegexReduxEnv) New_Worker_Env() callbacks.RegexRedux_Worker_Env {
-	return &callbacks.RegexReduxWorkerState{}
-}
-
 func (r *RegexReduxEnv) Master_Result(result regexredux.Master_Result) {
-}
-
-func (r *RegexReduxEnv) Worker_Result(result regexredux.Worker_Result) {
 }
 
 var regexreduxParams = []int{

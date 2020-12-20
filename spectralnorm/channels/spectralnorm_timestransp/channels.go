@@ -1,15 +1,19 @@
 package spectralnorm_timestransp
 
-import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm_timestransp"
+import "NestedScribbleBenchmark/spectralnorm/messages"
 
 type M_Chan struct {
-	W_Finish            chan spectralnorm_timestransp.Finish
-	W_TimesTranspResult chan spectralnorm_timestransp.TimesTranspResult
-	W_TimesTranspTask   chan spectralnorm_timestransp.TimesTranspTask
+	Int_To_W     chan int
+	Label_From_W chan messages.SpectralNorm_Label
+	Label_To_W   chan messages.SpectralNorm_Label
+	Vec_From_W   chan []float64
+	Vec_To_W     chan []float64
 }
 
 type W_Chan struct {
-	M_Finish            chan spectralnorm_timestransp.Finish
-	M_TimesTranspResult chan spectralnorm_timestransp.TimesTranspResult
-	M_TimesTranspTask   chan spectralnorm_timestransp.TimesTranspTask
+	Int_From_M   chan int
+	Label_From_M chan messages.SpectralNorm_Label
+	Label_To_M   chan messages.SpectralNorm_Label
+	Vec_From_M   chan []float64
+	Vec_To_M     chan []float64
 }

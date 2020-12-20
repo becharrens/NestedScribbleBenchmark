@@ -1,9 +1,6 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/quicksort/messages/quicksort"
-)
-import quicksort_2 "NestedScribbleBenchmark/quicksort/results/quicksort"
+import "NestedScribbleBenchmark/quicksort/results/quicksort"
 
 type QuickSort_Partition_Choice int
 
@@ -12,21 +9,16 @@ const (
 	QuickSort_Partition_Done
 )
 
-// const (
-// 	// SEQ_THRESHOLD = 1024
-// 	SEQ_THRESHOLD = 6000
-// )
-
 var SEQ_THRESHOLD = 3500
 
 type QuickSort_Partition_Env interface {
-	Done_To_Right() quicksort.Done
-	Done_To_Left() quicksort.Done
-	Done() quicksort_2.Partition_Result
-	SortedRight_From_Right(sortedright_msg quicksort.SortedRight)
-	SortedLeft_From_Left(sortedleft_msg quicksort.SortedLeft)
-	RightPartition_To_Right() quicksort.RightPartition
-	LeftParitition_To_Left() quicksort.LeftParitition
+	Done_To_Right()
+	Done_To_Left()
+	Done() quicksort.Partition_Result
+	SortedRight_From_Right(arr []int)
+	SortedLeft_From_Left(arr []int)
+	RightPartition_To_Right() []int
+	LeftParitition_To_Left() []int
 	Partition_Choice() QuickSort_Partition_Choice
 }
 
@@ -37,33 +29,31 @@ type QuickSortPartitionState struct {
 	SeqThreshold int
 }
 
-func (q *QuickSortPartitionState) Done_To_Right() quicksort.Done {
-	return quicksort.Done{}
+func (q *QuickSortPartitionState) Done_To_Right() {
 }
 
-func (q *QuickSortPartitionState) Done_To_Left() quicksort.Done {
-	return quicksort.Done{}
+func (q *QuickSortPartitionState) Done_To_Left() {
 }
 
-func (q *QuickSortPartitionState) Done() quicksort_2.Partition_Result {
-	return quicksort_2.Partition_Result{SortedArr: q.SortedArr}
+func (q *QuickSortPartitionState) Done() quicksort.Partition_Result {
+	return quicksort.Partition_Result{SortedArr: q.SortedArr}
 }
 
-func (q *QuickSortPartitionState) SortedRight_From_Right(sortedright_msg quicksort.SortedRight) {
+func (q *QuickSortPartitionState) SortedRight_From_Right(arr []int) {
 	// copy(q.SortedArr[q.Pivot + 1:], sortedright_msg.Arr)
 }
 
-func (q *QuickSortPartitionState) SortedLeft_From_Left(sortedleft_msg quicksort.SortedLeft) {
+func (q *QuickSortPartitionState) SortedLeft_From_Left(arr []int) {
 	// q.SortedArr = make([]int, len(q.Arr))
 	// copy(q.SortedArr, sortedleft_msg.Arr)
 }
 
-func (q *QuickSortPartitionState) RightPartition_To_Right() quicksort.RightPartition {
-	return quicksort.RightPartition{Arr: q.Arr[q.Pivot+1:]}
+func (q *QuickSortPartitionState) RightPartition_To_Right() []int {
+	return q.Arr[q.Pivot+1:]
 }
 
-func (q *QuickSortPartitionState) LeftParitition_To_Left() quicksort.LeftParitition {
-	return quicksort.LeftParitition{Arr: q.Arr[:q.Pivot+1]}
+func (q *QuickSortPartitionState) LeftParitition_To_Left() []int {
+	return q.Arr[:q.Pivot+1]
 }
 
 func (q *QuickSortPartitionState) Partition_Choice() QuickSort_Partition_Choice {

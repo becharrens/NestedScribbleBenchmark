@@ -1,40 +1,46 @@
 package roles
 
-import "NestedScribbleBenchmark/quicksort/messages/quicksort2"
-import quicksort2_2 "NestedScribbleBenchmark/quicksort/channels/quicksort2"
+import "NestedScribbleBenchmark/quicksort/messages"
+import "NestedScribbleBenchmark/quicksort/channels/quicksort2"
 import "NestedScribbleBenchmark/quicksort/invitations"
 import "NestedScribbleBenchmark/quicksort/callbacks"
 import "sync"
 
 func QuickSort2_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.QuickSort2_RoleSetupChan, inviteChannels invitations.QuickSort2_InviteSetupChan) {
-	p_r_done := make(chan quicksort2.Done, 1)
-	p_l_done := make(chan quicksort2.Done, 1)
-	r_p_sortedright := make(chan quicksort2.SortedRight, 1)
-	l_p_sortedleft := make(chan quicksort2.SortedLeft, 1)
-	r_invite_r := make(chan quicksort2_2.P_Chan, 1)
+	r_p_intarr := make(chan []int, 1)
+	r_p_label := make(chan messages.QuickSort_Label, 1)
+	l_p_intarr := make(chan []int, 1)
+	l_p_label := make(chan messages.QuickSort_Label, 1)
+	r_invite_r := make(chan quicksort2.P_Chan, 1)
 	r_invite_r_invitechan := make(chan invitations.QuickSort2_P_InviteChan, 1)
-	l_invite_l := make(chan quicksort2_2.P_Chan, 1)
+	l_invite_l := make(chan quicksort2.P_Chan, 1)
 	l_invite_l_invitechan := make(chan invitations.QuickSort2_P_InviteChan, 1)
-	p_r_rightpartition := make(chan quicksort2.RightPartition, 1)
-	p_l_leftparitition := make(chan quicksort2.LeftParitition, 1)
+	p_r_intarr := make(chan []int, 1)
+	p_r_label := make(chan messages.QuickSort_Label, 1)
+	p_l_intarr := make(chan []int, 1)
+	p_l_label := make(chan messages.QuickSort_Label, 1)
 
-	r_chan := quicksort2_2.R_Chan{
-		P_SortedRight:    r_p_sortedright,
-		P_RightPartition: p_r_rightpartition,
-		P_Done:           p_r_done,
+	r_chan := quicksort2.R_Chan{
+		Label_To_P:    r_p_label,
+		Label_From_P:  p_r_label,
+		IntArr_To_P:   r_p_intarr,
+		IntArr_From_P: p_r_intarr,
 	}
-	p_chan := quicksort2_2.P_Chan{
-		R_SortedRight:    r_p_sortedright,
-		R_RightPartition: p_r_rightpartition,
-		R_Done:           p_r_done,
-		L_SortedLeft:     l_p_sortedleft,
-		L_LeftParitition: p_l_leftparitition,
-		L_Done:           p_l_done,
+	p_chan := quicksort2.P_Chan{
+		Label_To_R:    p_r_label,
+		Label_To_L:    p_l_label,
+		Label_From_R:  r_p_label,
+		Label_From_L:  l_p_label,
+		IntArr_To_R:   p_r_intarr,
+		IntArr_To_L:   p_l_intarr,
+		IntArr_From_R: r_p_intarr,
+		IntArr_From_L: l_p_intarr,
 	}
-	l_chan := quicksort2_2.L_Chan{
-		P_SortedLeft:     l_p_sortedleft,
-		P_LeftParitition: p_l_leftparitition,
-		P_Done:           p_l_done,
+	l_chan := quicksort2.L_Chan{
+		Label_To_P:    l_p_label,
+		Label_From_P:  p_l_label,
+		IntArr_To_P:   l_p_intarr,
+		IntArr_From_P: p_l_intarr,
 	}
 
 	r_inviteChan := invitations.QuickSort2_R_InviteChan{

@@ -1,9 +1,12 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/primesieve/messages/sieve_sendnums"
-	sieve_sendnums_2 "NestedScribbleBenchmark/primesieve/results/sieve_sendnums"
-	"NestedScribbleBenchmark/primesieve/results/sieve_sendnums_send"
+import "NestedScribbleBenchmark/primesieve/results/sieve_sendnums"
+
+type Sieve_SendNums_S_Choice_2 int
+
+const (
+	Sieve_SendNums_S_Num_2 Sieve_SendNums_S_Choice_2 = iota
+	Sieve_SendNums_S_End_2
 )
 
 type Sieve_SendNums_S_Choice int
@@ -14,47 +17,53 @@ const (
 )
 
 type Sieve_SendNums_S_Env interface {
-	End_To_R() sieve_sendnums.End
-	Done() sieve_sendnums_2.S_Result
-	ResultFrom_Sieve_SendNums_SEND_S(result sieve_sendnums_send.S_Result)
-	To_Sieve_SendNums_SEND_S_Env() Sieve_SendNums_SEND_S_Env
-	Num_To_R() sieve_sendnums.Num
+	End_To_R_2()
+	Done() sieve_sendnums.S_Result
+	End_To_R()
+	Num_To_R_2() int
+	S_Choice_2() Sieve_SendNums_S_Choice_2
+	Num_To_R() int
 	S_Choice() Sieve_SendNums_S_Choice
 }
 
 type SieveSendNumsSState struct {
 	NumsToSend []int
+	Idx        int
 }
 
-func (s *SieveSendNumsSState) ResultFrom_Sieve_SendNums_SEND_S(result sieve_sendnums_send.S_Result) {
+func (s *SieveSendNumsSState) End_To_R_2() {
 }
 
-func (s *SieveSendNumsSState) To_Sieve_SendNums_SEND_S_Env() Sieve_SendNums_SEND_S_Env {
-	return &SieveSendNumsSSENDState{
-		NumsToSend: s.NumsToSend[1:],
+func (s *SieveSendNumsSState) Done() sieve_sendnums.S_Result {
+	return sieve_sendnums.S_Result{}
+}
+
+func (s *SieveSendNumsSState) End_To_R() {
+}
+
+func (s *SieveSendNumsSState) Num_To_R_2() int {
+	result := s.NumsToSend[s.Idx]
+	s.Idx++
+	return result
+}
+
+func (s *SieveSendNumsSState) S_Choice_2() Sieve_SendNums_S_Choice_2 {
+	// fmt.Println("s: len nums_to_send: ", len(s.NumsToSend))
+	if s.Idx >= len(s.NumsToSend) {
+		return Sieve_SendNums_S_End_2
 	}
+	return Sieve_SendNums_S_Num_2
 }
 
-func (s *SieveSendNumsSState) End_To_R_2() sieve_sendnums.End {
-	return sieve_sendnums.End{}
-}
-
-func (s *SieveSendNumsSState) Done() sieve_sendnums_2.S_Result {
-	return sieve_sendnums_2.S_Result{}
-}
-
-func (s *SieveSendNumsSState) End_To_R() sieve_sendnums.End {
-	return sieve_sendnums.End{}
-}
-
-func (s *SieveSendNumsSState) Num_To_R() sieve_sendnums.Num {
-	result := s.NumsToSend[0]
-	return sieve_sendnums.Num{N: result}
+func (s *SieveSendNumsSState) Num_To_R() int {
+	result := s.NumsToSend[s.Idx]
+	s.Idx++
+	return result
 }
 
 func (s *SieveSendNumsSState) S_Choice() Sieve_SendNums_S_Choice {
 	// fmt.Println("s: len nums_to_send: ", len(s.NumsToSend))
-	if len(s.NumsToSend) < 1 {
+	if s.Idx >= len(s.NumsToSend) {
 		return Sieve_SendNums_S_End
 	}
 	return Sieve_SendNums_S_Num

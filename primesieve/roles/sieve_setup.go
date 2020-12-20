@@ -1,38 +1,39 @@
 package roles
 
-import (
-	"NestedScribbleBenchmark/primesieve/callbacks"
-	sieve_2 "NestedScribbleBenchmark/primesieve/channels/sieve"
-	"NestedScribbleBenchmark/primesieve/channels/sieve_sendnums"
-	"NestedScribbleBenchmark/primesieve/invitations"
-	"NestedScribbleBenchmark/primesieve/messages/sieve"
-	"sync"
-)
+import "NestedScribbleBenchmark/primesieve/messages"
+import "NestedScribbleBenchmark/primesieve/channels/sieve_sendnums"
+import "NestedScribbleBenchmark/primesieve/channels/sieve"
+import "NestedScribbleBenchmark/primesieve/invitations"
+import "NestedScribbleBenchmark/primesieve/callbacks"
+import "sync"
 
 func Sieve_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Sieve_RoleSetupChan, inviteChannels invitations.Sieve_InviteSetupChan) {
-	w2_m_finish := make(chan sieve.Finish, 1)
-	w2_invite_w2 := make(chan sieve_2.W1_Chan, 1)
+	w2_invite_w2 := make(chan sieve.W1_Chan, 1)
 	w2_invite_w2_invitechan := make(chan invitations.Sieve_W1_InviteChan, 1)
-	w2_invite_m := make(chan sieve_2.M_Chan, 1)
+	w2_invite_m := make(chan sieve.M_Chan, 1)
 	w2_invite_m_invitechan := make(chan invitations.Sieve_M_InviteChan, 1)
-	w2_m_prime := make(chan sieve.Prime, 1)
+	w2_m_int := make(chan int, 1)
+	w2_m_label := make(chan messages.PrimeSieve_Label, 1)
 	w1_invite_w2 := make(chan sieve_sendnums.R_Chan, 1)
 	w1_invite_w2_invitechan := make(chan invitations.Sieve_SendNums_R_InviteChan, 1)
 	w1_invite_w1 := make(chan sieve_sendnums.S_Chan, 1)
 	w1_invite_w1_invitechan := make(chan invitations.Sieve_SendNums_S_InviteChan, 1)
-	w1_w2_filterprime := make(chan sieve.FilterPrime, 1)
+	w1_w2_int := make(chan int, 1)
+	w1_w2_label := make(chan messages.PrimeSieve_Label, 1)
 
-	w2_chan := sieve_2.W2_Chan{
-		W1_FilterPrime: w1_w2_filterprime,
-		M_Prime:        w2_m_prime,
-		M_Finish:       w2_m_finish,
+	w2_chan := sieve.W2_Chan{
+		Label_To_M:    w2_m_label,
+		Label_From_W1: w1_w2_label,
+		Int_To_M:      w2_m_int,
+		Int_From_W1:   w1_w2_int,
 	}
-	w1_chan := sieve_2.W1_Chan{
-		W2_FilterPrime: w1_w2_filterprime,
+	w1_chan := sieve.W1_Chan{
+		Label_To_W2: w1_w2_label,
+		Int_To_W2:   w1_w2_int,
 	}
-	m_chan := sieve_2.M_Chan{
-		W2_Prime:  w2_m_prime,
-		W2_Finish: w2_m_finish,
+	m_chan := sieve.M_Chan{
+		Label_From_W2: w2_m_label,
+		Int_From_W2:   w2_m_int,
 	}
 
 	w2_inviteChan := invitations.Sieve_W2_InviteChan{

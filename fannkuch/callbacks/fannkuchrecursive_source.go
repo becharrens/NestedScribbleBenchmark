@@ -1,12 +1,11 @@
 package callbacks
 
-import fannkuchrecursive_2 "NestedScribbleBenchmark/fannkuch/messages/fannkuchrecursive"
 import "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
 
 type FannkuchRecursive_Source_Env interface {
-	Result_From_NewWorker_2(result fannkuchrecursive_2.Result)
+	Result_From_NewWorker_2(maxflips int, checksum int)
 	Done() fannkuchrecursive.Source_Result
-	Result_From_NewWorker(result fannkuchrecursive_2.Result)
+	Result_From_NewWorker(maxFlips int, checksum int)
 	ResultFrom_FannkuchRecursive_Source(result fannkuchrecursive.Source_Result)
 	To_FannkuchRecursive_Source_Env() FannkuchRecursive_Source_Env
 }
@@ -16,8 +15,8 @@ type FannkuchRecursiveSourceState struct {
 	Chk int
 }
 
-func (f *FannkuchRecursiveSourceState) Result_From_NewWorker_2(result fannkuchrecursive_2.Result) {
-	res, chk := aggregate_result(f.Res, f.Chk, result.MaxFlips, result.Checksum)
+func (f *FannkuchRecursiveSourceState) Result_From_NewWorker_2(maxflips int, checksum int) {
+	res, chk := aggregate_result(f.Res, f.Chk, maxflips, checksum)
 	f.Res = res
 	f.Chk = chk
 }
@@ -29,8 +28,8 @@ func (f *FannkuchRecursiveSourceState) Done() fannkuchrecursive.Source_Result {
 	}
 }
 
-func (f *FannkuchRecursiveSourceState) Result_From_NewWorker(result fannkuchrecursive_2.Result) {
-	res, chk := aggregate_result(f.Res, f.Chk, result.MaxFlips, result.Checksum)
+func (f *FannkuchRecursiveSourceState) Result_From_NewWorker(maxflips int, checksum int) {
+	res, chk := aggregate_result(f.Res, f.Chk, maxflips, checksum)
 	f.Res = res
 	f.Chk = chk
 }

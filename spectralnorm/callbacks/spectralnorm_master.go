@@ -1,12 +1,11 @@
 package callbacks
 
 import (
-	"NestedScribbleBenchmark/spectralnorm/messages/spectralnorm"
+	"NestedScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
 	"math"
 )
-import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_timestransp"
 import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm_times"
-import spectralnorm_2 "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
+import "NestedScribbleBenchmark/spectralnorm/results/spectralnorm"
 
 type SpectralNorm_Master_Choice int
 
@@ -16,9 +15,9 @@ const (
 )
 
 type SpectralNorm_Master_Env interface {
-	Finish_To_Worker() spectralnorm.Finish
-	Done() spectralnorm_2.Master_Result
-	ResultFrom_SpectralNorm_Master(result spectralnorm_2.Master_Result)
+	Finish_To_Worker()
+	Done() spectralnorm.Master_Result
+	ResultFrom_SpectralNorm_Master(result spectralnorm.Master_Result)
 	To_SpectralNorm_Master_Env() SpectralNorm_Master_Env
 	SpectralNorm_Setup()
 	ResultFrom_SpectralNorm_TimesTransp_M_2(result spectralnorm_timestransp.M_Result)
@@ -30,11 +29,11 @@ type SpectralNorm_Master_Env interface {
 	ResultFrom_SpectralNorm_TimesTransp_M(result spectralnorm_timestransp.M_Result)
 	To_SpectralNorm_TimesTransp_M_Env() SpectralNorm_TimesTransp_M_Env
 	SpectralNorm_TimesTransp_Setup()
-	TimesResult_From_Worker(timesresult_msg spectralnorm.TimesResult)
+	TimesResult_From_Worker(res []float64)
 	ResultFrom_SpectralNorm_Times_M(result spectralnorm_times.M_Result)
 	To_SpectralNorm_Times_M_Env() SpectralNorm_Times_M_Env
 	SpectralNorm_Times_Setup()
-	TimesTask_To_Worker() spectralnorm.TimesTask
+	TimesTask_To_Worker() (int, int, []float64, []float64)
 	Master_Choice() SpectralNorm_Master_Choice
 }
 
@@ -48,17 +47,16 @@ type SpectralNormMasterState struct {
 	SpectralNorm float64
 }
 
-func (s *SpectralNormMasterState) Finish_To_Worker() spectralnorm.Finish {
-	return spectralnorm.Finish{}
+func (s *SpectralNormMasterState) Finish_To_Worker() {
 }
 
-func (s *SpectralNormMasterState) Done() spectralnorm_2.Master_Result {
-	return spectralnorm_2.Master_Result{
+func (s *SpectralNormMasterState) Done() spectralnorm.Master_Result {
+	return spectralnorm.Master_Result{
 		SpectralNorm: s.SpectralNorm,
 	}
 }
 
-func (s *SpectralNormMasterState) ResultFrom_SpectralNorm_Master(result spectralnorm_2.Master_Result) {
+func (s *SpectralNormMasterState) ResultFrom_SpectralNorm_Master(result spectralnorm.Master_Result) {
 	s.SpectralNorm = result.SpectralNorm
 }
 
@@ -124,7 +122,7 @@ func (s *SpectralNormMasterState) To_SpectralNorm_TimesTransp_M_Env() SpectralNo
 func (s *SpectralNormMasterState) SpectralNorm_TimesTransp_Setup() {
 }
 
-func (s *SpectralNormMasterState) TimesResult_From_Worker(timesresult_msg spectralnorm.TimesResult) {
+func (s *SpectralNormMasterState) TimesResult_From_Worker(res []float64) {
 	// s.X = timesresult_msg.Res]
 }
 
@@ -145,14 +143,9 @@ func (s *SpectralNormMasterState) To_SpectralNorm_Times_M_Env() SpectralNorm_Tim
 func (s *SpectralNormMasterState) SpectralNorm_Times_Setup() {
 }
 
-func (s *SpectralNormMasterState) TimesTask_To_Worker() spectralnorm.TimesTask {
+func (s *SpectralNormMasterState) TimesTask_To_Worker() (int, int, []float64, []float64) {
 	s.X = make([]float64, len(s.U))
-	return spectralnorm.TimesTask{
-		Ii: s.I * len(s.V) / s.NCPU,
-		N:  (s.I + 1) * len(s.V) / s.NCPU,
-		U:  s.U,
-		V:  s.X,
-	}
+	return s.I * len(s.V) / s.NCPU, (s.I + 1) * len(s.V) / s.NCPU, s.U, s.X
 }
 
 func (s *SpectralNormMasterState) Master_Choice() SpectralNorm_Master_Choice {

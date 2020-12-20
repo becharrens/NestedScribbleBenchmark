@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/primesieve/messages"
 import "NestedScribbleBenchmark/primesieve/channels/sieve"
 import "NestedScribbleBenchmark/primesieve/invitations"
 import "NestedScribbleBenchmark/primesieve/callbacks"
@@ -7,10 +8,13 @@ import sieve_2 "NestedScribbleBenchmark/primesieve/results/sieve"
 import "sync"
 
 func Sieve_W1(wg *sync.WaitGroup, roleChannels sieve.W1_Chan, inviteChannels invitations.Sieve_W1_InviteChan, env callbacks.Sieve_W1_Env) sieve_2.W1_Result {
-	filterprime_msg := env.FilterPrime_To_W2()
-	roleChannels.W2_FilterPrime <- filterprime_msg
+	int := env.FilterPrime_To_W2()
+	roleChannels.Label_To_W2 <- messages.FilterPrime
+	roleChannels.Int_To_W2 <- int
 
 	env.Sieve_SendNums_Setup()
+
+	roleChannels.Label_To_W2 <- messages.Sieve_SendNums_W1_W2
 	sieve_sendnums_rolechan := invitations.Sieve_SendNums_RoleSetupChan{
 		S_Chan: inviteChannels.Invite_W1_To_Sieve_SendNums_S,
 		R_Chan: inviteChannels.Invite_W2_To_Sieve_SendNums_R,

@@ -2,7 +2,7 @@ package main
 
 import (
 	"NestedScribbleBenchmark/benchmark"
-	"NestedScribbleBenchmark/bounded_fib_base"
+	"NestedScribbleBenchmark/boundedfib_base"
 	"NestedScribbleBenchmark/boundedfibonacci/callbacks"
 	"NestedScribbleBenchmark/boundedfibonacci/protocol"
 	"NestedScribbleBenchmark/boundedfibonacci/results/boundedfibonacci"
@@ -60,7 +60,7 @@ func TimeBoundedFibonacci(n int) time.Duration {
 
 func TimeBoundedFibonacciBase(n int) time.Duration {
 	start := time.Now()
-	_ = bounded_fib_base.Fibonacci(n)
+	_ = boundedfib_base.Fibonacci(n)
 	return time.Since(start)
 }
 

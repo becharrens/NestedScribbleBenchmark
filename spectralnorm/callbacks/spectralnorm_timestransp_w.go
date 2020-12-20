@@ -1,31 +1,29 @@
 package callbacks
 
-import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm_timestransp"
-
 type SpectralNorm_TimesTransp_W_Env interface {
-	Finish_From_M(finish_msg spectralnorm_timestransp.Finish)
+	Finish_From_M()
 	Done()
-	TimesTranspResult_To_M() spectralnorm_timestransp.TimesTranspResult
-	TimesTranspTask_From_M(timestransptask_msg spectralnorm_timestransp.TimesTranspTask)
+	TimesTranspResult_To_M() []float64
+	TimesTranspTask_From_M(ii int, n int, u []float64, v []float64)
 }
 
 type SpectralNorm_TimesTranspWState struct {
 	V []float64
 }
 
-func (s *SpectralNorm_TimesTranspWState) Finish_From_M(finish_msg spectralnorm_timestransp.Finish) {
+func (s *SpectralNorm_TimesTranspWState) Finish_From_M() {
 }
 
 func (s *SpectralNorm_TimesTranspWState) Done() {
 }
 
-func (s *SpectralNorm_TimesTranspWState) TimesTranspResult_To_M() spectralnorm_timestransp.TimesTranspResult {
-	return spectralnorm_timestransp.TimesTranspResult{Res: s.V}
+func (s *SpectralNorm_TimesTranspWState) TimesTranspResult_To_M() []float64 {
+	return s.V
 }
 
-func (s *SpectralNorm_TimesTranspWState) TimesTranspTask_From_M(timestransptask_msg spectralnorm_timestransp.TimesTranspTask) {
-	s.V = timestransptask_msg.V
-	TimesTransp(timestransptask_msg.Ii, timestransptask_msg.N, s.V, timestransptask_msg.U)
+func (s *SpectralNorm_TimesTranspWState) TimesTranspTask_From_M(ii int, n int, u []float64, v []float64) {
+	s.V = v
+	TimesTransp(ii, n, s.V, u)
 }
 
 func New_SpectralNorm_TimesTransp_W_State() SpectralNorm_TimesTransp_W_Env {

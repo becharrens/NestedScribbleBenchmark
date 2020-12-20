@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/primesieve/messages"
 import "NestedScribbleBenchmark/primesieve/channels/sieve"
 import "NestedScribbleBenchmark/primesieve/invitations"
 import "NestedScribbleBenchmark/primesieve/callbacks"
@@ -7,9 +8,11 @@ import "sync"
 
 func Sieve_W2(wg *sync.WaitGroup, roleChannels sieve.W2_Chan, inviteChannels invitations.Sieve_W2_InviteChan, env callbacks.Sieve_W2_Env) {
 	defer wg.Done()
-	filterprime_msg := <-roleChannels.W1_FilterPrime
-	env.FilterPrime_From_W1(filterprime_msg)
+	<-roleChannels.Label_From_W1
+	int := <-roleChannels.Int_From_W1
+	env.FilterPrime_From_W1(int)
 
+	<-roleChannels.Label_From_W1
 	sieve_sendnums_r_chan := <-inviteChannels.W1_Invite_To_Sieve_SendNums_R
 	sieve_sendnums_r_inviteChan := <-inviteChannels.W1_Invite_To_Sieve_SendNums_R_InviteChan
 	sieve_sendnums_r_env := env.To_Sieve_SendNums_R_Env()
@@ -19,10 +22,13 @@ func Sieve_W2(wg *sync.WaitGroup, roleChannels sieve.W2_Chan, inviteChannels inv
 	w2_choice := env.W2_Choice()
 	switch w2_choice {
 	case callbacks.Sieve_W2_Prime:
-		prime_msg := env.Prime_To_M()
-		roleChannels.M_Prime <- prime_msg
+		n := env.Prime_To_M()
+		roleChannels.Label_To_M <- messages.Prime
+		roleChannels.Int_To_M <- n
 
 		env.Sieve_Setup()
+		roleChannels.Label_To_M <- messages.Sieve_M_W2
+
 		sieve_rolechan := invitations.Sieve_RoleSetupChan{
 			M_Chan:  inviteChannels.Invite_M_To_Sieve_M,
 			W1_Chan: inviteChannels.Invite_W2_To_Sieve_W1,
@@ -42,8 +48,8 @@ func Sieve_W2(wg *sync.WaitGroup, roleChannels sieve.W2_Chan, inviteChannels inv
 		env.Done()
 		return
 	case callbacks.Sieve_W2_Finish:
-		finish_msg := env.Finish_To_M()
-		roleChannels.M_Finish <- finish_msg
+		env.Finish_To_M()
+		roleChannels.Label_To_M <- messages.Finish
 
 		env.Done()
 		return

@@ -16,14 +16,12 @@ var fannkuchParams = []int{4, 5, 6, 7, 8, 9, 10, 11, 12}
 type FannkuchEnv struct {
 	N         int
 	ChunkSize int
-	Fact      []int
 	Res       int
 	Checksum  int
 }
 
 func (f *FannkuchEnv) New_Main_Env() callbacks.Fannkuch_Main_Env {
 	return &callbacks.FannkuchMainState{
-		Fact:      f.Fact,
 		N:         f.N,
 		ChunkSize: f.ChunkSize,
 		Res:       0,
@@ -44,18 +42,17 @@ func (f *FannkuchEnv) Worker_Result(result fannkuch.Worker_Result) {
 }
 
 func NewFannkuchEnv(n int) *FannkuchEnv {
-	fact := make([]int, n+1)
-	fact[0] = 1
-	for i := 1; i < len(fact); i++ {
-		fact[i] = fact[i-1] * i
+	callbacks.Fact = make([]int, n+1)
+	callbacks.Fact[0] = 1
+	for i := 1; i < len(callbacks.Fact); i++ {
+		callbacks.Fact[i] = callbacks.Fact[i-1] * i
 	}
 
-	chunksz := (fact[n] + NCHUNKS - 1) / NCHUNKS
+	chunksz := (callbacks.Fact[n] + NCHUNKS - 1) / NCHUNKS
 	chunksz += chunksz % 2
 	return &FannkuchEnv{
 		N:         n,
 		ChunkSize: chunksz,
-		Fact:      fact,
 		Res:       0,
 		Checksum:  0,
 	}

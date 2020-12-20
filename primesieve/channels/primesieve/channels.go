@@ -1,17 +1,17 @@
 package primesieve
 
-import "NestedScribbleBenchmark/primesieve/messages/primesieve"
+import "NestedScribbleBenchmark/primesieve/messages"
 
 type Master_Chan struct {
-	Worker_Finish     chan primesieve.Finish
-	Worker_FirstPrime chan primesieve.FirstPrime
-	Worker_Prime      chan primesieve.Prime
-	Worker_UBound     chan primesieve.UBound
+	Int_From_Worker   chan int
+	Int_To_Worker     chan int
+	Label_From_Worker chan messages.PrimeSieve_Label
+	Label_To_Worker   chan messages.PrimeSieve_Label
 }
 
 type Worker_Chan struct {
-	Master_Finish     chan primesieve.Finish
-	Master_FirstPrime chan primesieve.FirstPrime
-	Master_Prime      chan primesieve.Prime
-	Master_UBound     chan primesieve.UBound
+	Int_From_Master   chan int
+	Int_To_Master     chan int
+	Label_From_Master chan messages.PrimeSieve_Label
+	Label_To_Master   chan messages.PrimeSieve_Label
 }

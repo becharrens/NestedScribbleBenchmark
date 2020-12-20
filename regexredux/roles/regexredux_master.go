@@ -7,10 +7,8 @@ import regexredux_2 "NestedScribbleBenchmark/regexredux/results/regexredux"
 import "sync"
 
 func RegexRedux_Master(wg *sync.WaitGroup, roleChannels regexredux.Master_Chan, inviteChannels invitations.RegexRedux_Master_InviteChan, env callbacks.RegexRedux_Master_Env) regexredux_2.Master_Result {
-	task_msg := env.Task_To_Worker()
-	roleChannels.Worker_Task <- task_msg
-
 	env.RegexRedux2_Setup()
+
 	regexredux2_rolechan := invitations.RegexRedux2_RoleSetupChan{
 		M_Chan: inviteChannels.Invite_Master_To_RegexRedux2_M,
 	}
@@ -24,9 +22,6 @@ func RegexRedux_Master(wg *sync.WaitGroup, roleChannels regexredux.Master_Chan, 
 	regexredux2_m_env := env.To_RegexRedux2_M_Env()
 	regexredux2_m_result := RegexRedux2_M(wg, regexredux2_m_chan, regexredux2_m_inviteChan, regexredux2_m_env)
 	env.ResultFrom_RegexRedux2_M(regexredux2_m_result)
-
-	nummatches_msg := <-roleChannels.Worker_NumMatches
-	env.NumMatches_From_Worker(nummatches_msg)
 
 	return env.Done()
 }

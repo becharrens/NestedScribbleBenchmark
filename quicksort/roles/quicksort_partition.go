@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/quicksort/messages"
 import "NestedScribbleBenchmark/quicksort/channels/quicksort"
 import "NestedScribbleBenchmark/quicksort/invitations"
 import "NestedScribbleBenchmark/quicksort/callbacks"
@@ -10,25 +11,29 @@ func QuickSort_Partition(wg *sync.WaitGroup, roleChannels quicksort.Partition_Ch
 	partition_choice := env.Partition_Choice()
 	switch partition_choice {
 	case callbacks.QuickSort_Partition_LeftParitition:
-		leftparitition_msg := env.LeftParitition_To_Left()
-		roleChannels.Left_LeftParitition <- leftparitition_msg
+		arr := env.LeftParitition_To_Left()
+		roleChannels.Label_To_Left <- messages.LeftParitition
+		roleChannels.IntArr_To_Left <- arr
 
-		rightpartition_msg := env.RightPartition_To_Right()
-		roleChannels.Right_RightPartition <- rightpartition_msg
+		arr_2 := env.RightPartition_To_Right()
+		roleChannels.Label_To_Right <- messages.RightPartition
+		roleChannels.IntArr_To_Right <- arr_2
 
-		sortedleft_msg := <-roleChannels.Left_SortedLeft
-		env.SortedLeft_From_Left(sortedleft_msg)
+		<-roleChannels.Label_From_Left
+		arr_3 := <-roleChannels.IntArr_From_Left
+		env.SortedLeft_From_Left(arr_3)
 
-		sortedright_msg := <-roleChannels.Right_SortedRight
-		env.SortedRight_From_Right(sortedright_msg)
+		<-roleChannels.Label_From_Right
+		arr_4 := <-roleChannels.IntArr_From_Right
+		env.SortedRight_From_Right(arr_4)
 
 		return env.Done()
 	case callbacks.QuickSort_Partition_Done:
-		done_msg := env.Done_To_Left()
-		roleChannels.Left_Done <- done_msg
+		env.Done_To_Left()
+		roleChannels.Label_To_Left <- messages.Done
 
-		done_msg_2 := env.Done_To_Right()
-		roleChannels.Right_Done <- done_msg_2
+		env.Done_To_Right()
+		roleChannels.Label_To_Right <- messages.Done
 
 		return env.Done()
 	default:

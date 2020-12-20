@@ -1,12 +1,9 @@
 package callbacks
 
-import (
-	boundedfib_2 "NestedScribbleBenchmark/boundedfibonacci/messages/boundedfib"
-)
 import "NestedScribbleBenchmark/boundedfibonacci/results/boundedfib"
 
 type BoundedFib_Res_Env interface {
-	Result_From_F3(result_msg boundedfib_2.Result)
+	Result_From_F3(fib int)
 	Done() boundedfib.Res_Result
 	ResultFrom_BoundedFib_Res(result boundedfib.Res_Result)
 	To_BoundedFib_Res_Env() BoundedFib_Res_Env
@@ -16,8 +13,8 @@ type BoundedFibResState struct {
 	Fib int
 }
 
-func (f *BoundedFibResState) Result_From_F3(result boundedfib_2.Result) {
-	f.Fib = result.Fib
+func (f *BoundedFibResState) Result_From_F3(fib int) {
+	f.Fib = fib
 }
 
 func (f *BoundedFibResState) Done() boundedfib.Res_Result {

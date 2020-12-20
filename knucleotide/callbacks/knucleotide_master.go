@@ -1,18 +1,13 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/knucleotide/messages/knucleotide"
-)
 import "NestedScribbleBenchmark/knucleotide/results/schedulejobs"
-import knucleotide_2 "NestedScribbleBenchmark/knucleotide/results/knucleotide"
+import "NestedScribbleBenchmark/knucleotide/results/knucleotide"
 
 type KNucleotide_Master_Env interface {
-	Done() knucleotide_2.Master_Result
-	SequenceResult_From_Worker(sequenceresult_msg knucleotide.SequenceResult)
+	Done() knucleotide.Master_Result
 	ResultFrom_ScheduleJobs_M(result schedulejobs.M_Result)
 	To_ScheduleJobs_M_Env() ScheduleJobs_M_Env
 	ScheduleJobs_Setup()
-	SequenceJob_To_Worker() knucleotide.SequenceJob
 }
 
 type TaskType int
@@ -38,13 +33,8 @@ type KNucleotideMasterState struct {
 	LenIdx     int
 }
 
-func (k *KNucleotideMasterState) Done() knucleotide_2.Master_Result {
-	return knucleotide_2.Master_Result{}
-}
-
-func (k *KNucleotideMasterState) SequenceResult_From_Worker(sequenceresult_msg knucleotide.SequenceResult) {
-	// TODO: Uncomment
-	// fmt.Println(sequenceresult_msg.Res)
+func (k *KNucleotideMasterState) Done() knucleotide.Master_Result {
+	return knucleotide.Master_Result{}
 }
 
 func (k *KNucleotideMasterState) ResultFrom_ScheduleJobs_M(result schedulejobs.M_Result) {
@@ -53,20 +43,13 @@ func (k *KNucleotideMasterState) ResultFrom_ScheduleJobs_M(result schedulejobs.M
 func (k *KNucleotideMasterState) To_ScheduleJobs_M_Env() ScheduleJobs_M_Env {
 	return &ScheduleJobsMState{
 		Dna:        k.Dna,
-		PatternIdx: k.PatternIdx - 1,
+		PatternIdx: k.PatternIdx,
 		LengthIdx:  k.LenIdx,
-		TaskType:   nextTaskType(k.PatternIdx),
+		TaskType:   SeqTask,
 	}
 }
 
 func (k *KNucleotideMasterState) ScheduleJobs_Setup() {
-}
-
-func (k *KNucleotideMasterState) SequenceJob_To_Worker() knucleotide.SequenceJob {
-	return knucleotide.SequenceJob{
-		Dna:      k.Dna,
-		Sequence: Patterns[k.PatternIdx],
-	}
 }
 
 func nextTaskType(patternIdx int) TaskType {

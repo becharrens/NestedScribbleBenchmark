@@ -1,16 +1,20 @@
 package boundedfibonacci
 
-import "NestedScribbleBenchmark/boundedfibonacci/messages/boundedfibonacci"
+import "NestedScribbleBenchmark/boundedfibonacci/messages"
 
 type Start_Chan struct {
-	F1_StartFib1 chan boundedfibonacci.StartFib1
-	F2_StartFib2 chan boundedfibonacci.StartFib2
+	Int_To_F1   chan int
+	Int_To_F2   chan int
+	Label_To_F1 chan messages.BoundedFibonacci_Label
+	Label_To_F2 chan messages.BoundedFibonacci_Label
 }
 
 type F1_Chan struct {
-	Start_StartFib1 chan boundedfibonacci.StartFib1
+	Int_From_Start   chan int
+	Label_From_Start chan messages.BoundedFibonacci_Label
 }
 
 type F2_Chan struct {
-	Start_StartFib2 chan boundedfibonacci.StartFib2
+	Int_From_Start   chan int
+	Label_From_Start chan messages.BoundedFibonacci_Label
 }

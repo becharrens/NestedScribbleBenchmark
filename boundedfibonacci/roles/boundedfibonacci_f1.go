@@ -7,9 +7,12 @@ import boundedfibonacci_2 "NestedScribbleBenchmark/boundedfibonacci/results/boun
 import "sync"
 
 func BoundedFibonacci_F1(wg *sync.WaitGroup, roleChannels boundedfibonacci.F1_Chan, inviteChannels invitations.BoundedFibonacci_F1_InviteChan, env callbacks.BoundedFibonacci_F1_Env) boundedfibonacci_2.F1_Result {
-	startfib1_msg := <-roleChannels.Start_StartFib1
-	env.StartFib1_From_Start(startfib1_msg)
+	<-roleChannels.Label_From_Start
+	n := <-roleChannels.Int_From_Start
+	val := <-roleChannels.Int_From_Start
+	env.StartFib1_From_Start(n, val)
 
+	<-roleChannels.Label_From_Start
 	boundedfib_f1_chan := <-inviteChannels.Start_Invite_To_BoundedFib_F1
 	boundedfib_f1_inviteChan := <-inviteChannels.Start_Invite_To_BoundedFib_F1_InviteChan
 	boundedfib_f1_env := env.To_BoundedFib_F1_Env()
@@ -17,4 +20,4 @@ func BoundedFibonacci_F1(wg *sync.WaitGroup, roleChannels boundedfibonacci.F1_Ch
 	env.ResultFrom_BoundedFib_F1(boundedfib_f1_result)
 
 	return env.Done()
-} 
+}

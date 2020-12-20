@@ -1,10 +1,7 @@
 package callbacks
 
-import (
-	"NestedScribbleBenchmark/fannkuch/messages/fannkuch"
-	fannkuch_2 "NestedScribbleBenchmark/fannkuch/results/fannkuch"
-	"NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
-)
+import "NestedScribbleBenchmark/fannkuch/results/fannkuchrecursive"
+import "NestedScribbleBenchmark/fannkuch/results/fannkuch"
 
 type Fannkuch_Worker_Choice int
 
@@ -14,42 +11,35 @@ const (
 )
 
 type Fannkuch_Worker_Env interface {
-	Result_To_Main_2() fannkuch.Result
-	Done() fannkuch_2.Worker_Result
-	Result_To_Main() fannkuch.Result
+	Result_To_Main_2() (int, int)
+	Done() fannkuch.Worker_Result
+	Result_To_Main() (int, int)
 	ResultFrom_FannkuchRecursive_Worker(result fannkuchrecursive.Worker_Result)
 	To_FannkuchRecursive_Worker_Env() FannkuchRecursive_Worker_Env
 	FannkuchRecursive_Setup()
 	Worker_Choice() Fannkuch_Worker_Choice
-	Task_From_Main(task fannkuch.Task)
+	Task_From_Main(idxmin int, chunksz int, n int)
 }
 
 type FannkuchWorkerState struct {
-	Fact    []int
 	IdxMin  int
 	IdxMax  int
 	N       int
 	Chunksz int
 }
 
-func (f *FannkuchWorkerState) Result_To_Main_2() fannkuch.Result {
-	maxFlips, checksum := fannkuchImpl(f.IdxMin, f.IdxMax, f.N, f.Fact)
-	return fannkuch.Result{
-		Checksum: checksum,
-		MaxFlips: maxFlips,
-	}
+func (f *FannkuchWorkerState) Result_To_Main_2() (int, int) {
+	maxFlips, checksum := fannkuchImpl(f.IdxMin, f.IdxMax, f.N)
+	return maxFlips, checksum
 }
 
-func (f *FannkuchWorkerState) Done() fannkuch_2.Worker_Result {
-	return fannkuch_2.Worker_Result{}
+func (f *FannkuchWorkerState) Done() fannkuch.Worker_Result {
+	return fannkuch.Worker_Result{}
 }
 
-func (f *FannkuchWorkerState) Result_To_Main() fannkuch.Result {
-	maxFlips, checksum := fannkuchImpl(f.IdxMin, f.IdxMax, f.N, f.Fact)
-	return fannkuch.Result{
-		Checksum: checksum,
-		MaxFlips: maxFlips,
-	}
+func (f *FannkuchWorkerState) Result_To_Main() (int, int) {
+	maxFlips, checksum := fannkuchImpl(f.IdxMin, f.IdxMax, f.N)
+	return maxFlips, checksum
 }
 
 func (f *FannkuchWorkerState) ResultFrom_FannkuchRecursive_Worker(result fannkuchrecursive.Worker_Result) {
@@ -57,7 +47,6 @@ func (f *FannkuchWorkerState) ResultFrom_FannkuchRecursive_Worker(result fannkuc
 
 func (f *FannkuchWorkerState) To_FannkuchRecursive_Worker_Env() FannkuchRecursive_Worker_Env {
 	return &FannkuchRecursiveWorkerState{
-		Fact:    f.Fact,
 		IdxMin:  f.IdxMax,
 		N:       f.N,
 		Chunksz: f.Chunksz,
@@ -68,25 +57,24 @@ func (f *FannkuchWorkerState) FannkuchRecursive_Setup() {
 }
 
 func (f *FannkuchWorkerState) Worker_Choice() Fannkuch_Worker_Choice {
-	if f.IdxMax < f.Fact[f.N] {
+	if f.IdxMax < Fact[f.N] {
 		return Fannkuch_Worker_FannkuchRecursive
 	}
-	f.IdxMax = f.Fact[f.N]
+	f.IdxMax = Fact[f.N]
 	return Fannkuch_Worker_Result
 }
 
-func (f *FannkuchWorkerState) Task_From_Main(task fannkuch.Task) {
-	f.Fact = task.Fact
-	f.N = task.N
-	f.IdxMin = task.IdxMin
-	f.IdxMax = task.IdxMin + task.Chunksz
-	f.N = task.N
-	f.Chunksz = task.Chunksz
+func (f *FannkuchWorkerState) Task_From_Main(idxmin int, chunksz int, n int) {
+	f.N = n
+	f.IdxMin = idxmin
+	f.IdxMax = idxmin + chunksz
+	f.N = n
+	f.Chunksz = chunksz
 }
 
 // ------
 
-func fannkuchImpl(idxMin int, idxMax int, n int, fact []int) (int, int) {
+func fannkuchImpl(idxMin int, idxMax int, n int) (int, int) {
 	p := make([]int, n)
 	pp := make([]int, n)
 	count := make([]int, n)
@@ -96,9 +84,9 @@ func fannkuchImpl(idxMin int, idxMax int, n int, fact []int) (int, int) {
 		p[i] = i
 	}
 	for i, idx := n-1, idxMin; i > 0; i-- {
-		d := idx / fact[i]
+		d := idx / Fact[i]
 		count[i] = d
-		idx = idx % fact[i]
+		idx = idx % Fact[i]
 
 		copy(pp, p)
 		for j := 0; j <= i; j++ {

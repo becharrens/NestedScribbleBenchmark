@@ -1,31 +1,40 @@
 package roles
 
+import "NestedScribbleBenchmark/boundedfibonacci/messages"
 import "NestedScribbleBenchmark/boundedfibonacci/channels/boundedfib"
 import "NestedScribbleBenchmark/boundedfibonacci/invitations"
 import "NestedScribbleBenchmark/boundedfibonacci/callbacks"
 import "sync"
 
-func BoundedFib_F3(wg *sync.WaitGroup, roleChannels boundedfib.F3_Chan, inviteChannels invitations.BoundedFib_F3_InviteChan, env callbacks.BoundedFib_F3_Env)  {
+func BoundedFib_F3(wg *sync.WaitGroup, roleChannels boundedfib.F3_Chan, inviteChannels invitations.BoundedFib_F3_InviteChan, env callbacks.BoundedFib_F3_Env) {
 	defer wg.Done()
-	fib1_msg := <-roleChannels.F1_Fib1
-	env.Fib1_From_F1(fib1_msg)
+	<-roleChannels.Label_From_F1
+	ubound := <-roleChannels.Int_From_F1
+	idx := <-roleChannels.Int_From_F1
+	val := <-roleChannels.Int_From_F1
+	env.Fib1_From_F1(ubound, idx, val)
 
-	fib2_msg := <-roleChannels.F2_Fib2
-	env.Fib2_From_F2(fib2_msg)
+	<-roleChannels.Label_From_F2
+	idx_2 := <-roleChannels.Int_From_F2
+	val_2 := <-roleChannels.Int_From_F2
+	env.Fib2_From_F2(idx_2, val_2)
 
 	f3_choice := env.F3_Choice()
 	switch f3_choice {
 	case callbacks.BoundedFib_F3_BoundedFib:
 		env.BoundedFib_Setup()
+		roleChannels.Label_To_Res <- messages.BoundedFib_Res_F2_F3
+		roleChannels.Label_To_F2 <- messages.BoundedFib_Res_F2_F3
+
 		boundedfib_rolechan := invitations.BoundedFib_RoleSetupChan{
 			Res_Chan: inviteChannels.Invite_Res_To_BoundedFib_Res,
-			F1_Chan: inviteChannels.Invite_F2_To_BoundedFib_F1,
-			F2_Chan: inviteChannels.Invite_F3_To_BoundedFib_F2,
+			F1_Chan:  inviteChannels.Invite_F2_To_BoundedFib_F1,
+			F2_Chan:  inviteChannels.Invite_F3_To_BoundedFib_F2,
 		}
 		boundedfib_invitechan := invitations.BoundedFib_InviteSetupChan{
 			Res_InviteChan: inviteChannels.Invite_Res_To_BoundedFib_Res_InviteChan,
-			F1_InviteChan: inviteChannels.Invite_F2_To_BoundedFib_F1_InviteChan,
-			F2_InviteChan: inviteChannels.Invite_F3_To_BoundedFib_F2_InviteChan,
+			F1_InviteChan:  inviteChannels.Invite_F2_To_BoundedFib_F1_InviteChan,
+			F2_InviteChan:  inviteChannels.Invite_F3_To_BoundedFib_F2_InviteChan,
 		}
 		BoundedFib_SendCommChannels(wg, boundedfib_rolechan, boundedfib_invitechan)
 
@@ -36,17 +45,18 @@ func BoundedFib_F3(wg *sync.WaitGroup, roleChannels boundedfib.F3_Chan, inviteCh
 		env.ResultFrom_BoundedFib_F2(boundedfib_f2_result)
 
 		env.Done()
-		return 
+		return
 	case callbacks.BoundedFib_F3_Result:
-		result_msg := env.Result_To_Res()
-		roleChannels.Res_Result <- result_msg
+		fib := env.Result_To_Res()
+		roleChannels.Label_To_Res <- messages.Result
+		roleChannels.Int_To_Res <- fib
 
-		end_msg := env.End_To_F2()
-		roleChannels.F2_End <- end_msg
+		env.End_To_F2()
+		roleChannels.Label_To_F2 <- messages.End
 
 		env.Done()
-		return 
+		return
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

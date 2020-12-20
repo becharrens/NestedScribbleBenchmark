@@ -1,17 +1,15 @@
 package callbacks
 
 import (
-	"NestedScribbleBenchmark/regexredux/messages/regexredux2"
-
 	"github.com/GRbit/go-pcre"
 )
 
 type RegexRedux2_W_Env interface {
-	Length_To_M() regexredux2.Length
-	CalcLength_From_M(calclength_msg regexredux2.CalcLength)
+	Length_To_M() int
+	CalcLength_From_M(b []byte)
 	Done()
-	NumMatches_To_M() regexredux2.NumMatches
-	Task_From_M(task_msg regexredux2.Task)
+	NumMatches_To_M() int
+	Task_From_M(pattern string, b []byte)
 }
 
 type substitution struct {
@@ -32,12 +30,11 @@ type RegexRedux2WState struct {
 	Length   int
 }
 
-func (r *RegexRedux2WState) Length_To_M() regexredux2.Length {
-	return regexredux2.Length{Len: r.Length}
+func (r *RegexRedux2WState) Length_To_M() int {
+	return r.Length
 }
 
-func (r *RegexRedux2WState) CalcLength_From_M(calclength_msg regexredux2.CalcLength) {
-	b := calclength_msg.B
+func (r *RegexRedux2WState) CalcLength_From_M(b []byte) {
 	for i := 0; i < len(substs); i++ {
 		b = pcre.
 			MustCompileJIT(substs[i].pattern, 0, pcre.STUDY_JIT_COMPILE).
@@ -49,14 +46,27 @@ func (r *RegexRedux2WState) CalcLength_From_M(calclength_msg regexredux2.CalcLen
 func (r *RegexRedux2WState) Done() {
 }
 
-func (r *RegexRedux2WState) NumMatches_To_M() regexredux2.NumMatches {
-	return regexredux2.NumMatches{Nmatches: r.Nmatches}
+func (r *RegexRedux2WState) NumMatches_To_M() int {
+	return r.Nmatches
 }
 
-func (r *RegexRedux2WState) Task_From_M(task_msg regexredux2.Task) {
-	r.Nmatches = countMatches(task_msg.Pattern, task_msg.B)
+func (r *RegexRedux2WState) Task_From_M(pattern string, b []byte) {
+	r.Nmatches = countMatches(pattern, b)
 }
 
 func New_RegexRedux2_W_State() RegexRedux2_W_Env {
 	return &RegexRedux2WState{}
+}
+
+func countMatches(pat string, b []byte) int {
+	m := pcre.MustCompileJIT(pat, 0, pcre.STUDY_JIT_COMPILE).Matcher(b, 0)
+	n := 0
+
+	for f := m.Matches; f; f = m.Match(b, 0) {
+		n++
+
+		b = b[m.Index()[1]:]
+	}
+
+	return n
 }

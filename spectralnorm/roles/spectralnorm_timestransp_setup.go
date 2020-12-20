@@ -1,27 +1,33 @@
 package roles
 
-import "NestedScribbleBenchmark/spectralnorm/messages/spectralnorm_timestransp"
-import spectralnorm_timestransp_2 "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm_timestransp"
+import "NestedScribbleBenchmark/spectralnorm/messages"
+import "NestedScribbleBenchmark/spectralnorm/channels/spectralnorm_timestransp"
 import "NestedScribbleBenchmark/spectralnorm/invitations"
 import "NestedScribbleBenchmark/spectralnorm/callbacks"
 import "sync"
 
 func SpectralNorm_TimesTransp_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.SpectralNorm_TimesTransp_RoleSetupChan, inviteChannels invitations.SpectralNorm_TimesTransp_InviteSetupChan) {
-	m_w_finish := make(chan spectralnorm_timestransp.Finish, 1)
-	w_m_timestranspresult := make(chan spectralnorm_timestransp.TimesTranspResult, 1)
-	m_invite_m := make(chan spectralnorm_timestransp_2.M_Chan, 1)
+	w_m_vec := make(chan []float64, 1)
+	w_m_label := make(chan messages.SpectralNorm_Label, 1)
+	m_invite_m := make(chan spectralnorm_timestransp.M_Chan, 1)
 	m_invite_m_invitechan := make(chan invitations.SpectralNorm_TimesTransp_M_InviteChan, 1)
-	m_w_timestransptask := make(chan spectralnorm_timestransp.TimesTranspTask, 1)
+	m_w_vec := make(chan []float64, 1)
+	m_w_int := make(chan int, 1)
+	m_w_label := make(chan messages.SpectralNorm_Label, 1)
 
-	w_chan := spectralnorm_timestransp_2.W_Chan{
-		M_TimesTranspTask:   m_w_timestransptask,
-		M_TimesTranspResult: w_m_timestranspresult,
-		M_Finish:            m_w_finish,
+	w_chan := spectralnorm_timestransp.W_Chan{
+		Vec_To_M:     w_m_vec,
+		Vec_From_M:   m_w_vec,
+		Label_To_M:   w_m_label,
+		Label_From_M: m_w_label,
+		Int_From_M:   m_w_int,
 	}
-	m_chan := spectralnorm_timestransp_2.M_Chan{
-		W_TimesTranspTask:   m_w_timestransptask,
-		W_TimesTranspResult: w_m_timestranspresult,
-		W_Finish:            m_w_finish,
+	m_chan := spectralnorm_timestransp.M_Chan{
+		Vec_To_W:     m_w_vec,
+		Vec_From_W:   w_m_vec,
+		Label_To_W:   m_w_label,
+		Label_From_W: w_m_label,
+		Int_To_W:     m_w_int,
 	}
 
 	w_inviteChan := invitations.SpectralNorm_TimesTransp_W_InviteChan{}

@@ -1,17 +1,19 @@
 package regexredux2
 
-import "NestedScribbleBenchmark/regexredux/messages/regexredux2"
+import "NestedScribbleBenchmark/regexredux/messages"
 
 type M_Chan struct {
-	W_CalcLength chan regexredux2.CalcLength
-	W_Length     chan regexredux2.Length
-	W_NumMatches chan regexredux2.NumMatches
-	W_Task       chan regexredux2.Task
+	ByteArr_To_W chan []byte
+	Int_From_W   chan int
+	Label_From_W chan messages.RegexRedux_Label
+	Label_To_W   chan messages.RegexRedux_Label
+	String_To_W  chan string
 }
 
 type W_Chan struct {
-	M_CalcLength chan regexredux2.CalcLength
-	M_Length     chan regexredux2.Length
-	M_NumMatches chan regexredux2.NumMatches
-	M_Task       chan regexredux2.Task
+	ByteArr_From_M chan []byte
+	Int_To_M       chan int
+	Label_From_M   chan messages.RegexRedux_Label
+	Label_To_M     chan messages.RegexRedux_Label
+	String_From_M  chan string
 }

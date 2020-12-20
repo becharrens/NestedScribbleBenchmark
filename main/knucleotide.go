@@ -23,14 +23,7 @@ func (k *KNucleotideEnv) New_Master_Env() callbacks.KNucleotide_Master_Env {
 	}
 }
 
-func (k *KNucleotideEnv) New_Worker_Env() callbacks.KNucleotide_Worker_Env {
-	return &callbacks.KNucleotideWorkerState{}
-}
-
 func (k *KNucleotideEnv) Master_Result(result knucleotide.Master_Result) {
-}
-
-func (k *KNucleotideEnv) Worker_Result(result knucleotide.Worker_Result) {
 }
 
 var kNucleotideParams = []int{

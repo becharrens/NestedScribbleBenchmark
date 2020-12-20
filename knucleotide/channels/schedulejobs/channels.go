@@ -1,19 +1,21 @@
 package schedulejobs
 
-import "NestedScribbleBenchmark/knucleotide/messages/schedulejobs"
+import "NestedScribbleBenchmark/knucleotide/messages"
 
 type M_Chan struct {
-	W_Finish          chan schedulejobs.Finish
-	W_FrequencyJob    chan schedulejobs.FrequencyJob
-	W_FrequencyResult chan schedulejobs.FrequencyResult
-	W_SequenceJob     chan schedulejobs.SequenceJob
-	W_SequenceResult  chan schedulejobs.SequenceResult
+	ByteArr_To_W  chan []byte
+	Int_To_W      chan int
+	Label_From_W  chan messages.KNucleotide_Label
+	Label_To_W    chan messages.KNucleotide_Label
+	String_From_W chan string
+	String_To_W   chan string
 }
 
 type W_Chan struct {
-	M_Finish          chan schedulejobs.Finish
-	M_FrequencyJob    chan schedulejobs.FrequencyJob
-	M_FrequencyResult chan schedulejobs.FrequencyResult
-	M_SequenceJob     chan schedulejobs.SequenceJob
-	M_SequenceResult  chan schedulejobs.SequenceResult
+	ByteArr_From_M chan []byte
+	Int_From_M     chan int
+	Label_From_M   chan messages.KNucleotide_Label
+	Label_To_M     chan messages.KNucleotide_Label
+	String_From_M  chan string
+	String_To_M    chan string
 }
