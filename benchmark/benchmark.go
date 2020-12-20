@@ -30,7 +30,7 @@ func TimeImpl(values []int, repetitions int, implFunction TimeFunction) Benchmar
 		for j = 0; rs.Mean()*float64(j) < float64(MinExecTime) || j < repetitions || rs.StandardDeviation()/rs.Mean() > 0.05+requirement; j++ {
 			times = append(times, implFunction(val))
 			rs.Push(float64(times[j]))
-			if j > repetitions {
+			if j > repetitions && rs.Mean()*float64(j) > float64(MinExecTime) {
 				requirement += 0.00001
 			}
 		}
