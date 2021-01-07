@@ -1,0 +1,61 @@
+(*#NestedProtocols#*)
+
+nested protocol DNSLookup(role res; new role dns) {
+  Req(host: string) from res to dns;
+  choice at dns {
+    IP(ip: string) from dns to res;
+  } or {
+    DNSIP(ip: string) from dns to res;
+    res calls DNSLookup(res);
+  }
+}
+
+// global protocol DNS(role app, role dnsRes) {
+
+//   nested protocol Cached(role res) {}
+
+//   rec REC {
+//     choice at app {
+//       Done() from app to dnsRes;
+//     } or {
+//       Req(host: string) from app to dnsRes;
+//       choice at dnsRes {
+//         // Return cached response
+//         dnsRes calls Cached(dnsRes);
+//         IP(ip: string) from dnsRes to app;
+//         continue REC;
+//       } or {
+//         dnsRes calls DNSLookup(dnsRes);
+//         IP(ip:string) from dnsRes to app;
+//         continue REC;
+//       }
+//     }
+//   }
+// }
+
+global protocol DNS(role app, role dnsRes, role ispDNS) {
+
+  nested protocol Cached(role res) {}
+
+  rec REC {
+    choice at app {
+      Done() from app to dnsRes;
+      Done() from dnsRes to ispDNS;
+    } or {
+      Query(host: string) from app to dnsRes;
+      RecQuery(host: string) from dnsRes to ispDNS;
+      choice at ispDNS {
+        // Return cached response
+        ispDNS calls Cached(ispDNS);
+        IP(ip: string) from ispDNS to dnsRes;
+        IP(ip: string) from dnsRes to app;
+        continue REC;
+      } or {
+        ispDNS calls DNSLookup(ispDNS);
+        IP(ip: string) from ispDNS to dnsRes;
+        IP(ip: string) from dnsRes to app;
+        continue REC;
+      }
+    }
+  }
+}
