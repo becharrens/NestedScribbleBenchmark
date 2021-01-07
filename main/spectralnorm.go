@@ -64,6 +64,7 @@ func TimeSpectralNorm(n int) time.Duration {
 	start := time.Now()
 	protocol.SpectralNorm(env)
 	elapsed := time.Since(start)
+	// fmt.Printf("%0.9f\n", env.SpectralNorm)
 	return elapsed
 }
 
@@ -71,6 +72,7 @@ func TimeSpectralNormBase(n int) time.Duration {
 	start := time.Now()
 	spectralnorm_base.SpectralNorm(n)
 	elapsed := time.Since(start)
+	// fmt.Printf("%0.9f\n", snorm)
 	return elapsed
 }
 

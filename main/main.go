@@ -195,11 +195,4 @@ func main() {
 		RunUboundedFibonacciBase()
 	}
 
-	// Testing
-	TimeBoundedFibonacci(90)
-	TimeBoundedFibonacciBase(90)
-	TimeBoundedFibonacciOptimisedLabelledMsgExchanges(90)
-	TimeBoundedFibonacciOptimisedInvitations(90)
-	TimeBoundedFibonacciWithoutCallbacks(90)
-	TimeBoundedFibonacciWithoutEmptyInviteStruct(90)
 }

@@ -56,7 +56,7 @@ func A(i, j int) int {
 	return ((i+j)*(i+j+1)/2 + i + 1)
 }
 
-func SpectralNorm(n int) {
+func SpectralNorm(n int) float64 {
 	u := make(Vec, n)
 	for i := range u {
 		u[i] = 1
@@ -71,7 +71,6 @@ func SpectralNorm(n int) {
 		vBv += u[i] * vi
 		vv += vi * vi
 	}
-	_ = math.Sqrt(vBv / vv)
-	// TODO: Uncomment
-	// fmt.Printf("%0.9f\n", math.Sqrt(vBv/vv))
+	snorm := math.Sqrt(vBv / vv)
+	return snorm
 }
