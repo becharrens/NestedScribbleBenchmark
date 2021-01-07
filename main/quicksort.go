@@ -74,6 +74,8 @@ func RandomArr(size int) []int {
 
 func TimeQuickSort(n int) time.Duration {
 	env := NewQuickSortEnv(n)
+	// DEBUG
+	// fmt.Println(env.Arr)
 	start := time.Now()
 	protocol.QuickSort(env)
 	elapsed := time.Since(start)
@@ -84,6 +86,8 @@ func TimeQuickSort(n int) time.Duration {
 
 func TimeQuickSortBase(n int) time.Duration {
 	arr := RandomArr(n)
+	// DEBUG
+	// fmt.Println(arr)
 	start := time.Now()
 	quicksort_base.QuickSort(arr)
 	elapsed := time.Since(start)
