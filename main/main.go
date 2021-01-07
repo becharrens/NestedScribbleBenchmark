@@ -36,8 +36,10 @@ func main() {
 
 	// Flags for benchmarks
 	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded fibonacci protocol")
+	cmpFibBaselines := flag.Bool("cmp-fib", false, "Compare bounded fibonacci performance against baselines with different degrees of optimisation")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
+	cmpSieveBaselines := flag.Bool("cmp-sieve", false, "Compare primesieve performance against baselines with different degrees of optimisation")
 	runRegexRedux := flag.Bool("redux", false, "Run benchmark on regexredux protocol")
 	runSpectralNorm := flag.Bool("snorm", false, "Run benchmark on spectralnorm protocol")
 	runKNucleotide := flag.Bool("knucl", false, "Run benchmark on quicksort protocol")
@@ -126,6 +128,44 @@ func main() {
 	err := ioutil.WriteFile("benchmark-results.txt", []byte(result), 0644)
 	if err != nil {
 		panic("Error while writing to file")
+	}
+
+	if *cmpSieveBaselines {
+		scribbleResults, allBaseResults := ComparePrimeSieveAgainstBaselines(iterations)
+		baseResStr := benchmark.ResultsToString("primesieve-scribble.txt", scribbleResults)
+		err := ioutil.WriteFile("primesieve-scribble"+".txt", []byte(baseResStr), 0644)
+		if err != nil {
+			panic("Error while writing to file")
+		}
+		for name, baseResults := range allBaseResults {
+			fmt.Println(name)
+			PrintAvgResults(scribbleResults, baseResults)
+			baseResStr := benchmark.ResultsToString(name, baseResults)
+			err := ioutil.WriteFile(name+".txt", []byte(baseResStr), 0644)
+			if err != nil {
+				panic("Error while writing to file")
+			}
+		}
+		fmt.Println()
+	}
+
+	if *cmpFibBaselines {
+		scribbleResults, allBaseResults := CompareFibonacciAgainstBaselines(iterations)
+		baseResStr := benchmark.ResultsToString("bfib-scribble.txt", scribbleResults)
+		err := ioutil.WriteFile("bfib-scribble"+".txt", []byte(baseResStr), 0644)
+		if err != nil {
+			panic("Error while writing to file")
+		}
+		for name, baseResults := range allBaseResults {
+			fmt.Println(name)
+			PrintAvgResults(scribbleResults, baseResults)
+			baseResStr := benchmark.ResultsToString(name, baseResults)
+			err := ioutil.WriteFile(name+".txt", []byte(baseResStr), 0644)
+			if err != nil {
+				panic("Error while writing to file")
+			}
+		}
+		fmt.Println()
 	}
 
 	if *runQuickSort || *runAll {

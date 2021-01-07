@@ -13,12 +13,18 @@ import (
 	"NestedScribbleBenchmark/boundedfibonacci/callbacks"
 	"NestedScribbleBenchmark/boundedfibonacci/protocol"
 	"NestedScribbleBenchmark/boundedfibonacci/results/boundedfibonacci"
+	"fmt"
 	"time"
 )
 
 var boundedfibParams = []int{
 	5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90,
 }
+
+var fibBaselines = map[string]func(int) time.Duration{"fib-optimised": TimeBoundedFibonacciBase,
+	"fib-no-callbacks":      TimeBoundedFibonacciWithoutCallbacks,
+	"fib-opt-invitations":   TimeBoundedFibonacciOptimisedInvitations,
+	"fib-opt-labelled-msgs": TimeBoundedFibonacciOptimisedLabelledMsgExchanges}
 
 // var boundedfibParams = []int{
 // 	10, 25, 40, 55, 70, 80, 90,
@@ -210,5 +216,17 @@ func BoundedFibonacciBenchmarkOptimisedLabelledMsgExchanges(repetitions int) (be
 func BoundedFibonacciBenchmarkOptimisedInvitations(repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
 	scribble_results := benchmark.TimeImpl(boundedfibParams, repetitions, TimeBoundedFibonacci)
 	base_results := benchmark.TimeImpl(boundedfibParams, repetitions, TimeBoundedFibonacciOptimisedInvitations)
+	return scribble_results, base_results
+}
+
+func CompareFibonacciAgainstBaselines(repetitions int) (benchmark.BenchmarkTimes, map[string]benchmark.BenchmarkTimes) {
+	fmt.Println("Bounded Fibonacci")
+	fmt.Println("Scribble")
+	scribble_results := benchmark.TimeImpl(boundedfibParams, repetitions, TimeBoundedFibonacci)
+	base_results := make(map[string]benchmark.BenchmarkTimes)
+	for name, baseTimeFunc := range fibBaselines {
+		fmt.Println("Baseline", name)
+		base_results[name] = benchmark.TimeImpl(boundedfibParams, repetitions, baseTimeFunc)
+	}
 	return scribble_results, base_results
 }

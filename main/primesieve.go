@@ -12,6 +12,7 @@ import (
 	callbacks_4 "NestedScribbleBenchmark/primesieve_base/primesieve4/callbacks"
 	protocol_4 "NestedScribbleBenchmark/primesieve_base/primesieve4/protocol"
 	primesieve_4 "NestedScribbleBenchmark/primesieve_base/primesieve4/results/primesieve"
+	"fmt"
 	"time"
 )
 
@@ -23,6 +24,10 @@ type PrimeSieveEnv struct {
 var primesieveParams = []int{
 	100, 1100, 2100, 3100, 4100, 5100, 6100, 7100, 8100, 9100,
 }
+
+var primesieveBaselines = map[string]func(int) time.Duration{"primesieve-optimised": TimePrimeSieveBase,
+	"primesieve-no-callbacks":    TimePrimeSieveBaseWithoutCallbacks,
+	"primesieve-opt-invitations": TimePrimeSieveBaseOptimisedInvitations}
 
 func (p *PrimeSieveEnv) New_Master_Env() callbacks.PrimeSieve_Master_Env {
 	return &callbacks.PrimeSieveMasterState{
@@ -171,5 +176,17 @@ func PrimeSieveBenchmarkWithoutCallbacks(repetitions int) (benchmark.BenchmarkTi
 func PrimeSieveBenchmarkOptimisedInvitations(repetitions int) (benchmark.BenchmarkTimes, benchmark.BenchmarkTimes) {
 	scribble_results := benchmark.TimeImpl(primesieveParams, repetitions, TimePrimeSieve)
 	base_results := benchmark.TimeImpl(primesieveParams, repetitions, TimePrimeSieveBaseOptimisedInvitations)
+	return scribble_results, base_results
+}
+
+func ComparePrimeSieveAgainstBaselines(repetitions int) (benchmark.BenchmarkTimes, map[string]benchmark.BenchmarkTimes) {
+	fmt.Println("PrimeSieve")
+	fmt.Println("Scribble")
+	scribble_results := benchmark.TimeImpl(primesieveParams, repetitions, TimePrimeSieve)
+	base_results := make(map[string]benchmark.BenchmarkTimes)
+	for name, baseTimeFunc := range primesieveBaselines {
+		fmt.Println("Baseline", name)
+		base_results[name] = benchmark.TimeImpl(primesieveParams, repetitions, baseTimeFunc)
+	}
 	return scribble_results, base_results
 }
