@@ -116,13 +116,15 @@ func TimePrimeSieve(n int) time.Duration {
 	start := time.Now()
 	protocol.PrimeSieve(env)
 	elapsed := time.Since(start)
+	fmt.Println(env.Primes)
 	return elapsed
 }
 
 func TimePrimeSieveBase(n int) time.Duration {
 	start := time.Now()
-	primesieve_base.PrimeSieve(n)
+	primes := primesieve_base.PrimeSieve(n)
 	elapsed := time.Since(start)
+	fmt.Println(primes)
 	return elapsed
 }
 
@@ -132,16 +134,16 @@ func TimePrimeSieveBaseWithoutResultStructs(n int) time.Duration {
 	start := time.Now()
 	protocol_2.PrimeSieve(env)
 	elapsed := time.Since(start)
-	// fmt.Println(env.Primes)
+	fmt.Println(env.Primes)
 	return elapsed
 }
 
 func TimePrimeSieveBaseWithoutCallbacks(n int) time.Duration {
 	// Remove result structs and cbs for empty results
 	start := time.Now()
-	protocol_3.PrimeSieve(n)
+	res := protocol_3.PrimeSieve(n)
 	elapsed := time.Since(start)
-	// fmt.Println(res)
+	fmt.Println(res)
 	return elapsed
 }
 
@@ -151,7 +153,7 @@ func TimePrimeSieveBaseOptimisedInvitations(n int) time.Duration {
 	start := time.Now()
 	protocol_4.PrimeSieve(env)
 	elapsed := time.Since(start)
-	// fmt.Println(env.Primes)
+	fmt.Println(env.Primes)
 	return elapsed
 }
 

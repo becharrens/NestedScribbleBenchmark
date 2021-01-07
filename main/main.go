@@ -194,4 +194,11 @@ func main() {
 	} else if *runUnboundedFibBase {
 		RunUboundedFibonacciBase()
 	}
+
+	// Testing
+	TimePrimeSieve(97)
+	TimePrimeSieveBase(97)
+	TimePrimeSieveBaseOptimisedInvitations(97)
+	TimePrimeSieveBaseWithoutCallbacks(97)
+	TimePrimeSieveBaseWithoutResultStructs(97)
 }
