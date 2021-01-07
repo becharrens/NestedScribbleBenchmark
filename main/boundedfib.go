@@ -146,13 +146,16 @@ func TimeBoundedFibonacci(n int) time.Duration {
 	start := time.Now()
 	protocol.BoundedFibonacci(env)
 	elapsed := time.Since(start)
+	// fmt.Println(env.Result)
 	return elapsed
 }
 
 func TimeBoundedFibonacciBase(n int) time.Duration {
 	start := time.Now()
-	_ = boundedfib_base.Fibonacci(n)
-	return time.Since(start)
+	boundedfib_base.Fibonacci(n)
+	elapsed := time.Since(start)
+	// fmt.Println(res)
+	return elapsed
 }
 
 func TimeBoundedFibonacciWithoutCallbacks(n int) time.Duration {
@@ -160,6 +163,7 @@ func TimeBoundedFibonacciWithoutCallbacks(n int) time.Duration {
 	start := time.Now()
 	protocol_2.BoundedFibonacci(n)
 	elapsed := time.Since(start)
+	// fmt.Println(res)
 	return elapsed
 }
 
@@ -168,6 +172,7 @@ func TimeBoundedFibonacciWithoutEmptyInviteStruct(n int) time.Duration {
 	start := time.Now()
 	protocol_3.BoundedFibonacci(env)
 	elapsed := time.Since(start)
+	// fmt.Println(env.Result)
 	return elapsed
 }
 

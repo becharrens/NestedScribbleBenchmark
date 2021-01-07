@@ -196,9 +196,10 @@ func main() {
 	}
 
 	// Testing
-	TimePrimeSieve(97)
-	TimePrimeSieveBase(97)
-	TimePrimeSieveBaseOptimisedInvitations(97)
-	TimePrimeSieveBaseWithoutCallbacks(97)
-	TimePrimeSieveBaseWithoutResultStructs(97)
+	TimeBoundedFibonacci(90)
+	TimeBoundedFibonacciBase(90)
+	TimeBoundedFibonacciOptimisedLabelledMsgExchanges(90)
+	TimeBoundedFibonacciOptimisedInvitations(90)
+	TimeBoundedFibonacciWithoutCallbacks(90)
+	TimeBoundedFibonacciWithoutEmptyInviteStruct(90)
 }

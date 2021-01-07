@@ -70,7 +70,7 @@ func (p *PrimeSieveWorkerState) Done() primesieve.Worker_Result {
 
 func initPossiblePrimes(firstPrime, ubound int) []int {
 	var result []int
-	for i := 3; i < ubound; i++ {
+	for i := 3; i <= ubound; i++ {
 		if i%firstPrime > 0 {
 			result = append(result, i)
 		}
