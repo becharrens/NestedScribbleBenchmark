@@ -17,7 +17,7 @@ type BoundedFib_F3_Env interface {
 	To_BoundedFib_F2_Env() BoundedFib_F2_Env
 	BoundedFib_Setup()
 	F3_Choice() BoundedFib_F3_Choice
-	Fib2_From_F2(idx int, val int)
+	Fib2_From_F2(val int)
 	Fib1_From_F1(ubound int, idx int, val int)
 }
 
@@ -59,7 +59,7 @@ func (f *BoundedFibF3State) F3_Choice() BoundedFib_F3_Choice {
 	return BoundedFib_F3_BoundedFib
 }
 
-func (f *BoundedFibF3State) Fib2_From_F2(idx int, val int) {
+func (f *BoundedFibF3State) Fib2_From_F2(val int) {
 	f.Fib = val + f.Fib1
 }
 

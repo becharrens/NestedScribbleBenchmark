@@ -15,9 +15,8 @@ func BoundedFib_F3(wg *sync.WaitGroup, roleChannels boundedfib.F3_Chan, inviteCh
 	env.Fib1_From_F1(ubound, idx, val)
 
 	<-roleChannels.Label_From_F2
-	idx_2 := <-roleChannels.Int_From_F2
 	val_2 := <-roleChannels.Int_From_F2
-	env.Fib2_From_F2(idx_2, val_2)
+	env.Fib2_From_F2(val_2)
 
 	f3_choice := env.F3_Choice()
 	switch f3_choice {

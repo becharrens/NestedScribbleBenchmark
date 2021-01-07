@@ -8,9 +8,8 @@ import boundedfib_2 "NestedScribbleBenchmark/boundedfibonacci/results/boundedfib
 import "sync"
 
 func BoundedFib_F2(wg *sync.WaitGroup, roleChannels boundedfib.F2_Chan, inviteChannels invitations.BoundedFib_F2_InviteChan, env callbacks.BoundedFib_F2_Env) boundedfib_2.F2_Result {
-	idx, val := env.Fib2_To_F3()
+	val := env.Fib2_To_F3()
 	roleChannels.Label_To_F3 <- messages.Fib2
-	roleChannels.Int_To_F3 <- idx
 	roleChannels.Int_To_F3 <- val
 
 	f3_choice := <-roleChannels.Label_From_F3

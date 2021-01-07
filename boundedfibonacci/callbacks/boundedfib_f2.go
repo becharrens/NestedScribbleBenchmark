@@ -7,7 +7,7 @@ type BoundedFib_F2_Env interface {
 	To_BoundedFib_F1_Env() BoundedFib_F1_Env
 	Done() boundedfib.F2_Result
 	End_From_F3()
-	Fib2_To_F3() (int, int)
+	Fib2_To_F3() int
 }
 
 type BoundedFibF2State struct {
@@ -34,6 +34,6 @@ func (f *BoundedFibF2State) Done() boundedfib.F2_Result {
 func (f *BoundedFibF2State) End_From_F3() {
 }
 
-func (f *BoundedFibF2State) Fib2_To_F3() (int, int) {
-	return f.Idx, f.Fib
+func (f *BoundedFibF2State) Fib2_To_F3() int {
+	return f.Fib
 }
