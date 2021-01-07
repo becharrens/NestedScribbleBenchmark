@@ -15,7 +15,7 @@ nested protocol Sieve(role M, role W1; new role W2) {
         }
     }
 
-    FilterPrime(int) from W1 to W2;
+    FilterPrime(n:int) from W1 to W2;
     W1 calls SendNums(W1, W2);
 
     choice at W2 {
