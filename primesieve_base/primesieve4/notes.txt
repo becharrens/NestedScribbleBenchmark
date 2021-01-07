@@ -1,0 +1,14 @@
+Optimisation:
+- Optimise invitations (only send invitations for dynamic participants, other
+channels are created when the role is initialised)
+
+100 - Scribble: 273, 81.052320, Base: 205, 48.214544, Ratio: 0.750916
+1100 - Scribble: 8141, 973.208511, Base: 7078, 517.512239, Ratio: 0.869426
+2100 - Scribble: 21263, 1238.648615, Base: 20289, 1775.223284, Ratio: 0.954193
+3100 - Scribble: 39965, 1333.816061, Base: 38594, 2356.519871, Ratio: 0.965695
+4100 - Scribble: 63503, 1080.381058, Base: 62414, 2943.579234, Ratio: 0.982851
+5100 - Scribble: 92225, 2642.759660, Base: 88984, 2712.092495, Ratio: 0.964858
+6100 - Scribble: 126355, 6394.134502, Base: 122883, 6113.505108, Ratio: 0.972522
+7100 - Scribble: 160880, 2081.085022, Base: 156258, 3785.294437, Ratio: 0.971271
+8100 - Scribble: 201031, 2961.471513, Base: 195450, 5863.625078, Ratio: 0.972238
+9100 - Scribble: 254298, 12943.472987, Base: 240816, 5966.581005, Ratio: 0.946983

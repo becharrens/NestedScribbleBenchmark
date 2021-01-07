@@ -48,43 +48,40 @@ func LoadBalancer() {
 // # Dynamic Task Generation #
 
 func Worker(idx int, req string, resp_chan chan string) {
-	resp_chan <- req[idx : idx+1]
+	resp_chan <- req[idx:idx+1] + req[idx:idx+1] /* Compute worker result */
 }
 
 func Master(req_chan, resp_chan chan string) {
 	for {
-		req := <-req_chan
+		req := <-req_chan /* Service request from Client */
 		worker_chan := make(chan string, 1)
-		n_workers := len(req)
-		for i := 0; i < n_workers; i++ {
+		n_workers := len(req)            /* Spawn workers to calculate result */
+		for i := 0; i < n_workers; i++ { /* n_workers depends on runtime value */
 			go Worker(i, req, worker_chan)
 		}
 		res := ""
-		for i := 0; i < n_workers; i++ {
+		for i := 0; i < n_workers; i++ { /* Aggregate worker results */
 			res += <-worker_chan
 		}
-		resp_chan <- res
+		resp_chan <- res /* Send response to Client */
 	}
 }
 
 func Client(req_chan, resp_chan chan string) {
-	for i := 0; ; i++ {
-		if i%2 == 0 {
-			req_chan <- "request"
-		} else {
-			req_chan <- "req"
-		}
-		fmt.Println(<-resp_chan)
+	requests := []string{"req", "short", "longreq"}
+	for i := 0; ; i++ { /* Send requests to Master */
+		req_chan <- requests[i%len(requests)]
+		fmt.Println(<-resp_chan) /* Process response */
 	}
 }
 
 func DynTaskGen() {
 	req_chan := make(chan string, 1)
 	resp_chan := make(chan string, 1)
-	go Master(req_chan, resp_chan)
+	go Master(req_chan, resp_chan) /* Spawn Client and Master */
 	go Client(req_chan, resp_chan)
 	ch := make(chan bool)
-	<-ch
+	<-ch /* Block so main thread does not exit prematurely */
 }
 
 // Posible bugs:
