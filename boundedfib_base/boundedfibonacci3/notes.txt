@@ -1,0 +1,11 @@
+Optimisations:
+- Removed empty invitation struct
+
+10 - Scribble: 64, 24.048199, Base: 61, 20.072074, Ratio: 0.953125
+25 - Scribble: 172, 50.330965, Base: 165, 39.110173, Ratio: 0.959302
+40 - Scribble: 278, 63.015018, Base: 265, 48.675857, Ratio: 0.953237
+55 - Scribble: 383, 75.583873, Base: 367, 59.930789, Ratio: 0.958225
+70 - Scribble: 490, 86.661650, Base: 467, 67.198257, Ratio: 0.953061
+80 - Scribble: 557, 89.344346, Base: 537, 77.467810, Ratio: 0.964093
+90 - Scribble: 624, 93.515318, Base: 606, 83.006885, Ratio: 0.971154
+

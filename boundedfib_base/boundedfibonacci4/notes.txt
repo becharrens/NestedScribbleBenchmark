@@ -1,0 +1,10 @@
+Optimisations
+- Optimise invitation messages
+
+10 - Scribble: 66, 23.390813, Base: 42, 16.280481, Ratio: 0.636364
+25 - Scribble: 178, 50.416326, Base: 107, 27.464588, Ratio: 0.601124
+40 - Scribble: 285, 63.221010, Base: 170, 37.453775, Ratio: 0.596491
+55 - Scribble: 393, 74.758648, Base: 235, 47.992341, Ratio: 0.597964
+70 - Scribble: 499, 87.142962, Base: 298, 55.105902, Ratio: 0.597194
+80 - Scribble: 568, 87.111757, Base: 336, 54.746032, Ratio: 0.591549
+90 - Scribble: 640, 95.490240, Base: 380, 60.267886, Ratio: 0.593750

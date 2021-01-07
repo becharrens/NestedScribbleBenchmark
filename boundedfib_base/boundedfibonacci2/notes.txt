@@ -1,0 +1,12 @@
+Optimisations:
+- Remove empty invitation struct
+- Remove callbacks and role state
+- Remove result structs
+
+10 - Scribble: 66, 33.971871, Base: 58, 18.164444, Ratio: 0.878788
+25 - Scribble: 179, 57.405930, Base: 155, 33.518975, Ratio: 0.865922
+40 - Scribble: 276, 59.760039, Base: 252, 44.640922, Ratio: 0.913043
+55 - Scribble: 380, 70.167327, Base: 355, 54.054014, Ratio: 0.934211
+70 - Scribble: 484, 81.120302, Base: 443, 61.540302, Ratio: 0.915289
+80 - Scribble: 552, 82.761789, Base: 504, 65.642722, Ratio: 0.913043
+90 - Scribble: 621, 88.385638, Base: 568, 72.046330, Ratio: 0.914654
