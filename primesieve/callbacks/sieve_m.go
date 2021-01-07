@@ -11,9 +11,9 @@ type Sieve_M_Env interface {
 }
 
 type SieveMState struct {
-	Primes   []int
-	StartNum int
-	EndNum   int
+	Primes []int
+	// StartNum int
+	EndNum int
 }
 
 func (s *SieveMState) Prime_From_W2(n int) {
@@ -22,14 +22,15 @@ func (s *SieveMState) Prime_From_W2(n int) {
 }
 
 func (s *SieveMState) To_Sieve_M_Env() Sieve_M_Env {
-	return &SieveMState{
-		Primes:   s.Primes,
-		StartNum: s.StartNum + 1,
-	}
+	// return &SieveMState{
+	// 	Primes:   s.Primes,
+	// 	StartNum: s.StartNum + 1,
+	// }
+	return s
 }
 
 func (s *SieveMState) ResultFrom_Sieve_M(result sieve.M_Result) {
-	s.Primes = result.Primes
+	// s.Primes = result.Primes
 }
 
 func (s *SieveMState) Finish_From_W2() {

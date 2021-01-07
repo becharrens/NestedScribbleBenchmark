@@ -1,6 +1,8 @@
 package roles
 
-import "NestedScribbleBenchmark/primesieve/messages"
+import (
+	"NestedScribbleBenchmark/primesieve/messages"
+)
 import "NestedScribbleBenchmark/primesieve/channels/sieve"
 import "NestedScribbleBenchmark/primesieve/invitations"
 import "NestedScribbleBenchmark/primesieve/callbacks"

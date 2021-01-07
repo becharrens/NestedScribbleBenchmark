@@ -1,11 +1,13 @@
 package roles
 
-import "NestedScribbleBenchmark/primesieve/messages"
-import "NestedScribbleBenchmark/primesieve/channels/primesieve"
-import "NestedScribbleBenchmark/primesieve/invitations"
-import "NestedScribbleBenchmark/primesieve/callbacks"
-import primesieve_2 "NestedScribbleBenchmark/primesieve/results/primesieve"
-import "sync"
+import (
+	"NestedScribbleBenchmark/primesieve/callbacks"
+	"NestedScribbleBenchmark/primesieve/channels/primesieve"
+	"NestedScribbleBenchmark/primesieve/invitations"
+	"NestedScribbleBenchmark/primesieve/messages"
+	primesieve_2 "NestedScribbleBenchmark/primesieve/results/primesieve"
+	"sync"
+)
 
 func PrimeSieve_Worker(wg *sync.WaitGroup, roleChannels primesieve.Worker_Chan, inviteChannels invitations.PrimeSieve_Worker_InviteChan, env callbacks.PrimeSieve_Worker_Env) primesieve_2.Worker_Result {
 	<-roleChannels.Label_From_Master
