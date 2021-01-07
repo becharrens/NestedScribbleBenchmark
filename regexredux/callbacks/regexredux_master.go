@@ -1,7 +1,9 @@
 package callbacks
 
-import "NestedScribbleBenchmark/regexredux/results/regexredux2"
-import "NestedScribbleBenchmark/regexredux/results/regexredux"
+import (
+	"NestedScribbleBenchmark/regexredux/results/regexredux"
+	"NestedScribbleBenchmark/regexredux/results/regexredux2"
+)
 
 type RegexRedux_Master_Env interface {
 	Done() regexredux.Master_Result
@@ -24,12 +26,13 @@ func (r *RegexReduxMasterState) Done() regexredux.Master_Result {
 
 func (r *RegexReduxMasterState) ResultFrom_RegexRedux2_M(result regexredux2.M_Result) {
 	r.Len = result.Length
+	// fmt.Printf("\n%d\n%d\n%d\n", r.ILen, r.CLen, r.Len)
 }
 
 func (r *RegexReduxMasterState) To_RegexRedux2_M_Env() RegexRedux2_M_Env {
 	return &RegexRedux2MState{
 		B:          r.B,
-		VariantIdx: r.Idx + 1,
+		VariantIdx: r.Idx,
 		CLen:       r.CLen,
 		ILen:       r.ILen,
 	}

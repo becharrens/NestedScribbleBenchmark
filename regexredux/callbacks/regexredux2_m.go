@@ -57,7 +57,8 @@ func (r *RegexRedux2MState) Done() regexredux2.M_Result {
 
 func (r *RegexRedux2MState) NumMatches_From_W(nmatches int) {
 	// TODO: Uncomment
-	// fmt.Printf("%s %d\n", variants[r.VariantIdx], nummatches_msg.Nmatches)
+	// r.VariantIdx--
+	// fmt.Printf("%s %d\n", variants[r.VariantIdx], nmatches)
 }
 
 func (r *RegexRedux2MState) ResultFrom_RegexRedux2_M(result regexredux2.M_Result) {
@@ -65,12 +66,8 @@ func (r *RegexRedux2MState) ResultFrom_RegexRedux2_M(result regexredux2.M_Result
 }
 
 func (r *RegexRedux2MState) To_RegexRedux2_M_Env() RegexRedux2_M_Env {
-	return &RegexRedux2MState{
-		B:          r.B,
-		VariantIdx: r.VariantIdx + 1,
-		CLen:       r.CLen,
-		ILen:       r.ILen,
-	}
+	r.VariantIdx++
+	return r
 }
 
 func (r *RegexRedux2MState) RegexRedux2_Setup() {
