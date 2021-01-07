@@ -48,6 +48,8 @@ func main() {
 	runUnboundedFib := flag.Bool("ubfib-scr", false, "Run Fibonacci Sequence protocol")
 	runUnboundedFibBase := flag.Bool("ubfib-base", false, "Run Fibonacci Sequence protocol")
 	ringSize := flag.Int("ring", 0, "Run Ring protocol of size n")
+	runDynTaskGen := flag.Bool("dyntask", false, "Run dynamic task generation protocol")
+	runDNS := flag.Bool("dns", false, "Run DNS protocol")
 	flag.Parse()
 	benchmark.MinExecTime = *minTime * benchmark.SECOND
 	iterations := *nIterations
@@ -137,6 +139,14 @@ func main() {
 			panic("ring size should be >= 2")
 		}
 		RunRing(*ringSize)
+	}
+
+	if *runDNS {
+		RunDNS()
+	}
+
+	if *runDynTaskGen {
+		RunClientServer()
 	}
 
 	if *runUnboundedFib {
