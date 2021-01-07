@@ -63,12 +63,14 @@ func TimeFannkuch(n int) time.Duration {
 	env := NewFannkuchEnv(n)
 	protocol.Fannkuch(env)
 	elapsed := time.Since(start)
+	// fmt.Println(env.Res, env.Checksum)
 	return elapsed
 }
 
 func TimeFannkuchBase(n int) time.Duration {
 	start := time.Now()
-	_, _ = fannkuch_base.Fannkuch(n)
+	fannkuch_base.Fannkuch(n)
+	// fmt.Println(res, chk)
 	return time.Since(start)
 }
 
