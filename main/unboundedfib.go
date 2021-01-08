@@ -1,10 +1,10 @@
 package main
 
 import (
-	"NestedScribbleBenchmark/fibonacci/callbacks"
-	"NestedScribbleBenchmark/fibonacci/protocol"
-	fibonacci_2 "NestedScribbleBenchmark/fibonacci/results/fibonacci"
 	"NestedScribbleBenchmark/fibonacci_base"
+	"NestedScribbleBenchmark/fibonacci_prev/callbacks"
+	"NestedScribbleBenchmark/fibonacci_prev/protocol"
+	fibonacci_2 "NestedScribbleBenchmark/fibonacci_prev/results/fibonacci"
 )
 
 type UnboundedFibEnv struct {

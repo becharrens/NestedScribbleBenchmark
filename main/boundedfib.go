@@ -22,9 +22,9 @@ var boundedfibParams = []int{
 }
 
 var fibBaselines = map[string]func(int) time.Duration{"fib-optimised": TimeBoundedFibonacciBase,
-	"fib-no-callbacks":      TimeBoundedFibonacciWithoutCallbacks,
-	"fib-opt-invitations":   TimeBoundedFibonacciOptimisedInvitations,
-	"fib-opt-labelled-msgs": TimeBoundedFibonacciOptimisedLabelledMsgExchanges}
+	"bfib-no-callbacks":      TimeBoundedFibonacciWithoutCallbacks,
+	"bfib-opt-invitations":   TimeBoundedFibonacciOptimisedInvitations,
+	"bfib-opt-labelled-msgs": TimeBoundedFibonacciOptimisedLabelledMsgExchanges}
 
 // var boundedfibParams = []int{
 // 	10, 25, 40, 55, 70, 80, 90,

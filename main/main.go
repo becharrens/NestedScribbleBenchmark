@@ -35,8 +35,8 @@ func main() {
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
 
 	// Flags for benchmarks
-	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded fibonacci protocol")
-	cmpFibBaselines := flag.Bool("cmp-fib", false, "Compare bounded fibonacci performance against baselines with different degrees of optimisation")
+	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded fibonacci_prev protocol")
+	cmpFibBaselines := flag.Bool("cmp-fib", false, "Compare bounded fibonacci_prev performance against baselines with different degrees of optimisation")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
 	cmpSieveBaselines := flag.Bool("cmp-sieve", false, "Compare primesieve performance against baselines with different degrees of optimisation")
@@ -132,8 +132,8 @@ func main() {
 
 	if *cmpSieveBaselines {
 		scribbleResults, allBaseResults := ComparePrimeSieveAgainstBaselines(iterations)
-		baseResStr := benchmark.ResultsToString("primesieve-scribble.txt", scribbleResults)
-		err := ioutil.WriteFile("primesieve-scribble"+".txt", []byte(baseResStr), 0644)
+		baseResStr := benchmark.ResultsToString("primesieve-scribble", scribbleResults)
+		err := ioutil.WriteFile("primesieve-scribble.txt", []byte(baseResStr), 0644)
 		if err != nil {
 			panic("Error while writing to file")
 		}
@@ -141,7 +141,7 @@ func main() {
 			fmt.Println(name)
 			PrintAvgResults(scribbleResults, baseResults)
 			baseResStr := benchmark.ResultsToString(name, baseResults)
-			err := ioutil.WriteFile(name+".txt", []byte(baseResStr), 0644)
+			err := ioutil.WriteFile(name+".txt", []byte(baseResStr+"\n;;"), 0644)
 			if err != nil {
 				panic("Error while writing to file")
 			}
@@ -151,8 +151,8 @@ func main() {
 
 	if *cmpFibBaselines {
 		scribbleResults, allBaseResults := CompareFibonacciAgainstBaselines(iterations)
-		baseResStr := benchmark.ResultsToString("bfib-scribble.txt", scribbleResults)
-		err := ioutil.WriteFile("bfib-scribble"+".txt", []byte(baseResStr), 0644)
+		baseResStr := benchmark.ResultsToString("bfib-scribble", scribbleResults)
+		err := ioutil.WriteFile("bfib-scribble.txt", []byte(baseResStr), 0644)
 		if err != nil {
 			panic("Error while writing to file")
 		}
@@ -160,7 +160,7 @@ func main() {
 			fmt.Println(name)
 			PrintAvgResults(scribbleResults, baseResults)
 			baseResStr := benchmark.ResultsToString(name, baseResults)
-			err := ioutil.WriteFile(name+".txt", []byte(baseResStr), 0644)
+			err := ioutil.WriteFile(name+".txt", []byte(baseResStr+"\n;;"), 0644)
 			if err != nil {
 				panic("Error while writing to file")
 			}
