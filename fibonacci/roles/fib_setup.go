@@ -1,35 +1,47 @@
 package roles
 
-import "NestedScribbleBenchmark/fibonacci/messages/fib"
-import fib_2 "NestedScribbleBenchmark/fibonacci/channels/fib"
+import "NestedScribbleBenchmark/fibonacci/messages"
+import "NestedScribbleBenchmark/fibonacci/channels/fib"
 import "NestedScribbleBenchmark/fibonacci/invitations"
 import "NestedScribbleBenchmark/fibonacci/callbacks"
 import "sync"
 
 func Fib_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Fib_RoleSetupChan, inviteChannels invitations.Fib_InviteSetupChan)  {
-	f3_invite_f3 := make(chan fib_2.F2_Chan, 1)
+	f3_invite_f3 := make(chan fib.F2_Chan, 1)
 	f3_invite_f3_invitechan := make(chan invitations.Fib_F2_InviteChan, 1)
-	f3_invite_f2 := make(chan fib_2.F1_Chan, 1)
+	f3_f2_label := make(chan messages.Fibonacci_Label, 1)
+	f3_invite_f2 := make(chan fib.F1_Chan, 1)
 	f3_invite_f2_invitechan := make(chan invitations.Fib_F1_InviteChan, 1)
-	f3_invite_res := make(chan fib_2.Res_Chan, 1)
+	f3_invite_res := make(chan fib.Res_Chan, 1)
 	f3_invite_res_invitechan := make(chan invitations.Fib_Res_InviteChan, 1)
-	f3_res_nextfib := make(chan fib.NextFib, 1)
-	f2_f3_fib2 := make(chan fib.Fib2, 1)
-	f1_f3_fib1 := make(chan fib.Fib1, 1)
+	f3_res_int := make(chan int, 1)
+	f3_res_label := make(chan messages.Fibonacci_Label, 1)
+	f2_f3_int := make(chan int, 1)
+	f2_f3_label := make(chan messages.Fibonacci_Label, 1)
+	f1_f3_int := make(chan int, 1)
+	f1_f3_label := make(chan messages.Fibonacci_Label, 1)
 
-	res_chan := fib_2.Res_Chan{
-		F3_NextFib: f3_res_nextfib,
+	res_chan := fib.Res_Chan{
+		Label_From_F3: f3_res_label,
+		Int_From_F3: f3_res_int,
 	}
-	f3_chan := fib_2.F3_Chan{
-		Res_NextFib: f3_res_nextfib,
-		F2_Fib2: f2_f3_fib2,
-		F1_Fib1: f1_f3_fib1,
+	f3_chan := fib.F3_Chan{
+		Label_To_Res: f3_res_label,
+		Label_To_F2: f3_f2_label,
+		Label_From_F2: f2_f3_label,
+		Label_From_F1: f1_f3_label,
+		Int_To_Res: f3_res_int,
+		Int_From_F2: f2_f3_int,
+		Int_From_F1: f1_f3_int,
 	}
-	f2_chan := fib_2.F2_Chan{
-		F3_Fib2: f2_f3_fib2,
+	f2_chan := fib.F2_Chan{
+		Label_To_F3: f2_f3_label,
+		Label_From_F3: f3_f2_label,
+		Int_To_F3: f2_f3_int,
 	}
-	f1_chan := fib_2.F1_Chan{
-		F3_Fib1: f1_f3_fib1,
+	f1_chan := fib.F1_Chan{
+		Label_To_F3: f1_f3_label,
+		Int_To_F3: f1_f3_int,
 	}
 
 	res_inviteChan := invitations.Fib_Res_InviteChan{

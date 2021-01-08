@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/fibonacci/messages"
 import "NestedScribbleBenchmark/fibonacci/channels/fib"
 import "NestedScribbleBenchmark/fibonacci/invitations"
 import "NestedScribbleBenchmark/fibonacci/callbacks"
@@ -7,16 +8,22 @@ import "sync"
 
 func Fib_F3(wg *sync.WaitGroup, roleChannels fib.F3_Chan, inviteChannels invitations.Fib_F3_InviteChan, env callbacks.Fib_F3_Env)  {
 	defer wg.Done()
-	fib1_msg := <-roleChannels.F1_Fib1
-	env.Fib1_From_F1(fib1_msg)
+	<-roleChannels.Label_From_F1
+	val := <-roleChannels.Int_From_F1
+	env.Fib1_From_F1(val)
 
-	fib2_msg := <-roleChannels.F2_Fib2
-	env.Fib2_From_F2(fib2_msg)
+	<-roleChannels.Label_From_F2
+	val_2 := <-roleChannels.Int_From_F2
+	env.Fib2_From_F2(val_2)
 
-	nextfib_msg := env.NextFib_To_Res()
-	roleChannels.Res_NextFib <- nextfib_msg
+	val_3 := env.NextFib_To_Res()
+	roleChannels.Label_To_Res <- messages.NextFib
+	roleChannels.Int_To_Res <- val_3
 
 	env.Fib_Setup()
+	roleChannels.Label_To_Res <- messages.Fib_Res_F2_F3
+	roleChannels.Label_To_F2 <- messages.Fib_Res_F2_F3
+	
 	fib_rolechan := invitations.Fib_RoleSetupChan{
 		Res_Chan: inviteChannels.Invite_Res_To_Fib_Res,
 		F1_Chan: inviteChannels.Invite_F2_To_Fib_F1,

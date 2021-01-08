@@ -1,7 +1,7 @@
 package roles
 
-import "NestedScribbleBenchmark/fibonacci/messages/fibonacci"
-import fibonacci_2 "NestedScribbleBenchmark/fibonacci/channels/fibonacci"
+import "NestedScribbleBenchmark/fibonacci/messages"
+import "NestedScribbleBenchmark/fibonacci/channels/fibonacci"
 import "NestedScribbleBenchmark/fibonacci/channels/fib"
 import "NestedScribbleBenchmark/fibonacci/invitations"
 import "sync"
@@ -13,18 +13,24 @@ func Fibonacci_SendCommChannels(wg *sync.WaitGroup, roleChannels invitations.Fib
 	start_invite_f1_invitechan := make(chan invitations.Fib_F1_InviteChan, 1)
 	start_invite_start := make(chan fib.Res_Chan, 1)
 	start_invite_start_invitechan := make(chan invitations.Fib_Res_InviteChan, 1)
-	start_f2_startfib2 := make(chan fibonacci.StartFib2, 1)
-	start_f1_startfib1 := make(chan fibonacci.StartFib1, 1)
+	start_f2_int := make(chan int, 1)
+	start_f2_label := make(chan messages.Fibonacci_Label, 1)
+	start_f1_int := make(chan int, 1)
+	start_f1_label := make(chan messages.Fibonacci_Label, 1)
 
-	start_chan := fibonacci_2.Start_Chan{
-		F2_StartFib2: start_f2_startfib2,
-		F1_StartFib1: start_f1_startfib1,
+	start_chan := fibonacci.Start_Chan{
+		Label_To_F2: start_f2_label,
+		Label_To_F1: start_f1_label,
+		Int_To_F2: start_f2_int,
+		Int_To_F1: start_f1_int,
 	}
-	f2_chan := fibonacci_2.F2_Chan{
-		Start_StartFib2: start_f2_startfib2,
+	f2_chan := fibonacci.F2_Chan{
+		Label_From_Start: start_f2_label,
+		Int_From_Start: start_f2_int,
 	}
-	f1_chan := fibonacci_2.F1_Chan{
-		Start_StartFib1: start_f1_startfib1,
+	f1_chan := fibonacci.F1_Chan{
+		Label_From_Start: start_f1_label,
+		Int_From_Start: start_f1_int,
 	}
 
 	start_inviteChan := invitations.Fibonacci_Start_InviteChan{

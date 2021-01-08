@@ -1,21 +1,29 @@
 package fib
 
-import "NestedScribbleBenchmark/fibonacci/messages/fib"
+import "NestedScribbleBenchmark/fibonacci/messages"
 
 type Res_Chan struct {
-	F3_NextFib chan fib.NextFib
+	Int_From_F3 chan int
+	Label_From_F3 chan messages.Fibonacci_Label
 }
 
 type F1_Chan struct {
-	F3_Fib1 chan fib.Fib1
+	Int_To_F3 chan int
+	Label_To_F3 chan messages.Fibonacci_Label
 }
 
 type F2_Chan struct {
-	F3_Fib2 chan fib.Fib2
+	Int_To_F3 chan int
+	Label_From_F3 chan messages.Fibonacci_Label
+	Label_To_F3 chan messages.Fibonacci_Label
 }
 
 type F3_Chan struct {
-	F1_Fib1 chan fib.Fib1
-	F2_Fib2 chan fib.Fib2
-	Res_NextFib chan fib.NextFib
+	Int_From_F1 chan int
+	Int_From_F2 chan int
+	Int_To_Res chan int
+	Label_From_F1 chan messages.Fibonacci_Label
+	Label_From_F2 chan messages.Fibonacci_Label
+	Label_To_F2 chan messages.Fibonacci_Label
+	Label_To_Res chan messages.Fibonacci_Label
 }
