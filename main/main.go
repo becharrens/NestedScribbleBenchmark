@@ -52,6 +52,9 @@ func main() {
 	ringSize := flag.Int("ring", 0, "Run Ring protocol of size n")
 	runDynTaskGen := flag.Bool("dyntask", false, "Run dynamic task generation protocol")
 	runDNS := flag.Bool("dns", false, "Run DNS protocol")
+	runNoughtsAndCrosses := flag.Bool("nc", false, "Run Noughts and Crosses protocol")
+	p1AI := flag.Bool("p1-ai", false, "Set player1 in Noughts and Crosses game as a computer AI")
+	p2AI := flag.Bool("p2-ai", false, "Set player2 in Noughts and Crosses game as a computer AI")
 	flag.Parse()
 	benchmark.MinExecTime = *minTime * benchmark.SECOND
 	iterations := *nIterations
@@ -189,10 +192,13 @@ func main() {
 		RunClientServer()
 	}
 
+	if *runNoughtsAndCrosses {
+		NoughtsAndCrosses(*p1AI, *p2AI)
+	}
+
 	if *runUnboundedFib {
 		RunUboundedFibonacci()
 	} else if *runUnboundedFibBase {
 		RunUboundedFibonacciBase()
 	}
-
 }
