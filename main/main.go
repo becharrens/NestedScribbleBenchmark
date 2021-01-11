@@ -35,8 +35,8 @@ func main() {
 	genInputs := flag.Bool("geninputs", false, "Run fasta to generate input files for benchmarks")
 
 	// Flags for benchmarks
-	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded fibonacci_prev protocol")
-	cmpFibBaselines := flag.Bool("cmp-fib", false, "Compare bounded fibonacci_prev performance against baselines with different degrees of optimisation")
+	runBoundedFib := flag.Bool("boundedfib", false, "Run benchmark on bounded fibonacci protocol")
+	cmpFibBaselines := flag.Bool("cmp-fib", false, "Compare bounded fibonacci performance against baselines with different degrees of optimisation")
 	runFannkuch := flag.Bool("fannkuch", false, "Run benchmark on fannkuch protocol")
 	runSieve := flag.Bool("sieve", false, "Run benchmark on primesieve protocol")
 	cmpSieveBaselines := flag.Bool("cmp-sieve", false, "Compare primesieve performance against baselines with different degrees of optimisation")
@@ -50,7 +50,7 @@ func main() {
 	runUnboundedFib := flag.Bool("ubfib-scr", false, "Run Fibonacci Sequence protocol")
 	runUnboundedFibBase := flag.Bool("ubfib-base", false, "Run Fibonacci Sequence protocol")
 	ringSize := flag.Int("ring", 0, "Run Ring protocol of size n")
-	runDynTaskGen := flag.Bool("dyntask", false, "Run dynamic task generation protocol")
+	runDynTaskGen := flag.Bool("dyntaskgen", false, "Run dynamic task generation protocol")
 	runDNS := flag.Bool("dns", false, "Run DNS protocol")
 	runNoughtsAndCrosses := flag.Bool("nc", false, "Run Noughts and Crosses protocol")
 	p1AI := flag.Bool("p1-ai", false, "Set player1 in Noughts and Crosses game as a computer AI")
