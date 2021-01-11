@@ -10,29 +10,6 @@ nested protocol DNSLookup(role res; new role dns) {
   }
 }
 
-// global protocol DNS(role app, role dnsRes) {
-
-//   nested protocol Cached(role res) {}
-
-//   rec REC {
-//     choice at app {
-//       Done() from app to dnsRes;
-//     } or {
-//       Req(host: string) from app to dnsRes;
-//       choice at dnsRes {
-//         // Return cached response
-//         dnsRes calls Cached(dnsRes);
-//         IP(ip: string) from dnsRes to app;
-//         continue REC;
-//       } or {
-//         dnsRes calls DNSLookup(dnsRes);
-//         IP(ip:string) from dnsRes to app;
-//         continue REC;
-//       }
-//     }
-//   }
-// }
-
 global protocol DNS(role app, role dnsRes, role ispDNS) {
 
   nested protocol Cached(role res) {}
