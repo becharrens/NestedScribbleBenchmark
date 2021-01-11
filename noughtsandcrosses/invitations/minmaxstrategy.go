@@ -1,0 +1,24 @@
+package invitations
+
+import "NestedScribbleBenchmark/noughtsandcrosses/channels/minmaxstrategy_evalboard"
+import "NestedScribbleBenchmark/noughtsandcrosses/channels/minmaxstrategy"
+
+type MinMaxStrategy_RoleSetupChan struct {
+	Master_Chan chan minmaxstrategy.Master_Chan
+}
+
+type MinMaxStrategy_InviteSetupChan struct {
+	Master_InviteChan chan MinMaxStrategy_Master_InviteChan
+}
+
+type MinMaxStrategy_Master_InviteChan struct {
+	Invite_Master_To_MinMaxStrategy_Master chan minmaxstrategy.Master_Chan
+	Invite_Master_To_MinMaxStrategy_Master_InviteChan chan MinMaxStrategy_Master_InviteChan
+}
+
+type MinMaxStrategy_Worker_InviteChan struct {
+	Invite_Worker_To_MinMaxStrategy_EvalBoard_W chan minmaxstrategy_evalboard.W_Chan
+	Invite_Worker_To_MinMaxStrategy_EvalBoard_W_InviteChan chan MinMaxStrategy_EvalBoard_W_InviteChan
+	Invite_Worker_To_MinMaxStrategy_Master chan minmaxstrategy.Master_Chan
+	Invite_Worker_To_MinMaxStrategy_Master_InviteChan chan MinMaxStrategy_Master_InviteChan
+}
