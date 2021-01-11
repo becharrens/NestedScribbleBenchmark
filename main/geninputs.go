@@ -209,8 +209,19 @@ func check(e error) {
 	}
 }
 
+func ensureDirExists(dirPath string) {
+	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+		err = os.Mkdir(dirPath, os.ModePerm)
+		if err != nil {
+			panic("Could not create dir '" + dirPath + "'")
+		}
+	}
+}
+
 func newFileWriter(fileName string) (*os.File, *bufio.Writer) {
-	filepath := fmt.Sprintf("%s/src/NestedScribbleBenchmark/data/%s", os.Getenv("GOPATH"), fileName)
+	dataDirPath := fmt.Sprintf("%s/src/NestedScribbleBenchmark/data", os.Getenv("GOPATH"))
+	ensureDirExists(dataDirPath)
+	filepath := fmt.Sprintf("%s/%s", dataDirPath, fileName)
 	f, err := os.Create(filepath)
 	check(err)
 	w := bufio.NewWriter(f)
