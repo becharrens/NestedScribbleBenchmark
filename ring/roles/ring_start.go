@@ -1,5 +1,6 @@
 package roles
 
+import "NestedScribbleBenchmark/ring/messages"
 import "NestedScribbleBenchmark/ring/channels/ring"
 import "NestedScribbleBenchmark/ring/invitations"
 import "NestedScribbleBenchmark/ring/callbacks"
@@ -11,6 +12,8 @@ func Ring_Start(wg *sync.WaitGroup, roleChannels ring.Start_Chan, inviteChannels
 	switch start_choice {
 	case callbacks.Ring_Start_Forward:
 		env.Forward_Setup()
+		
+		roleChannels.Label_To_End <- messages.Forward_Start_End
 		forward_rolechan := invitations.Forward_RoleSetupChan{
 			S_Chan: inviteChannels.Invite_Start_To_Forward_S,
 			E_Chan: inviteChannels.Invite_End_To_Forward_E,
@@ -27,19 +30,25 @@ func Ring_Start(wg *sync.WaitGroup, roleChannels ring.Start_Chan, inviteChannels
 		forward_s_result := Forward_S(wg, forward_s_chan, forward_s_inviteChan, forward_s_env)
 		env.ResultFrom_Forward_S(forward_s_result)
 
-		msg_msg := <-roleChannels.End_Msg
-		env.Msg_From_End(msg_msg)
+		<-roleChannels.Label_From_End
+		msg := <-roleChannels.String_From_End
+		hops := <-roleChannels.Int_From_End
+		env.Msg_From_End(msg, hops)
 
 		return env.Done()
 	case callbacks.Ring_Start_Msg:
-		msg_msg_2 := env.Msg_To_End()
-		roleChannels.End_Msg_2 <- msg_msg_2
+		msg_2, hops_2 := env.Msg_To_End()
+		roleChannels.Label_To_End <- messages.Msg
+		roleChannels.String_To_End <- msg_2
+		roleChannels.Int_To_End <- hops_2
 
-		msg_msg_3 := <-roleChannels.End_Msg_3
-		env.Msg_From_End_2(msg_msg_3)
+		<-roleChannels.Label_From_End
+		msg_3 := <-roleChannels.String_From_End
+		hops_3 := <-roleChannels.Int_From_End
+		env.Msg_From_End_2(msg_3, hops_3)
 
 		return env.Done()
 	default:
 		panic("Invalid choice was made")
 	}
-}
+} 

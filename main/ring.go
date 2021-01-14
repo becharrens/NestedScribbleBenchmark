@@ -17,9 +17,9 @@ type RingEnv struct {
 
 func (r *RingEnv) New_Start_Env() callbacks.Ring_Start_Env {
 	return &callbacks.RingStartState{
-		SendMsg: r.SendMsg,
-		RecvMsg: "",
-		NHops:   r.NHops,
+		SendMsg:  r.SendMsg,
+		RecvMsg:  "",
+		RingSize: r.NHops,
 	}
 }
 
