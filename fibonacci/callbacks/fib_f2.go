@@ -1,24 +1,25 @@
 package callbacks
 
-import "NestedScribbleBenchmark/fibonacci/messages/fib"
-import fib_2 "NestedScribbleBenchmark/fibonacci/results/fib"
+import (
+	"NestedScribbleBenchmark/fibonacci/results/fib"
+)
 
 type Fib_F2_Env interface {
-	Done() fib_2.F2_Result
-	ResultFrom_Fib_F1(result fib_2.F1_Result)
+	Done() fib.F2_Result
+	ResultFrom_Fib_F1(result fib.F1_Result)
 	To_Fib_F1_Env() Fib_F1_Env
-	Fib2_To_F3() fib.Fib2
+	Fib2_To_F3() int
 }
 
 type FibF2State struct {
 	Fib int
 }
 
-func (f *FibF2State) Done() fib_2.F2_Result {
-	return fib_2.F2_Result{}
+func (f *FibF2State) Done() fib.F2_Result {
+	return fib.F2_Result{}
 }
 
-func (f *FibF2State) ResultFrom_Fib_F1(result fib_2.F1_Result) {
+func (f *FibF2State) ResultFrom_Fib_F1(result fib.F1_Result) {
 }
 
 func (f *FibF2State) To_Fib_F1_Env() Fib_F1_Env {
@@ -27,6 +28,6 @@ func (f *FibF2State) To_Fib_F1_Env() Fib_F1_Env {
 	}
 }
 
-func (f *FibF2State) Fib2_To_F3() fib.Fib2 {
-	return fib.Fib2{Val: f.Fib}
+func (f *FibF2State) Fib2_To_F3() int {
+	return f.Fib
 }

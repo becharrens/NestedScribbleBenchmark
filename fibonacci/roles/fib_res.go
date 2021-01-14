@@ -7,9 +7,11 @@ import fib_2 "NestedScribbleBenchmark/fibonacci/results/fib"
 import "sync"
 
 func Fib_Res(wg *sync.WaitGroup, roleChannels fib.Res_Chan, inviteChannels invitations.Fib_Res_InviteChan, env callbacks.Fib_Res_Env) fib_2.Res_Result {
-	nextfib_msg := <-roleChannels.F3_NextFib
-	env.NextFib_From_F3(nextfib_msg)
+	<-roleChannels.Label_From_F3
+	val := <-roleChannels.Int_From_F3
+	env.NextFib_From_F3(val)
 
+	<-roleChannels.Label_From_F3
 	fib_res_chan := <-inviteChannels.F3_Invite_To_Fib_Res
 	fib_res_inviteChan := <-inviteChannels.F3_Invite_To_Fib_Res_InviteChan
 	fib_res_env := env.To_Fib_Res_Env()
@@ -17,4 +19,4 @@ func Fib_Res(wg *sync.WaitGroup, roleChannels fib.Res_Chan, inviteChannels invit
 	env.ResultFrom_Fib_Res(fib_res_result)
 
 	return env.Done()
-}
+} 
