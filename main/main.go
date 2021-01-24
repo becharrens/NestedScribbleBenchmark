@@ -53,6 +53,7 @@ func main() {
 	runDynTaskGen := flag.Bool("dyntaskgen", false, "Run dynamic task generation protocol")
 	runDNS := flag.Bool("dns", false, "Run DNS protocol")
 	runSimpleDNS := flag.Bool("simpledns", false, "Run simple DNS protocol")
+	runGeneralDNS := flag.Bool("generaldns", false, "Run general DNS protocol")
 	runNoughtsAndCrosses := flag.Bool("nc", false, "Run Noughts and Crosses protocol")
 	p1AI := flag.Bool("p1-ai", false, "Set player1 in Noughts and Crosses game as a computer AI")
 	p2AI := flag.Bool("p2-ai", false, "Set player2 in Noughts and Crosses game as a computer AI")
@@ -191,6 +192,10 @@ func main() {
 
 	if *runSimpleDNS {
 		RunSimpleDNS()
+	}
+
+	if *runGeneralDNS {
+		RunGeneralDNS()
 	}
 
 	if *runDynTaskGen {
