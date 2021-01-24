@@ -1,0 +1,34 @@
+(*# NestedProtocols #*)
+
+nested protocol DNSLookup(role res; new role dns) {
+  Req(host: string) from res to dns;
+  choice at dns {
+    IP(ip: string) from dns to res;
+  } or {
+    DNSIP(ip: string) from dns to res;
+    res calls DNSLookup(res);
+  }
+}
+
+global protocol SimpleDNS(role app, role ispDNS) {
+
+  nested protocol Cached(role res) {}
+
+  rec REC {
+    choice at app {
+      Done() from app to ispDNS;
+    } or {
+      RecQuery(host: string) from app to ispDNS;
+      choice at ispDNS {
+        // Return cached response
+        ispDNS calls Cached(ispDNS);
+        IP(ip: string) from ispDNS to app;
+        continue REC;
+      } or {
+        ispDNS calls DNSLookup(ispDNS);
+        IP(ip: string) from ispDNS to app;
+        continue REC;
+      }
+    }
+  }
+}

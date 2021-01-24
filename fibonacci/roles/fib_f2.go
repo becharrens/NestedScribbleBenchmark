@@ -20,4 +20,4 @@ func Fib_F2(wg *sync.WaitGroup, roleChannels fib.F2_Chan, inviteChannels invitat
 	env.ResultFrom_Fib_F1(fib_f1_result)
 
 	return env.Done()
-} 
+}

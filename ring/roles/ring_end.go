@@ -37,4 +37,4 @@ func Ring_End(wg *sync.WaitGroup, roleChannels ring.End_Chan, inviteChannels inv
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

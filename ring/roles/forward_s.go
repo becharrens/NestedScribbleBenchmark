@@ -14,4 +14,4 @@ func Forward_S(wg *sync.WaitGroup, roleChannels forward.S_Chan, inviteChannels i
 	roleChannels.Int_To_RingNode <- hops
 
 	return env.Done()
-} 
+}

@@ -12,7 +12,7 @@ func Ring_Start(wg *sync.WaitGroup, roleChannels ring.Start_Chan, inviteChannels
 	switch start_choice {
 	case callbacks.Ring_Start_Forward:
 		env.Forward_Setup()
-		
+
 		roleChannels.Label_To_End <- messages.Forward_Start_End
 		forward_rolechan := invitations.Forward_RoleSetupChan{
 			S_Chan: inviteChannels.Invite_Start_To_Forward_S,
@@ -51,4 +51,4 @@ func Ring_Start(wg *sync.WaitGroup, roleChannels ring.Start_Chan, inviteChannels
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

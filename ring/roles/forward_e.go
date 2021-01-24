@@ -27,4 +27,4 @@ func Forward_E(wg *sync.WaitGroup, roleChannels forward.E_Chan, inviteChannels i
 	default:
 		panic("Invalid choice was made")
 	}
-} 
+}

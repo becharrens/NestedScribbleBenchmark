@@ -13,4 +13,4 @@ func Fib_F1(wg *sync.WaitGroup, roleChannels fib.F1_Chan, inviteChannels invitat
 	roleChannels.Int_To_F3 <- val
 
 	return env.Done()
-} 
+}
