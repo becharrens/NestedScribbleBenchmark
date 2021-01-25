@@ -63,7 +63,8 @@ func (c *CalcMovePState) ResultFrom_StandardStrategy_P(result standardstrategy.P
 
 func (c *CalcMovePState) To_StandardStrategy_P_Env() StandardStrategy_P_Env {
 	return &StandardStrategyPState{
-		Board: c.Board,
+		Board:  c.Board,
+		Player: c.Player,
 	}
 }
 
