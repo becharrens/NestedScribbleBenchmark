@@ -32,9 +32,9 @@ nested protocol MinMaxStrategy(role Master; new role Worker) {
 
 nested protocol CalcMove(role P) {
   choice at P {
-    P calls Human(P);
+    P calls StandardStrategy(P);
   } or {
-    P calls AI(P);
+    P calls MinMaxStrategy(P);
   }
 }
 
